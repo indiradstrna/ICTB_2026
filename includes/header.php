@@ -30,7 +30,7 @@ $site_title = "5th International Conference on Tropical Biology";
             <a href="index.php" class="custom-logo">
                 <div class="custom-logo-top">
                     <span class="custom-logo-year">2026</span>
-                    <img src="assets/img/ICTB.jpeg" alt="ICTB Logo" class="custom-logo-img">
+                    <img src="assets/img/LOGO_ICTB_approved.png" alt="ICTB Logo" class="custom-logo-img">
                 </div>
                 <div class="custom-logo-text">
                     International Conference

@@ -1,3 +1,53 @@
+<?php
+// Dynamic Pricing Logic based on Registration Type (Indonesian Participants)
+$participant_type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 'Author'; // 'Author', 'Participant', 'Exhibitor'
+$participant_category = isset($_REQUEST['category']) ? $_REQUEST['category'] : 'General'; // Default to 'General' instead of 'Student'
+$is_early_bird = isset($_REQUEST['earlybird']) ? filter_var($_REQUEST['earlybird'], FILTER_VALIDATE_BOOLEAN) : true;
+
+// Get publication type from POST (from application.php) or fallback to GET/default
+$publication_type = isset($_POST['publication']) ? $_POST['publication'] : (isset($_GET['pub']) ? $_GET['pub'] : 'ICTB proceeding book (ISBN)');
+
+$participation_fee = 0;
+$fee_label = "";
+$rate_title = "";
+
+// Determine participation fee based on Type and Category
+if (strtolower($participant_category) == 'student') {
+    $participation_fee = $is_early_bird ? 600000 : 750000;
+    $fee_label = "Participation as Student" . (strtolower($participant_type) == 'author' ? ' (Author)' : '');
+    $rate_title = "Student";
+} elseif (strtolower($participant_type) == 'author') {
+    $participation_fee = $is_early_bird ? 1200000 : 1500000;
+    $fee_label = "Participation as Presenter (oral, poster)";
+    $rate_title = "Presenter";
+} elseif (strtolower($participant_type) == 'participant') {
+    $participation_fee = $is_early_bird ? 850000 : 1000000;
+    $fee_label = "Participation as General (no paper)";
+    $rate_title = "General";
+} else {
+    // Default / Exhibitor fallback
+    $participation_fee = 0;
+    $fee_label = "Participation as " . ucfirst($participant_type);
+    $rate_title = ucfirst($participant_type);
+}
+
+$publication_fee = 0;
+$pub_fee_label = "To be determined by the journal";
+
+if ($publication_type == 'Scopus-indexed proceedings') {
+    $publication_fee = 2500000;
+    $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
+} elseif ($publication_type == 'ICTB proceeding book (ISBN)' || $publication_type == 'Program book and proceeding (full paper) - Rp. 800.000 / USD 80') {
+    $publication_fee = 800000;
+    $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
+} elseif (strpos(strtolower($publication_type), 'free') !== false || $publication_type == 'Program book (abstract only) - free') {
+    $publication_fee = 0;
+    $pub_fee_label = "Free";
+}
+
+$total_payment = $participation_fee + $publication_fee;
+$total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
+?>
 <?php include 'includes/header.php'; ?>
 
 <style>
@@ -178,13 +228,13 @@
             <div class="summary-line"><span class="summary-label">Registration ID:</span> <span class="summary-val">5ICTB-OR-0075</span></div>
             <div class="summary-line"><span class="summary-label">Fullname:</span> <span class="summary-val">Ms. Destriana, Indira</span></div>
             <div class="summary-line"><span class="summary-label">Registration Code:</span> <span class="summary-val">5ICTB-OR-0075</span></div>
-            <div class="summary-line"><span class="summary-label">Participant Type:</span> <span class="summary-val">Author</span></div>
             <div class="summary-line"><span class="summary-label">Email address:</span> <span class="summary-val">kunci027@gmail.com</span></div>
             <div class="summary-line"><span class="summary-label">Phone number:</span> <span class="summary-val">087711761206</span></div>
             <div class="summary-line"><span class="summary-label">Gender:</span> <span class="summary-val">Female</span></div>
             <div class="summary-line"><span class="summary-label">Organization:</span> <span class="summary-val">Telkom University (Private Company)</span></div>
             <div class="summary-line"><span class="summary-label">Country:</span> <span class="summary-val">Indonesia</span></div>
-            <div class="summary-line"><span class="summary-label">Participant Category:</span> <span class="summary-val">Student</span> | <a href="#" style="color: #1a73e8; text-decoration: none;">Proof</a></div>
+            <div class="summary-line"><span class="summary-label">Participant Type:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($participant_type)); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Participant Category:</span> <span class="summary-val"><?php echo htmlspecialchars($participant_category); ?></span> | <a href="#" style="color: #1a73e8; text-decoration: none;">Proof</a></div>
             <div class="summary-line"><span class="summary-label">Food allergies:</span> <span class="summary-val"></span></div>
         </fieldset>
 
@@ -200,22 +250,22 @@
             <div class="summary-line" style="margin-top: 5px;"><span class="summary-label">Keywords:</span></div>
             <div class="summary-line"><span class="summary-val">test</span></div>
             
-            <div class="summary-line"><span class="summary-label">Publication Type:</span> <span class="summary-val">Program book and proceeding (full paper) - Rp. 800.000 / USD 80</span></div>
+            <div class="summary-line"><span class="summary-label">Publication Type:</span> <span class="summary-val"><?php echo htmlspecialchars($publication_type); ?> - <?php echo $pub_fee_label; ?></span></div>
         </fieldset>
 
         <fieldset class="info-fieldset">
             <legend class="info-legend">Payment Information</legend>
             <div class="payment-info">
-                <h3>Student Rate</h3>
+                <h3><?php echo htmlspecialchars($rate_title); ?> Rate <?php echo $is_early_bird ? '(Early Bird)' : '(Regular)'; ?></h3>
                 
-                <div style="margin-bottom: 5px;">Participation as Author: <span class="summary-val">IDR 600,000</span></div>
-                <div style="margin-bottom: 10px;">Proceeding: <span class="summary-val">IDR 800,000</span></div>
-                <div style="margin-bottom: 20px; font-size: 14px;"><strong>Total payment: <span class="summary-val">IDR 1,400,000</span></strong></div>
+                <div style="margin-bottom: 5px;"><?php echo $fee_label; ?>: <span class="summary-val">IDR <?php echo number_format($participation_fee, 0, ',', ','); ?></span></div>
+                <div style="margin-bottom: 10px;">Publication: <span class="summary-val"><?php echo $pub_fee_label; ?></span></div>
+                <div style="margin-bottom: 20px; font-size: 14px;"><strong>Total payment: <span class="summary-val"><?php echo $total_payment_formatted; ?></span></strong></div>
 
                 <div style="margin-bottom: 5px;">Should you need formal invoice, please contact <a href="mailto:ictb@biotrop.org" style="color: #1a73e8; text-decoration: none;">ictb@biotrop.org</a></div>
                 
                 <div style="margin-left: 20px; margin-bottom: 20px;">
-                    <div>Please pay for the amount of <strong>IDR 1,400,000</strong>, to:</div>
+                    <div>Please pay for the amount of <strong><?php echo $total_payment_formatted; ?></strong>, to:</div>
                     <div>SEAMEO BIOTROP</div>
                     <div>Account Number: 1330013406830</div>
                     <div>Bank MANDIRI (Persero) Tbk, Bogor Branch</div>
