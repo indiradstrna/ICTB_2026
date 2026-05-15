@@ -23,9 +23,9 @@ $site_title = "5th International Conference on Tropical Biology";
 </head>
 <body>
     <!-- Header -->
-    <?php $is_home = (basename($_SERVER['PHP_SELF']) == 'index.php' || basename($_SERVER['PHP_SELF']) == 'index.php'); ?>
+    <?php $is_home = (basename($_SERVER['PHP_SELF']) == 'index.php' || basename($_SERVER['PHP_SELF']) == 'index2.php'); ?>
     <header class="header <?php echo !$is_home ? 'scrolled' : ''; ?>" id="header" data-is-home="<?php echo $is_home ? 'true' : 'false'; ?>">
-        <div class="nav-container" style="width: 100%; padding: 0 50px;">
+        <div class="nav-container">
             <!-- Logo -->
             <a href="index.php" class="custom-logo">
                 <div class="custom-logo-top">

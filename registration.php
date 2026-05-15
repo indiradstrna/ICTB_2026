@@ -30,41 +30,16 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             // Password hash
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
 
-            // File Upload Setup
-            $upload_dir = 'uploads/participants/';
-            if (!is_dir($upload_dir)) {
-                mkdir($upload_dir, 0777, true);
-            }
-
             $bukti_transfer = '';
             $bukti_diri = '';
-
-            // Handle Bukti Transfer Upload
-            if (isset($_FILES['buktiTf']) && $_FILES['buktiTf']['error'] == 0) {
-                $ext = pathinfo($_FILES['buktiTf']['name'], PATHINFO_EXTENSION);
-                $filename = time() . '_tf_' . uniqid() . '.' . $ext;
-                $target_file = $upload_dir . $filename;
-                if (move_uploaded_file($_FILES['buktiTf']['tmp_name'], $target_file)) {
-                    $bukti_transfer = $target_file;
-                }
-            }
-
-            // Handle Bukti Diri Upload
-            if (isset($_FILES['buktiDiri']) && $_FILES['buktiDiri']['error'] == 0) {
-                $ext = pathinfo($_FILES['buktiDiri']['name'], PATHINFO_EXTENSION);
-                $filename = time() . '_diri_' . uniqid() . '.' . $ext;
-                $target_file = $upload_dir . $filename;
-                if (move_uploaded_file($_FILES['buktiDiri']['tmp_name'], $target_file)) {
-                    $bukti_diri = $target_file;
-                }
-            }
 
             // Insert Database
             $stmt = $conn->prepare("INSERT INTO participants (participant_type, first_name, last_name, institution, email, phone, password_hash, bukti_transfer, bukti_diri) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
             $stmt->bind_param("sssssssss", $participant_type, $first_name, $last_name, $institution, $email, $phone, $password_hash, $bukti_transfer, $bukti_diri);
             
             if ($stmt->execute()) {
-                $success_msg = "Registration successful! We will verify your payment and details soon.";
+                header("Location: information.php");
+                exit();
             } else {
                 $error_msg = "Error registering participant: " . $conn->error;
             }
@@ -252,18 +227,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <div class="form-row">
-                        <div class="form-group">
-                            <label for="buktiTf">Bukti Transfer</label>
-                            <input type="file" id="buktiTf" name="buktiTf" class="form-control" style="padding: 10px;" accept="image/*,.pdf" required>
-                            <small style="color: var(--text-muted); display: block; margin-top: 5px;">Upload bukti transfer pembayaran.</small>
-                        </div>
-                        <div class="form-group">
-                            <label for="buktiDiri">Bukti Data Diri</label>
-                            <input type="file" id="buktiDiri" name="buktiDiri" class="form-control" style="padding: 10px;" accept="image/*,.pdf" required>
-                            <small style="color: var(--text-muted); display: block; margin-top: 5px;">KTP / KTM / Identitas lainnya.</small>
-                        </div>
-                    </div>
+
                     
                     <div class="form-group mt-4">
                         <button type="submit" class="btn" style="background-color: #17a2b8; color: #000; padding: 8px 16px; font-weight: bold; border: 1px solid #117a8b;">Submit</button>

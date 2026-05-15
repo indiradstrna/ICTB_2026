@@ -1,45 +1,75 @@
-<?php include 'includes/header2.php'; ?>
+<?php include 'includes/header.php'; ?>
 
 <!-- Cover Section -->
-<section class="cover" id="cover">
-    <div class="cover-overlay"></div>
+<section class="cover" id="cover" style="background: url('assets/img/bground.jpeg') no-repeat center center; background-size: cover;">
+    <div class="cover-overlay" style="background: linear-gradient(to right, rgba(15, 118, 110, 0.8) 0%, rgba(15, 118, 110, 0.2) 100%);"></div>
     <div class="container cover-container">
-        <div class="cover-content reveal-up">
-            <h1 class="cover-title">
-                5TH INTERNATIONAL CONFERENCE ON TROPICAL BIOLOGY<span class="dot">.</span>
-            </h1>
-            <h2 class="cover-subtitle">
-                Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes
-            </h2>
-            <div class="cover-meta">
-                <div class="meta-item">
-                    <i class="ph-fill ph-map-pin"></i>
-                    <span>BOGOR, INDONESIA</span>
+        <div class="cover-flex-container reveal-up" style="padding-top: 100px;">
+            <div class="cover-content">
+                <div id="countdown" class="countdown-box">
+                    <div class="cd-item">
+                        <div class="cd-value" id="cd-days">00</div>
+                        <div class="cd-label">Days</div>
+                    </div>
+                    <div class="cd-item">
+                        <div class="cd-value" id="cd-hours">00</div>
+                        <div class="cd-label">Hours</div>
+                    </div>
+                    <div class="cd-item">
+                        <div class="cd-value" id="cd-minutes">00</div>
+                        <div class="cd-label">Minutes</div>
+                    </div>
+                    <div class="cd-item">
+                        <div class="cd-value" id="cd-seconds">00</div>
+                        <div class="cd-label">Seconds</div>
+                    </div>
                 </div>
-                <div class="meta-item accent">
-                    <i class="ph-fill ph-calendar-blank"></i>
-                    <span>5 - 7 OCTOBER 2026</span>
+                <h1 class="cover-title">
+                    5TH INTERNATIONAL CONFERENCE<br>ON TROPICAL BIOLOGY<span class="dot">.</span>
+                </h1>
+                <h2 class="cover-subtitle">
+                    Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes
+                </h2>
+                <div class="cover-meta">
+                    <div class="meta-item">
+                        <i class="ph-fill ph-map-pin"></i>
+                        <span>BOGOR, INDONESIA</span>
+                    </div>
+                    <div class="meta-item accent">
+                        <i class="ph-fill ph-calendar-blank"></i>
+                        <span>5 - 7 OCTOBER 2026</span>
+                    </div>
                 </div>
-            </div>
-            
-            <div class="countdown-wrapper" id="countdown">
-                <div class="countdown-item"><div class="countdown-value" id="cd-days">00</div><div class="countdown-label">Days</div></div>
-                <div class="countdown-item"><div class="countdown-value" id="cd-hours">00</div><div class="countdown-label">Hours</div></div>
-                <div class="countdown-item"><div class="countdown-value" id="cd-minutes">00</div><div class="countdown-label">Minutes</div></div>
-                <div class="countdown-item"><div class="countdown-value" id="cd-seconds">00</div><div class="countdown-label">Seconds</div></div>
+
+                <div class="cover-actions">
+                    <a href="#schedule" class="btn btn-primary">View Schedule <i class="ph-bold ph-arrow-right"></i></a>
+                    <a href="#pricing" class="btn btn-white">Register</a>
+                </div>
             </div>
 
-            <div class="cover-actions">
-                <a href="#schedule" class="btn btn-primary">View Schedule <i class="ph-bold ph-arrow-right"></i></a>
-                <a href="registration.php" class="btn btn-white">Register</a>
+            <div class="cover-side-panel">
+                <div class="cover-dates-list vertical">
+                    <div class="side-panel-header">Important Dates</div>
+                    <div class="cover-date-item">
+                        <div class="date-label">Abstract Submission</div>
+                        <div class="date-value">1 Jun – 1 Sep 2026</div>
+                    </div>
+                    <div class="cover-date-item">
+                        <div class="date-label">Announcement</div>
+                        <div class="date-value">7 Sep 2026</div>
+                    </div>
+                    <div class="cover-date-item">
+                        <div class="date-label">Registration & Payment</div>
+                        <div class="date-value">7 – 24 Sep 2026</div>
+                    </div>
+                    <div class="cover-date-item">
+                        <div class="date-label highlight">Conference Dates</div>
+                        <div class="date-value">5 – 7 Oct 2026</div>
+                    </div>
+                </div>
             </div>
         </div>
     </div>
-    
-    <a href="#about" class="cover-scroll-indicator">
-        <span>Scroll Down</span>
-        <i class="ph ph-arrow-down"></i>
-    </a>
 </section>
 
 <!-- About Section -->
@@ -48,27 +78,40 @@
         <div class="about-content reveal-left">
             <div class="section-header" style="margin-bottom: 15px;">
                 <span class="section-subtitle">Introduction</span>
-                <h2 class="section-title" style="font-size: clamp(2rem, 3vw, 2.5rem);">5th International Conference on Tropical Biology (ICTB)</h2>
+                <h2 class="section-title" style="font-size: clamp(2rem, 3vw, 2.5rem);">The 5<sup style="font-family: var(--font-body); text-transform: lowercase; font-size: 0.6em;">th</sup> International Conference on Tropical Biology (5<sup style="font-family: var(--font-body); text-transform: lowercase; font-size: 0.6em;">th</sup> ICTB)</h2>
             </div>
             <p class="about-text" style="margin-bottom: 0; text-align: justify; color: var(--text-dark);">The conference is designed as a multidisciplinary and global platform that integrates science, education, innovation, and policy to address contemporary biodiversity challenges across diverse ecosystems. It aims to enhance regional collaboration, promote biodiversity education, and foster innovative approaches to sustainable ecosystem management to support sustainable development in Southeast Asia. Through interdisciplinary dialogue among researchers, educators, policymakers, and practitioners, the conference seeks to develop transformative solutions for environmental resilience, strengthen human resource capacity, and reinforce biodiversity governance to ensure the long-term sustainability of tropical ecosystems.</p>
             <a href="about.php" class="btn btn-outline" style="margin-top: 5px;">Read More</a>
-            
-            <div class="stats-grid" style="margin-top: 15px;">
-                <div class="stat-item">
-                    <h3 class="stat-number">5+</h3>
-                    <p class="stat-label">SDGs Supported</p>
-                </div>
-                <div class="stat-item">
-                    <h3 class="stat-number">4</h3>
-                    <p class="stat-label">Thematic Pillars</p>
+        </div>
+        <div class="about-image reveal-right" style="align-self: flex-end;">
+            <!-- Image Wrapper for Badge Positioning -->
+            <div style="position: relative;">
+                <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1000" alt="Tropical Biology Conference">
+                <div class="experience-badge">
+                    <span class="number">5<sup style="font-family: var(--font-body); text-transform: lowercase; font-size: 0.6em;">th</sup></span>
+                    <span class="text">Annual<br>Event</span>
                 </div>
             </div>
-        </div>
-        <div class="about-image reveal-right">
-            <img src="https://images.unsplash.com/photo-1542601906990-b4d3fb778b09?auto=format&fit=crop&q=80&w=1000" alt="Tropical Biology Conference">
-            <div class="experience-badge">
-                <span class="number">5th</span>
-                <span class="text">Annual<br>Event</span>
+            
+            <!-- Stats Group Enlarged and Styled -->
+            <div class="stats-group" style="display: flex; align-items: flex-start; justify-content: space-between; gap: 20px; margin-top: 40px; border-top: 2px solid #f59e0b; padding-top: 25px; width: 100%;">
+                <!-- SDGs -->
+                <div class="stat-item" style="border-left: none; padding-left: 0;">
+                    <div class="sdg-logos" style="display: flex; gap: 8px; margin-bottom: 12px;">
+                        <img src="https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/08/E-Goal-04-1024x1024.png" alt="SDG 4" title="SDG 4" style="width: 48px; height: 48px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                        <img src="https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/08/E-Goal-09-1024x1024.png" alt="SDG 9" title="SDG 9" style="width: 48px; height: 48px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                        <img src="https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/08/E-Goal-13-1024x1024.png" alt="SDG 13" title="SDG 13" style="width: 48px; height: 48px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                        <img src="https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/08/E-Goal-15-1024x1024.png" alt="SDG 15" title="SDG 15" style="width: 48px; height: 48px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                        <img src="https://www.un.org/sustainabledevelopment/wp-content/uploads/2019/08/E-Goal-17-1024x1024.png" alt="SDG 17" title="SDG 17" style="width: 48px; height: 48px; border-radius: 4px; box-shadow: 0 4px 10px rgba(0,0,0,0.15);">
+                    </div>
+                    <p class="stat-label" style="font-size: 11px; color: #f59e0b; font-weight: 700; max-width: 180px; line-height: 1.3; margin: 0; text-transform: uppercase; letter-spacing: 0.5px;">Supporting Sustainable Development Goals</p>
+                </div>
+
+                <!-- Thematic Pillars -->
+                <div class="stat-item" style="border-left: none; padding-left: 0; display: flex; flex-direction: column; align-items: flex-end;">
+                    <h3 class="stat-number" style="font-size: 48px; color: #f59e0b; margin: 0; line-height: 0.8; font-family: var(--font-heading);">4</h3>
+                    <p class="stat-label" style="font-size: 11px; color: #f59e0b; font-weight: 700; text-align: right; max-width: 100px; line-height: 1.3; margin-top: 8px; text-transform: uppercase; letter-spacing: 0.5px;">Thematic Pillars</p>
+                </div>
             </div>
         </div>
     </div>
@@ -83,7 +126,7 @@
             </div>
             <h2 class="section-title" style="text-transform: uppercase; font-size: clamp(2rem, 4vw, 3rem); letter-spacing: 1px;">Themes & Subthemes</h2>
             <p style="font-family: var(--font-body); font-size: 1.1rem; color: var(--text-dark); max-width: 800px; margin: 20px auto 0; line-height: 1.6;">
-                <span style="color: var(--primary-color);">Theme for the 5th ICTB:</span><br>
+                <span style="color: var(--primary-color);">Theme for the 5<sup style="font-family: var(--font-body); text-transform: lowercase; font-size: 0.6em;">th</sup> ICTB:</span><br>
                 <strong>Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes</strong>
             </p>
         </div>
@@ -113,39 +156,6 @@
         
         <div class="text-center reveal-up" style="margin-top: 60px;">
             <a href="theme.php" class="btn btn-primary">Read More</a>
-        </div>
-    </div>
-</section>
-
-
-<!-- Partners Section -->
-<section class="partners section-padding" id="partners">
-    <div class="container">
-        <div class="section-header text-center reveal-up">
-            <span class="section-subtitle">In Collaboration With</span>
-            <h2 class="section-title">Our Partners</h2>
-        </div>
-        
-        <div class="partners-wrapper reveal-up">
-            <div class="partners-track">
-                <!-- Original Set -->
-                <a href="#" class="partner-logo"><img src="assets/img/partners/kemdikbud.svg" alt="Ministry of Education" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=MoE+Indonesia'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/ipb_university.png" alt="IPB University" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=IPB+University'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/seameo_biotrop.png" alt="SEAMEO BIOTROP" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=SEAMEO+BIOTROP'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/asean_biodiversity.png" alt="ASEAN Centre for Biodiversity" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=ASEAN+Biodiversity'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/partners/tsukuba.svg" alt="University of Tsukuba" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=Tsukuba'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/partners/unesco.svg" alt="UNESCO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=UNESCO'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/partners/fao.svg" alt="FAO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=FAO'"></a>
-                
-                <!-- Duplicated Set for Infinite Scroll -->
-                <a href="#" class="partner-logo"><img src="assets/img/partners/kemdikbud.svg" alt="Ministry of Education" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=MoE+Indonesia'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/ipb_university.png" alt="IPB University" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=IPB+University'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/seameo_biotrop.png" alt="SEAMEO BIOTROP" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=SEAMEO+BIOTROP'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/asean_biodiversity.png" alt="ASEAN Centre for Biodiversity" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=ASEAN+Biodiversity'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/partners/tsukuba.svg" alt="University of Tsukuba" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=Tsukuba'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/partners/unesco.svg" alt="UNESCO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=UNESCO'"></a>
-                <a href="#" class="partner-logo"><img src="assets/img/partners/fao.svg" alt="FAO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=FAO'"></a>
-            </div>
         </div>
     </div>
 </section>
@@ -185,39 +195,7 @@
         </div>
         
         <div class="text-center mt-5 reveal-up">
-            <a href="#" class="btn btn-outline">View All Speakers</a>
-        </div>
-    </div>
-</section>
-
-<!-- Important Dates Section -->
-<section class="dates section-padding bg-alt" id="dates">
-    <div class="container">
-        <div class="section-header text-center reveal-up">
-            <span class="section-subtitle">Mark Your Calendar</span>
-            <h2 class="section-title">Important Dates</h2>
-        </div>
-        <div class="dates-grid reveal-up">
-            <div class="date-card">
-                <div class="date">30 May - 30 Jul</div>
-                <div class="event">Call for Abstracts</div>
-            </div>
-            <div class="date-card">
-                <div class="date">30 Jul 2026</div>
-                <div class="event">Abstract Submission Deadline</div>
-            </div>
-            <div class="date-card">
-                <div class="date">1 Jul - 25 Aug</div>
-                <div class="event">Announcement of Accepted Abstracts</div>
-            </div>
-            <div class="date-card">
-                <div class="date">25 Sep 2026</div>
-                <div class="event">Registration Deadline</div>
-            </div>
-            <div class="date-card">
-                <div class="date">5 - 7 Oct 2026</div>
-                <div class="event">Conference Dates</div>
-            </div>
+            <a href="speakers.php" class="btn btn-outline">View All Speakers</a>
         </div>
     </div>
 </section>
@@ -239,68 +217,66 @@
         <div class="schedule-content reveal-up">
             <!-- Day 1 Content -->
             <div class="schedule-pane active" id="day1">
-                <div class="schedule-item">
-                    <div class="time">Morning</div>
-                    <div class="details">
-                        <h4>Opening Ceremony & Keynote Speech</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                <div class="schedule-list">
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Opening Ceremony</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                        </div>
                     </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="time">Midday</div>
-                    <div class="details">
-                        <h4>Plenary Session</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Keynote Speech</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                        </div>
                     </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="time">Afternoon</div>
-                    <div class="details">
-                        <h4>Parallel Sessions</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Breakout Rooms</p>
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Plenary Session</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                        </div>
                     </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="time">Evening</div>
-                    <div class="details">
-                        <h4>Welcome Dinner</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Banquet Hall</p>
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Parallel Sessions</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Breakout Rooms</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 2 Content -->
             <div class="schedule-pane" id="day2">
-                <div class="schedule-item">
-                    <div class="time">Morning</div>
-                    <div class="details">
-                        <h4>Parallel Sessions</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Breakout Rooms</p>
+                <div class="schedule-list">
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Parallel Sessions</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Breakout Rooms</p>
+                        </div>
                     </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="time">Midday</div>
-                    <div class="details">
-                        <h4>Poster Presentations</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Exhibition Hall</p>
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Poster Presentations</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Exhibition Hall</p>
+                        </div>
                     </div>
-                </div>
-                <div class="schedule-item">
-                    <div class="time">Afternoon</div>
-                    <div class="details">
-                        <h4>Conference Synthesis & Closing Ceremony</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Conference Synthesis & Closing Ceremony</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                        </div>
                     </div>
                 </div>
             </div>
 
             <!-- Day 3 Content -->
             <div class="schedule-pane" id="day3">
-                <div class="schedule-item">
-                    <div class="time">All Day</div>
-                    <div class="details">
-                        <h4>Excursion to Bogor Botanical Garden</h4>
-                        <p class="location"><i class="ph-fill ph-map-pin"></i> Bogor Botanical Garden</p>
+                <div class="schedule-list">
+                    <div class="schedule-item">
+                        <div class="details">
+                            <h4>Excursion to Bogor Botanical Garden</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Bogor Botanical Garden</p>
+                        </div>
                     </div>
                 </div>
             </div>
@@ -328,7 +304,7 @@
 </section>
 
 <!-- Location Section -->
-<section class="location section-padding" id="location">
+<section class="location section-padding" id="location" style="padding-bottom: 20px;">
     <div class="container">
         <div class="section-header text-center reveal-up">
             <span class="section-subtitle">Venue</span>
@@ -340,7 +316,7 @@
                     <h3>IPB International Convention Center</h3>
                     <p><i class="ph-fill ph-map-pin"></i> Botani Square, Jl. Raya Pajajaran, Bogor, West Java, Indonesia</p>
                     <p><i class="ph-fill ph-phone"></i> +62 251 8323848</p>
-                    <p><i class="ph-fill ph-envelope"></i> cb.symposium@biotrop.org</p>
+                    <p><i class="ph-fill ph-envelope"></i> ictb@biotrop.org</p>
                 </div>
                 <div class="location-map">
                     <iframe src="https://maps.google.com/maps?q=IPB%20International%20Convention%20Center,%20Bogor&t=&z=15&ie=UTF8&iwloc=&output=embed" width="100%" height="400" style="border:0;" allowfullscreen="" loading="lazy" referrerpolicy="no-referrer-when-downgrade"></iframe>
@@ -350,5 +326,36 @@
     </div>
 </section>
 
+<!-- Partners Section -->
+<section class="partners section-padding" id="partners">
+    <div class="container">
+        <div class="section-header text-center reveal-up">
+            <span class="section-subtitle">In Collaboration With</span>
+            <h2 class="section-title">Our Partners</h2>
+        </div>
+        
+        <div class="partners-wrapper reveal-up">
+            <div class="partners-track">
+                <!-- Original Set -->
+                <a href="#" class="partner-logo"><img src="assets/img/partners/kemdikbud.svg" alt="Ministry of Education" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=MoE+Indonesia'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/ipb_university.png" alt="IPB University" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=IPB+University'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/seameo_biotrop.png" alt="SEAMEO BIOTROP" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=SEAMEO+BIOTROP'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/asean_biodiversity.png" alt="ASEAN Centre for Biodiversity" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=ASEAN+Biodiversity'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/partners/tsukuba.svg" alt="University of Tsukuba" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=Tsukuba'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/partners/unesco.svg" alt="UNESCO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=UNESCO'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/partners/fao.svg" alt="FAO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=FAO'"></a>
+                
+                <!-- Duplicated Set for Infinite Scroll -->
+                <a href="#" class="partner-logo"><img src="assets/img/partners/kemdikbud.svg" alt="Ministry of Education" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=MoE+Indonesia'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/ipb_university.png" alt="IPB University" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=IPB+University'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/seameo_biotrop.png" alt="SEAMEO BIOTROP" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=SEAMEO+BIOTROP'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/asean_biodiversity.png" alt="ASEAN Centre for Biodiversity" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=ASEAN+Biodiversity'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/partners/tsukuba.svg" alt="University of Tsukuba" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=Tsukuba'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/partners/unesco.svg" alt="UNESCO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=UNESCO'"></a>
+                <a href="#" class="partner-logo"><img src="assets/img/partners/fao.svg" alt="FAO" onerror="this.src='https://placehold.co/200x80/transparent/0d9488?text=FAO'"></a>
+            </div>
+        </div>
+    </div>
+</section>
 
 <?php include 'includes/footer.php'; ?>

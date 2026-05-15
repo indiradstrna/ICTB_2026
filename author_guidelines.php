@@ -15,40 +15,40 @@
     <div class="container article-container">
             
         <div class="reveal-up article-section">
-            <span class="section-subtitle">Abstract Preparation</span>
-            <h2 class="article-title">Requirements for Extended Abstract Preparation</h2>
+            <span class="section-subtitle">Abstract   Preparation</span>
+            <h2 class="article-title">Requirements for Abstract   Preparation</h2>
             <div class="article-content">
-                <p>The extended abstract should clearly define the theoretical and empirical gaps addressed by the researcher, a brief review of the work, a brief description of the methodology used, the results obtained and a brief discussion, the contributions expected to theory and practice, and the conclusions drawn from the study. The elements of extended abstract should be organized in the following order listed:</p>
+                <p>The Abstract   should clearly define the theoretical and empirical gaps addressed by the researcher, a brief review of the work, a brief description of the methodology used, the results obtained and a brief discussion, the contributions expected to theory and practice, and the conclusions drawn from the study. The elements of Abstract   should be organized in the following order listed:</p>
                 
                 <ul class="article-list check-list">
                     <li><i class="ph-bold ph-check-circle"></i> Title</li>
                     <li><i class="ph-bold ph-check-circle"></i> Author(s)</li>
                     <li><i class="ph-bold ph-check-circle"></i> Affiliation</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Abstract</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Abstract  </li>
                     <li><i class="ph-bold ph-check-circle"></i> Introduction</li>
                     <li><i class="ph-bold ph-check-circle"></i> Main Body Text (including a concise materials and methods, results and discussion, and conclusion sections)</li>
                     <li><i class="ph-bold ph-check-circle"></i> References</li>
                 </ul>
-                <p>Extended abstracts should be at least three pages or no more than 2000 words, excluding references.</p>
-                <p><a href="#" class="btn btn-outline" style="margin-top: 10px;"><i class="ph-bold ph-download-simple"></i> Download Extended Abstract Template</a></p>
+                <p> Abstract  s should be at least three pages or no more than 2000 words, excluding references.</p>
+                <p><a href="template_abstract.docx" download class="btn btn-outline" style="margin-top: 10px;"><i class="ph-bold ph-download-simple"></i> Download Abstract Template</a></p>
             </div>
         </div>
 
         <div class="reveal-up article-section">
-            <h2 class="article-title">Requirements for Submission of Extended Abstract</h2>
+            <h2 class="article-title">Requirements for Submission of Abstract   </h2>
             <div class="article-content">
                 <ul class="article-list icon-list" style="padding-left: 0;">
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
-                        <div>When submitting abstracts, authors should clearly indicate if they are either for oral or poster presentation or both.</div>
+                        <div>When submitting Abstract   s, authors should clearly indicate if they are either for oral or poster presentation or both.</div>
                     </li>
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
-                        <div>Authors can submit a maximum of two abstracts for both either oral or poster presentations.</div>
+                        <div>Authors can submit a maximum of two Abstract   s for both either oral or poster presentations.</div>
                     </li>
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
-                        <div>Authors are required to complete the online registration process before they can submit their abstracts. Once completed, authors will be given a username, password, and registration number. The authors will have access to submit and edit their abstracts using username, password and registration number given to them until the deadline submission on 10 August 2026 at 23:59 GMT+7. An icon to upload their abstracts will be provided in the account.</div>
+                        <div>Authors are required to complete the online registration process before they can submit their Abstract   s. Once completed, authors will be given a username, password, and registration number. The authors will have access to submit and edit their Abstract   s using username, password and registration number given to them until the deadline submission on 10 August 2026 at 23:59 GMT+7. An icon to upload their Abstract  s will be provided in the account.</div>
                     </li>
                 </ul>
                 <div class="fee-table-container" style="margin: 20px 0 30px;">
@@ -83,7 +83,7 @@
                         </tbody>
                     </table>
                 </div>
-                <p><a href="registration.php#important-info" class="btn btn-primary" style="margin-top: 10px;">Submit Your Extended Abstract Now</a></p>
+                <p><a href="registration.php#important-info" class="btn btn-primary" style="margin-top: 10px;">Submit Your Abstract   Now</a></p>
             </div>
         </div>
 
@@ -91,7 +91,7 @@
             <h2 class="article-title">Oral Presentation</h2>
             <div class="article-content">
                 <ul class="article-list check-list">
-                    <li><i class="ph-bold ph-check-circle"></i> Participants whose abstracts are accepted for oral presentation will only be included in the session schedule of the Conference if they have fully paid the registration fee.</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Participants whose Abstract  s are accepted for oral presentation will only be included in the session schedule of the Conference if they have fully paid the registration fee.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Each presenter will have 15-minute time slot (12 minutes presentation, 3 minutes for discussion). Thus, PowerPoint file should not exceed 15 slides.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Presentation file should be prepared using Microsoft PowerPoint.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Presenters must upload their presentation files by login to their account on or before 15 October 2026 at 23:59 GMT+7.</li>

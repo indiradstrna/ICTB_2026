@@ -6,7 +6,7 @@
     <div class="cover-overlay"></div>
     <div class="container page-header-content text-center reveal-up">
         <h1 class="section-title text-white">About the Conference</h1>
-        <p class="text-white" style="font-size: 1.1rem; opacity: 0.9;">The 5th International Conference on Tropical Biology (ICTB) 2026</p>
+        <p class="text-white" style="font-size: 1.1rem; opacity: 0.9;">The 5<sup style="font-family: var(--font-body); text-transform: lowercase; font-size: 0.6em;">th</sup> International Conference on Tropical Biology (ICTB) 2026</p>
     </div>
 </section>
 

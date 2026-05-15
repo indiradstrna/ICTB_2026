@@ -103,40 +103,43 @@ document.addEventListener('DOMContentLoaded', () => {
         });
     }
     // 6. Countdown Timer
-    const cdDays = document.getElementById('cd-days');
-    const cdHours = document.getElementById('cd-hours');
-    const cdMinutes = document.getElementById('cd-minutes');
-    const cdSeconds = document.getElementById('cd-seconds');
-
-    if (cdDays) {
-        // Target date: October 5, 2026 08:00:00
+    if (document.getElementById('countdown')) {
         const targetDate = new Date("October 5, 2026 08:00:00").getTime();
+        let intervalId;
 
         const updateCountdown = () => {
             const now = new Date().getTime();
             const distance = targetDate - now;
+            
+            const cdDays = document.getElementById('cd-days');
+            const cdHours = document.getElementById('cd-hours');
+            const cdMinutes = document.getElementById('cd-minutes');
+            const cdSeconds = document.getElementById('cd-seconds');
 
             if (distance < 0) {
-                cdDays.innerText = "00";
-                cdHours.innerText = "00";
-                cdMinutes.innerText = "00";
-                cdSeconds.innerText = "00";
+                if(intervalId) clearInterval(intervalId);
+                const countdownWrapper = document.getElementById('countdown');
+                if (countdownWrapper) {
+                    countdownWrapper.innerHTML = "<span style='font-weight: bold; color: #fff; font-size: 16px;'>The countdown is finished</span>";
+                }
                 return;
             }
 
-            const days = Math.floor(distance / (1000 * 60 * 60 * 24));
-            const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
-            const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
-            const seconds = Math.floor((distance % (1000 * 60)) / 1000);
+            if(cdDays && cdHours && cdMinutes && cdSeconds) {
+                const days = Math.floor(distance / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((distance % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-            cdDays.innerText = days.toString().padStart(2, '0');
-            cdHours.innerText = hours.toString().padStart(2, '0');
-            cdMinutes.innerText = minutes.toString().padStart(2, '0');
-            cdSeconds.innerText = seconds.toString().padStart(2, '0');
+                cdDays.innerText = days.toString().padStart(2, '0');
+                cdHours.innerText = hours.toString().padStart(2, '0');
+                cdMinutes.innerText = minutes.toString().padStart(2, '0');
+                cdSeconds.innerText = seconds.toString().padStart(2, '0');
+            }
         };
 
         updateCountdown();
-        setInterval(updateCountdown, 1000);
+        intervalId = setInterval(updateCountdown, 1000);
     }
 
     // 7. Partners Slider Logic

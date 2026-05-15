@@ -50,7 +50,8 @@
             <h2 class="article-title">Submission</h2>
             <div class="article-content">
                 <p>Please check all boxes to ensure that they are completely filled up, before you click "Submit".</p>
-                <p>Author can return to the registration page and revise the information on abstract until the deadline of abstract submission date on September 30, 2026.</p>
+                <p>Author can return to the registration page and revise the information on abstract until the deadline of abstract submission date on <strong>1 September 2026</strong>.</p>
+                <p>Abstract submission is done <strong>online via the link provided at the conference website/fanpage</strong>.</p>
             </div>
         </div>
 
@@ -63,8 +64,8 @@
                         <thead>
                             <tr>
                                 <th>Category</th>
-                                <th>Early Bird (USD/IDR)</th>
-                                <th>Regular (USD/IDR)</th>
+                                <th>Early Bird<br><span style="font-size:12px;font-weight:400;">(before 31 August 2026)</span></th>
+                                <th>Regular Rate<br><span style="font-size:12px;font-weight:400;">(1 – 25 September 2026)</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -74,7 +75,7 @@
                             <tr>
                                 <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                                 <td>USD 150</td>
-                                <td>USD 180</td>
+                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -93,7 +94,7 @@
                             <tr>
                                 <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                                 <td>IDR 1,200,000</td>
-                                <td>IDR 1,500,000</td>
+                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -117,11 +118,15 @@
                         <tbody>
                             <tr>
                                 <td style="font-weight: 600; width: 50%;">In selected Scopus-indexed journals</td>
-                                <td>IDR to be determined by the journal</td>
+                                <td>To be determined by the journal</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;">Sinta accredited journal</td>
+                                <td>To be determined by the journal</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">Scopus-indexed proceedings</td>
-                                <td>IDR 3,000,000</td>
+                                <td>IDR 2,500,000</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">ICTB proceeding book (ISBN)</td>
@@ -144,12 +149,12 @@
                 
                 <div style="background-color: var(--bg-alt); padding: 20px; border-radius: 8px; border-left: 4px solid var(--primary-color); margin-top: 15px;">
                     <h4 style="color: var(--primary-color); margin-bottom: 10px; font-family: var(--font-subheading); font-size: 1.2rem;">BIOTROP Bank Account</h4>
-                    <p style="margin-bottom: 5px;"><strong>BIOTROP ICTB ORGANISASI</strong></p>
-                    <p style="margin-bottom: 5px;">No. 1784009151</p>
-                    <p style="margin-bottom: 5px;">Bank BNI, Bogor Branch</p>
-                    <p style="margin-bottom: 5px;">Jl. Ir. H. Juanda, Bogor</p>
-                    <p style="margin-bottom: 5px;">West Java, Indonesia</p>
-                    <p style="margin-bottom: 0;"><strong>SWIFT CODE: BNINIDJABGR</strong></p>
+                    <p style="margin-bottom: 5px;"><strong>SEAMEO BIOTROP</strong></p>
+                    <p style="margin-bottom: 5px;">Account Number: 1330013406830</p>
+                    <p style="margin-bottom: 5px;">PT Bank MANDIRI (Persero) Tbk, Bogor Branch</p>
+                    <p style="margin-bottom: 5px;">Jl. Raya Tajur No. 121 B-C, Bogor, Indonesia</p>
+                    <p style="margin-bottom: 5px;">Account Currency: IDR &nbsp;|&nbsp; Branch Code: 13310</p>
+                    <p style="margin-bottom: 0;"><strong>SWIFT CODE: BMRIIDJA</strong></p>
                 </div>
             </div>
         </div>

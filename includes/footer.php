@@ -34,10 +34,12 @@
                 <!-- Contact Info -->
                 <div class="footer-contact">
                     <h3>Contact Us</h3>
+                    <p style="font-size: 0.9rem; color: rgba(255,255,255,0.7); margin-bottom: 10px;">For further information, please contact:</p>
+                    <p style="font-weight: 600; color: #fff; margin-bottom: 15px;">Putri Dina Rahayu</p>
                     <ul>
-                        <li><i class="ph-fill ph-globe"></i>www.biotrop.org</li>
+                        <li><i class="ph-fill ph-phone"></i>+62 819-3434-6013</li>
                         <li><i class="ph-fill ph-envelope-simple"></i>ictb@biotrop.org</li>
-                        <li><i class="ph-fill ph-phone"></i>+62-251-8323848</li>
+                        <li><i class="ph-fill ph-globe"></i>www.biotrop.org</li>
                     </ul>
                 </div>
             </div>
