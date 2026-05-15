@@ -6,23 +6,11 @@
     <div class="container cover-container">
         <div class="cover-flex-container reveal-up" style="padding-top: 100px;">
             <div class="cover-content">
-                <div id="countdown" class="countdown-box">
-                    <div class="cd-item">
-                        <div class="cd-value" id="cd-days">00</div>
-                        <div class="cd-label">Days</div>
-                    </div>
-                    <div class="cd-item">
-                        <div class="cd-value" id="cd-hours">00</div>
-                        <div class="cd-label">Hours</div>
-                    </div>
-                    <div class="cd-item">
-                        <div class="cd-value" id="cd-minutes">00</div>
-                        <div class="cd-label">Minutes</div>
-                    </div>
-                    <div class="cd-item">
-                        <div class="cd-value" id="cd-seconds">00</div>
-                        <div class="cd-label">Seconds</div>
-                    </div>
+                <div id="countdown" style="font-size: 16px; font-weight: 500; letter-spacing: 1px; color: #fff; margin-bottom: 15px;">
+                    <span id="cd-days">00</span> Days 
+                    <span id="cd-hours">00</span> Hours 
+                    <span id="cd-minutes">00</span> Minutes 
+                    <span id="cd-seconds">00</span> Seconds
                 </div>
                 <h1 class="cover-title">
                     5TH INTERNATIONAL CONFERENCE<br>ON TROPICAL BIOLOGY<span class="dot">.</span>
