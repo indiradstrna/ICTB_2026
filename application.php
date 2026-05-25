@@ -1,3 +1,7 @@
+<?php
+$is_student = isset($_POST['is_student']) ? $_POST['is_student'] : 'No';
+$participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
+?>
 <?php include 'includes/header.php'; ?>
 
 <style>
@@ -181,7 +185,9 @@
             Please fill in the form. All fields are required. When you are ready to submit, please check that all fields are filled. A red border indicates that the information entered does not conform with the required format, and needs to be changed.
         </div>
 
-        <form action="Confirmation.php" method="POST" enctype="multipart/form-data">
+        <form action="Confirmation.php" method="POST" enctype="multipart/form-data" onsubmit="return validateAbstractForm()">
+            <input type="hidden" name="type" value="<?php echo htmlspecialchars($participant_type); ?>">
+            <input type="hidden" name="category" value="<?php echo (strtolower($is_student) == 'yes') ? 'student' : 'General'; ?>">
             <fieldset class="info-fieldset">
                 <legend class="info-legend">Application</legend>
                 
@@ -220,7 +226,7 @@
                     <label class="info-form-label">Abstract</label>
                     <a href="template_abstract.docx" download class="btn-dark">Download Abstract Template</a>
                     <div class="highlight-box">
-                        <input type="file" name="extended_abstract" id="extended_abstract" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;">
+                        <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;">
                     </div>
                 </div>
 
@@ -267,5 +273,26 @@
 
     </div>
 </section>
+
+<script>
+function validateAbstractForm() {
+    var fileInput = document.getElementById('extended_abstract');
+    if (fileInput && fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        var fileName = file.name;
+        var extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+        
+        if (extension !== '.docx') {
+            alert('Format file tidak didukung! Harap unggah file dengan format .docx saja.');
+            fileInput.value = ''; // Reset input file
+            return false;
+        }
+    } else {
+        alert('Harap unggah file abstrak Anda (.docx) terlebih dahulu.');
+        return false;
+    }
+    return true;
+}
+</script>
 
 <?php include 'includes/footer.php'; ?>

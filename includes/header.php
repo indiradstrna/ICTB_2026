@@ -1,6 +1,6 @@
 <?php
 // Base URL or configurations can be set here
-$site_title = "5th International Conference on Tropical Biology";
+$site_title = "The 5th International Conference on Tropical Biology";
 ?>
 <!DOCTYPE html>
 <html lang="en">

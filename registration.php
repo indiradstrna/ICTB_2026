@@ -8,7 +8,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     $participant_type = $_POST['participant_type'];
     $first_name = $_POST['first_name'];
     $last_name = $_POST['last_name'];
-    $institution = $_POST['institution'];
+    $institution = '';
     $email = $_POST['email'];
     $phone = $_POST['phone'];
     $password = $_POST['password'];
@@ -38,7 +38,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
             $stmt->bind_param("sssssssss", $participant_type, $first_name, $last_name, $institution, $email, $phone, $password_hash, $bukti_transfer, $bukti_diri);
             
             if ($stmt->execute()) {
-                header("Location: information.php");
+                header("Location: information.php?type=" . urlencode($participant_type));
                 exit();
             } else {
                 $error_msg = "Error registering participant: " . $conn->error;
@@ -75,8 +75,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <thead>
                     <tr>
                         <th>Category</th>
-                        <th>Early Bird (USD/IDR)</th>
-                        <th>Regular (USD/IDR)</th>
+                        <th>Early Bird<br><span style="font-size:12px;font-weight:400;">(before 31 August 2026)</span></th>
+                        <th>Regular Rate<br><span style="font-size:12px;font-weight:400;">(1 – 25 September 2026)</span></th>
                     </tr>
                 </thead>
                 <tbody>
@@ -86,7 +86,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <tr>
                         <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                         <td>USD 150</td>
-                        <td>USD 180</td>
+                        <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -105,7 +105,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <tr>
                         <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                         <td>IDR 1,200,000</td>
-                        <td>IDR 1,500,000</td>
+                        <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -129,11 +129,15 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <tbody>
                     <tr>
                         <td style="font-weight: 600; width: 50%;">In selected Scopus-indexed journals</td>
-                        <td>IDR to be determined by the journal</td>
+                        <td>To be determined by the journal</td>
+                    </tr>
+                    <tr>
+                        <td style="font-weight: 600;">Sinta accredited journal</td>
+                        <td>To be determined by the journal</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">Scopus-indexed proceedings</td>
-                        <td>IDR 3,000,000</td>
+                        <td>IDR 2,500,000</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">ICTB proceeding book (ISBN)</td>
@@ -149,15 +153,47 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 <section class="bg-alt" id="important-info" style="padding: 20px 0 80px;">
     <div class="container">
         <div class="registration-wrapper reveal-up">
-            <div class="registration-info">
-                <h3>Important Information</h3>
-                <p>Please fill out the form carefully. Make sure your email is active as we will send further instructions and payment details there.</p>
+            <div class="registration-info" style="border-left: 4px solid var(--primary-color);">
+                <h3 style="display: flex; align-items: center; gap: 8px; color: var(--primary-color); font-family: var(--font-subheading); font-size: 24px; margin-bottom: 16px;">
+                    <i class="ph-bold ph-calendar-blank" style="color: var(--primary-color); font-size: 24px;"></i>
+                    Important Dates & Info
+                </h3>
+                <p style="font-size: 14px; margin-bottom: 20px; color: var(--text-muted);">Please take note of the following crucial deadlines for the conference registration and submission process:</p>
                 
-                <ul class="info-list mt-4">
-                    <li><i class="ph-fill ph-check-circle"></i> <strong>Early Bird Deadline:</strong> 25 August 2026</li>
-                    <li><i class="ph-fill ph-check-circle"></i> <strong>Registration Deadline:</strong> 25 September 2026</li>
-                    <li><i class="ph-fill ph-info"></i> For Group Registrations, please contact secretariat@biotrop.org</li>
-                </ul>
+                <div class="timeline-container" style="display: flex; flex-direction: column; gap: 15px; margin-bottom: 25px;">
+                    
+                    <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
+                        <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent-color);"></span>
+                        <div style="font-size: 12px; font-weight: bold; color: var(--accent-color); text-transform: uppercase;">10 August 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Abstract Submission Deadline</div>
+                    </div>
+
+                    <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
+                        <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-color);"></span>
+                        <div style="font-size: 12px; font-weight: bold; color: var(--primary-color); text-transform: uppercase;">25 August 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Paper Submission Deadline</div>
+                    </div>
+
+                    <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
+                        <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #17a2b8;"></span>
+                        <div style="font-size: 12px; font-weight: bold; color: #17a2b8; text-transform: uppercase;">31 August 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Early Bird Deadline</div>
+                    </div>
+
+                    <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
+                        <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #28a745;"></span>
+                        <div style="font-size: 12px; font-weight: bold; color: #28a745; text-transform: uppercase;">25 September 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Registration Deadline</div>
+                    </div>
+
+                </div>
+
+                <div style="background: rgba(13, 148, 136, 0.05); padding: 15px; border-radius: 8px; border: 1px solid rgba(13, 148, 136, 0.15); display: flex; gap: 10px; align-items: flex-start;">
+                    <i class="ph-bold ph-info" style="color: var(--primary-color); font-size: 20px; margin-top: 2px;"></i>
+                    <div style="font-size: 13px; color: var(--text-dark); line-height: 1.5;">
+                        For <strong>Group Registrations</strong> or other inquiries, please contact our secretariat at <a href="mailto:ictb@biotrop.org" style="color: var(--primary-color); font-weight: 600; text-decoration: none;">ictb@biotrop.org</a>.
+                    </div>
+                </div>
             </div>
             
             <div class="registration-form-card">
@@ -178,14 +214,13 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 $selected_type = isset($_GET['type']) ? $_GET['type'] : 'participant';
                 ?>
                 <form action="registration.php#important-info" method="POST" class="conference-form" enctype="multipart/form-data">
-                    <h4 style="margin-bottom: 20px; color: var(--primary-color);">Main author, Exhibitor, or Participant Only</h4>
+                    <h4 style="margin-bottom: 20px; color: var(--primary-color);">Main author or Participant Only</h4>
                     
                     <div class="form-group">
                         <label for="participantType">Type of Participant</label>
                         <select id="participantType" name="participant_type" class="form-control" required>
                             <option value="author" <?php echo $selected_type == 'author' ? 'selected' : ''; ?>>Author</option>
                             <option value="participant" <?php echo $selected_type == 'participant' ? 'selected' : ''; ?>>Participant Only</option>
-                            <option value="exhibitor" <?php echo $selected_type == 'exhibitor' ? 'selected' : ''; ?>>Exhibitor</option>
                         </select>
                     </div>
 
@@ -200,10 +235,6 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                     </div>
 
-                    <div class="form-group" style="margin-bottom: 24px;">
-                        <label for="institution">Institution / Affiliation</label>
-                        <input type="text" id="institution" name="institution" class="form-control" placeholder="University, Organization, or Company" required>
-                    </div>
                     
                     <div class="form-row">
                         <div class="form-group">

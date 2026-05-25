@@ -1,8 +1,22 @@
 <?php
 // Dynamic Pricing Logic based on Registration Type (Indonesian Participants)
 $participant_type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 'Author'; // 'Author', 'Participant', 'Exhibitor'
-$participant_category = isset($_REQUEST['category']) ? $_REQUEST['category'] : 'General'; // Default to 'General' instead of 'Student'
-$is_early_bird = isset($_REQUEST['earlybird']) ? filter_var($_REQUEST['earlybird'], FILTER_VALIDATE_BOOLEAN) : true;
+
+// Determine category based on is_student (from information.php direct submit) or category (from application.php)
+$participant_category = 'General';
+if (isset($_REQUEST['is_student'])) {
+    $participant_category = (strtolower($_REQUEST['is_student']) == 'yes') ? 'student' : 'General';
+} elseif (isset($_REQUEST['category'])) {
+    $participant_category = $_REQUEST['category'];
+}
+
+$is_participant_only = (strtolower($participant_type) == 'participant');
+
+// Automatic Early Bird calculation based on current date
+// Early Bird is valid up to August 31, 2026 (inclusive of that day)
+$early_bird_deadline = strtotime('2026-08-31 23:59:59');
+$current_time = time();
+$is_early_bird = ($current_time <= $early_bird_deadline);
 
 // Get publication type from POST (from application.php) or fallback to GET/default
 $publication_type = isset($_POST['publication']) ? $_POST['publication'] : (isset($_GET['pub']) ? $_GET['pub'] : 'ICTB proceeding book (ISBN)');
@@ -34,15 +48,21 @@ if (strtolower($participant_category) == 'student') {
 $publication_fee = 0;
 $pub_fee_label = "To be determined by the journal";
 
-if ($publication_type == 'Scopus-indexed proceedings') {
-    $publication_fee = 2500000;
-    $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
-} elseif ($publication_type == 'ICTB proceeding book (ISBN)' || $publication_type == 'Program book and proceeding (full paper) - Rp. 800.000 / USD 80') {
-    $publication_fee = 800000;
-    $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
-} elseif (strpos(strtolower($publication_type), 'free') !== false || $publication_type == 'Program book (abstract only) - free') {
+if ($is_participant_only) {
     $publication_fee = 0;
-    $pub_fee_label = "Free";
+    $pub_fee_label = "Not Applicable";
+    $publication_type = "None";
+} else {
+    if ($publication_type == 'Scopus-indexed proceedings') {
+        $publication_fee = 2500000;
+        $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
+    } elseif ($publication_type == 'ICTB proceeding book (ISBN)' || $publication_type == 'Program book and proceeding (full paper) - Rp. 800.000 / USD 80') {
+        $publication_fee = 800000;
+        $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
+    } elseif (strpos(strtolower($publication_type), 'free') !== false || $publication_type == 'Program book (abstract only) - free') {
+        $publication_fee = 0;
+        $pub_fee_label = "Free";
+    }
 }
 
 $total_payment = $participation_fee + $publication_fee;
@@ -209,10 +229,12 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                 <div class="wizard-step-name active">Additional Information</div>
                 <div class="wizard-step-dot active"></div>
             </div>
+            <?php if (!$is_participant_only): ?>
             <div class="wizard-step">
                 <div class="wizard-step-name active">Application</div>
                 <div class="wizard-step-dot active"></div>
             </div>
+            <?php endif; ?>
             <div class="wizard-step">
                 <div class="wizard-step-name active">Confirmation</div>
                 <div class="wizard-step-dot active"></div>
@@ -234,10 +256,11 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             <div class="summary-line"><span class="summary-label">Organization:</span> <span class="summary-val">Telkom University (Private Company)</span></div>
             <div class="summary-line"><span class="summary-label">Country:</span> <span class="summary-val">Indonesia</span></div>
             <div class="summary-line"><span class="summary-label">Participant Type:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($participant_type)); ?></span></div>
-            <div class="summary-line"><span class="summary-label">Participant Category:</span> <span class="summary-val"><?php echo htmlspecialchars($participant_category); ?></span> | <a href="#" style="color: #1a73e8; text-decoration: none;">Proof</a></div>
+            <div class="summary-line"><span class="summary-label">Participant Category:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($participant_category)); ?></span> | <a href="#" style="color: #1a73e8; text-decoration: none;">Proof</a></div>
             <div class="summary-line"><span class="summary-label">Food allergies:</span> <span class="summary-val"></span></div>
         </fieldset>
 
+        <?php if (!$is_participant_only): ?>
         <fieldset class="info-fieldset">
             <legend class="info-legend">Application Information</legend>
             <div class="summary-line"><span class="summary-label">Application Type:</span> <span class="summary-val">Oral</span></div>
@@ -252,6 +275,7 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             
             <div class="summary-line"><span class="summary-label">Publication Type:</span> <span class="summary-val"><?php echo htmlspecialchars($publication_type); ?> - <?php echo $pub_fee_label; ?></span></div>
         </fieldset>
+        <?php endif; ?>
 
         <fieldset class="info-fieldset">
             <legend class="info-legend">Payment Information</legend>

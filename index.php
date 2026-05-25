@@ -28,10 +28,10 @@
                     </div>
                 </div>
                 <h1 class="cover-title">
-                    5TH INTERNATIONAL CONFERENCE<br>ON TROPICAL BIOLOGY<span class="dot">.</span>
+                    THE 5TH INTERNATIONAL CONFERENCE ON TROPICAL BIOLOGY
                 </h1>
                 <h2 class="cover-subtitle">
-                    Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes
+                    Biodiversity Beyond Boundaries: <br>Advancing Global Education, Bio-Science, and Sustainable Landscapes
                 </h2>
                 <div class="cover-meta">
                     <div class="meta-item">

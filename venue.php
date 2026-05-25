@@ -94,7 +94,7 @@
                 <div class="line"></div>
             </div>
             <!-- Gambar ICC -->
-            <img src="assets/img/icc.png" onerror="this.src='https://images.unsplash.com/photo-1540304892644-8d4e414f6b21?auto=format&fit=crop&q=80&w=1200'" alt="IPB International Convention Center" class="venue-image">
+            <img src="assets/img/ipbicc.jpeg" onerror="this.src='https://images.unsplash.com/photo-1540304892644-8d4e414f6b21?auto=format&fit=crop&q=80&w=1200'" alt="IPB International Convention Center" class="venue-image">
         </div>
 
         <div class="divider-icon reveal-up">

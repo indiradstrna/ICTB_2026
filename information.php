@@ -1,3 +1,7 @@
+<?php
+$participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
+$is_participant_only = (strtolower($participant_type) == 'participant');
+?>
 <?php include 'includes/header.php'; ?>
 
 <style>
@@ -136,10 +140,12 @@
                 <div class="wizard-step-name active">Additional Information</div>
                 <div class="wizard-step-dot active"></div>
             </div>
+            <?php if (!$is_participant_only): ?>
             <div class="wizard-step">
                 <div class="wizard-step-name">Application</div>
                 <div class="wizard-step-dot"></div>
             </div>
+            <?php endif; ?>
             <div class="wizard-step">
                 <div class="wizard-step-name">Confirmation</div>
                 <div class="wizard-step-dot"></div>
@@ -150,7 +156,10 @@
             Information entered does not conform with the required format, and needs to be changed.
         </div>
 
-        <form action="application.php" method="POST">
+        <?php
+        $form_action = $is_participant_only ? 'Confirmation.php?type=participant' : 'application.php?type=' . urlencode($participant_type);
+        ?>
+        <form action="<?php echo $form_action; ?>" method="POST" enctype="multipart/form-data">
             <fieldset class="info-fieldset">
                 <legend class="info-legend">Other Information</legend>
                 
@@ -423,15 +432,15 @@
                     <label class="info-form-label">Do you have funding support for attending this conference?</label>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="funding" value="No"> No
+                            <input type="radio" name="funding" value="No" onclick="document.getElementById('funding_source_wrapper').style.display='none'"> No
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="funding" value="Yes" checked> Yes
+                            <input type="radio" name="funding" value="Yes" checked onclick="document.getElementById('funding_source_wrapper').style.display='block'"> Yes
                         </label>
                     </div>
                 </div>
 
-                <div class="info-form-group">
+                <div class="info-form-group" id="funding_source_wrapper">
                     <label class="info-form-label" for="funding_source">If 'Yes', from where?</label>
                     <input type="text" id="funding_source" name="funding_source" class="info-form-control" placeholder="Funding support">
                 </div>
