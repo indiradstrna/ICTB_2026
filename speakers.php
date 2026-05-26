@@ -24,9 +24,9 @@
             <div class="speakers-grid">
                 <?php
                 $keynote_speakers = [
-                    ['name' => 'Prof. Dr. Edi Santosa S.P, M.Si', 'role' => 'Direktur', 'org' => 'SEAMEO BIOTROP', 'img' => 'https://biotrop.org/images/bod/Pak_Edi.jpeg'],
-                    ['name' => 'Dr. Elis Rosdiawati M.Pd', 'role' => 'Deputi Direktur Administrasi', 'org' => 'SEAMEO BIOTROP', 'img' => 'https://biotrop.org/images/bod/bu%20elis.png'],
-                    ['name' => 'Dr. Doni Yusri S.P, M.M', 'role' => 'Deputi Direktur Program', 'org' => 'SEAMEO BIOTROP', 'img' => 'https://biotrop.org/images/bod/pak%20doni.png'],
+                    ['name' => 'Dr. Elis Rosdiawati M.Pd', 'role' => 'Deputy Director of Administration', 'org' => 'SEAMEO BIOTROP', 'img' => 'https://biotrop.org/images/bod/bu%20elis.png'],
+                    ['name' => 'Prof. Dr. Edi Santosa S.P, M.Si', 'role' => 'Director', 'org' => 'SEAMEO BIOTROP', 'img' => 'https://biotrop.org/images/bod/Pak_Edi.jpeg'],
+                    ['name' => 'Dr. Doni Yusri S.P, M.M', 'role' => 'Deputy Director of Program', 'org' => 'SEAMEO BIOTROP', 'img' => 'https://biotrop.org/images/bod/pak%20doni.png'],
                 ];
                 
                 foreach($keynote_speakers as $index => $speaker): ?>
