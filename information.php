@@ -1,6 +1,37 @@
 <?php
+session_start();
+require_once 'includes/db.php';
+
 $participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
 $is_participant_only = (strtolower($participant_type) == 'participant');
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $is_student = $_POST['is_student'] ?? 'No';
+    $_SESSION['is_student'] = $is_student;
+    
+    $student_proof_path = '';
+    if ($is_student == 'Yes' && isset($_FILES['student_proof']) && $_FILES['student_proof']['error'] == UPLOAD_ERR_OK) {
+        $filename = time() . '_proof_' . basename($_FILES['student_proof']['name']);
+        $target_path = 'uploads/' . $filename;
+        if (move_uploaded_file($_FILES['student_proof']['tmp_name'], $target_path)) {
+            $student_proof_path = $target_path;
+        }
+    }
+    
+    if (isset($_SESSION['participant_id']) && $student_proof_path != '') {
+        $stmt = $conn->prepare("UPDATE participants SET bukti_diri = ? WHERE id = ?");
+        $stmt->bind_param("si", $student_proof_path, $_SESSION['participant_id']);
+        $stmt->execute();
+    }
+    
+    if ($is_participant_only) {
+        header("Location: Confirmation.php?type=participant");
+        exit();
+    } else {
+        header("Location: application.php?type=" . urlencode($participant_type));
+        exit();
+    }
+}
 ?>
 <?php include 'includes/header.php'; ?>
 
@@ -156,10 +187,7 @@ $is_participant_only = (strtolower($participant_type) == 'participant');
             Information entered does not conform with the required format, and needs to be changed.
         </div>
 
-        <?php
-        $form_action = $is_participant_only ? 'Confirmation.php?type=participant' : 'application.php?type=' . urlencode($participant_type);
-        ?>
-        <form action="<?php echo $form_action; ?>" method="POST" enctype="multipart/form-data">
+        <form action="" method="POST" enctype="multipart/form-data">
             <fieldset class="info-fieldset">
                 <legend class="info-legend">Other Information</legend>
                 

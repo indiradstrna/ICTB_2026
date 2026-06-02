@@ -1,25 +1,40 @@
 <?php
-// Dynamic Pricing Logic based on Registration Type (Indonesian Participants)
-$participant_type = isset($_REQUEST['type']) ? $_REQUEST['type'] : 'Author'; // 'Author', 'Participant', 'Exhibitor'
+session_start();
+require_once 'includes/db.php';
 
-// Determine category based on is_student (from information.php direct submit) or category (from application.php)
-$participant_category = 'General';
-if (isset($_REQUEST['is_student'])) {
-    $participant_category = (strtolower($_REQUEST['is_student']) == 'yes') ? 'student' : 'General';
-} elseif (isset($_REQUEST['category'])) {
-    $participant_category = $_REQUEST['category'];
+$upload_success = false;
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (isset($_FILES['payment_receipt']) && $_FILES['payment_receipt']['error'] == UPLOAD_ERR_OK) {
+        $filename = time() . '_receipt_' . basename($_FILES['payment_receipt']['name']);
+        $target_path = 'uploads/' . $filename;
+        if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $target_path)) {
+            if (isset($_SESSION['participant_id'])) {
+                $stmt = $conn->prepare("UPDATE participants SET bukti_transfer = ? WHERE id = ?");
+                $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                $stmt->execute();
+            }
+            $upload_success = true;
+        }
+    }
 }
+
+// Dynamic Pricing Logic based on Registration Type (Indonesian Participants)
+$participant_type = isset($_GET['type']) ? $_GET['type'] : (isset($_SESSION['participant_type']) ? $_SESSION['participant_type'] : 'Author');
+
+// Determine category based on is_student
+$is_student = isset($_SESSION['is_student']) ? $_SESSION['is_student'] : 'No';
+$participant_category = (strtolower($is_student) == 'yes') ? 'student' : 'General';
 
 $is_participant_only = (strtolower($participant_type) == 'participant');
 
 // Automatic Early Bird calculation based on current date
-// Early Bird is valid up to August 31, 2026 (inclusive of that day)
 $early_bird_deadline = strtotime('2026-08-31 23:59:59');
 $current_time = time();
 $is_early_bird = ($current_time <= $early_bird_deadline);
 
-// Get publication type from POST (from application.php) or fallback to GET/default
-$publication_type = isset($_POST['publication']) ? $_POST['publication'] : (isset($_GET['pub']) ? $_GET['pub'] : 'ICTB proceeding book (ISBN)');
+// Get publication type from session
+$publication_type = isset($_SESSION['publication']) ? $_SESSION['publication'] : 'ICTB proceeding book (ISBN)';
 
 $participation_fee = 0;
 $fee_label = "";
@@ -300,18 +315,21 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
 
                 <div style="margin-bottom: 10px;">After you have completed the payment, please upload your receipt here:</div>
                 
-                <form action="#" method="POST" enctype="multipart/form-data">
+                <?php if ($upload_success): ?>
+                    <div style="color: green; font-weight: bold; margin-bottom: 10px;">Payment receipt uploaded successfully!</div>
+                <?php endif; ?>
+                <form action="" method="POST" enctype="multipart/form-data">
                     <div class="highlight-box">
                         <input type="file" name="payment_receipt" id="payment_receipt" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
                     </div>
                     <div>
-                        <button type="submit" class="btn-yellow-submit">Submit</button>
+                        <button type="submit" class="btn-yellow-submit">Submit Receipt</button>
                     </div>
                 </form>
             </div>
         </fieldset>
 
-        <button type="button" class="btn-yellow-confirm">Confirm Data</button>
+        <a href="success.php" class="btn-yellow-confirm" style="display: inline-block; text-decoration: none; text-align: center;">Confirm Data</a>
 
     </div>
 </section>

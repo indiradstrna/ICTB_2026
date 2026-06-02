@@ -1,6 +1,38 @@
 <?php
-$is_student = isset($_POST['is_student']) ? $_POST['is_student'] : 'No';
+session_start();
+require_once 'includes/db.php';
+
+$is_student = isset($_SESSION['is_student']) ? $_SESSION['is_student'] : 'No';
 $participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $apptype_id = $_POST['application_type'] ?? '';
+    $subtheme_id = $_POST['sub_theme'] ?? '';
+    $title = $_POST['title'] ?? '';
+    $keyword = $_POST['keywords'] ?? '';
+    $firstsubmit = ($_POST['first_time'] ?? 'Yes') == 'Yes' ? 1 : 0;
+    $publication_id = $_POST['publication'] ?? '';
+    
+    $_SESSION['publication'] = $publication_id; // Pass to Confirmation.php
+
+    $abstract_path = '';
+    if (isset($_FILES['extended_abstract']) && $_FILES['extended_abstract']['error'] == UPLOAD_ERR_OK) {
+        $filename = time() . '_abstract_' . basename($_FILES['extended_abstract']['name']);
+        $target_path = 'uploads/' . $filename;
+        if (move_uploaded_file($_FILES['extended_abstract']['tmp_name'], $target_path)) {
+            $abstract_path = $target_path;
+        }
+    }
+
+    if (isset($_SESSION['participant_id'])) {
+        $stmt = $conn->prepare("INSERT INTO applications (participant_id, apptype_id, subtheme_id, title, abstract, keyword, firstsubmit, publication_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        $stmt->bind_param("isssssis", $_SESSION['participant_id'], $apptype_id, $subtheme_id, $title, $abstract_path, $keyword, $firstsubmit, $publication_id);
+        $stmt->execute();
+    }
+    
+    header("Location: Confirmation.php?type=" . urlencode($participant_type));
+    exit();
+}
 ?>
 <?php include 'includes/header.php'; ?>
 
@@ -185,7 +217,7 @@ $participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
             Please fill in the form. All fields are required. When you are ready to submit, please check that all fields are filled. A red border indicates that the information entered does not conform with the required format, and needs to be changed.
         </div>
 
-        <form action="Confirmation.php" method="POST" enctype="multipart/form-data" onsubmit="return validateAbstractForm()">
+        <form action="" method="POST" enctype="multipart/form-data" onsubmit="return validateAbstractForm()">
             <input type="hidden" name="type" value="<?php echo htmlspecialchars($participant_type); ?>">
             <input type="hidden" name="category" value="<?php echo (strtolower($is_student) == 'yes') ? 'student' : 'General'; ?>">
             <fieldset class="info-fieldset">

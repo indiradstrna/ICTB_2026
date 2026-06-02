@@ -1,4 +1,7 @@
 <?php
+if (session_status() === PHP_SESSION_NONE) {
+    session_start();
+}
 // Base URL or configurations can be set here
 $site_title = "The 5th International Conference on Tropical Biology";
 ?>
@@ -65,11 +68,19 @@ $site_title = "The 5th International Conference on Tropical Biology";
                     </ul>
                 </li>
                 <li class="has-dropdown">
-                    <a href="#" class="nav-link">LOGIN</a>
-                    <ul class="dropdown-menu">
-                        <li><a href="login.php">LOGIN</a></li>
-                        <li><a href="registration.php">REGISTER</a></li>
-                    </ul>
+                    <?php if (isset($_SESSION['participant_id'])): ?>
+                        <a href="#" class="nav-link" style="text-transform: uppercase;"><?php echo htmlspecialchars($_SESSION['first_name'] ?? 'USER'); ?></a>
+                        <ul class="dropdown-menu">
+                            <li><a href="Confirmation.php?type=participant#important-info">MY REGISTRATION</a></li>
+                            <li><a href="logout.php">LOGOUT</a></li>
+                        </ul>
+                    <?php else: ?>
+                        <a href="#" class="nav-link">LOGIN</a>
+                        <ul class="dropdown-menu">
+                            <li><a href="login.php">LOGIN</a></li>
+                            <li><a href="registration.php">REGISTER</a></li>
+                        </ul>
+                    <?php endif; ?>
                 </li>
             </ul>
 

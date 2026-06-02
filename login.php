@@ -1,4 +1,36 @@
-<?php include 'includes/header.php'; ?>
+<?php 
+session_start();
+require_once 'includes/db.php';
+
+$error_msg = '';
+
+if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    $email = $_POST['email'];
+    $password = $_POST['password'];
+
+    $stmt = $conn->prepare("SELECT id, first_name, password_hash FROM participants WHERE email = ?");
+    $stmt->bind_param("s", $email);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    
+    if ($result->num_rows > 0) {
+        $user = $result->fetch_assoc();
+        if (password_verify($password, $user['password_hash'])) {
+            $_SESSION['participant_id'] = $user['id'];
+            $_SESSION['first_name'] = $user['first_name'];
+            header("Location: index.php");
+            exit();
+        } else {
+            $error_msg = "Invalid password.";
+        }
+    } else {
+        $error_msg = "Email not found.";
+    }
+    $stmt->close();
+}
+
+include 'includes/header.php'; 
+?>
 
 <style>
     /* Specific styles for the login page matching the screenshot */
@@ -166,7 +198,12 @@
             Login
         </div>
         <div class="login-card-body">
-            <form action="#" method="POST">
+            <?php if (!empty($error_msg)): ?>
+                <div style="color: red; margin-bottom: 15px; font-size: 14px; text-align: center; font-family: 'Inter', sans-serif;">
+                    <?php echo htmlspecialchars($error_msg); ?>
+                </div>
+            <?php endif; ?>
+            <form action="" method="POST">
                 <div class="login-form-group">
                     <label class="login-form-label" for="email">E-mail Address</label>
                     <div class="login-form-input">
