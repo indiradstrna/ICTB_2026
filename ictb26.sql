@@ -3,7 +3,7 @@
 -- https://www.phpmyadmin.net/
 --
 -- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2026 pada 09.11
+-- Waktu pembuatan: 02 Jun 2026 pada 09.27
 -- Versi server: 10.4.28-MariaDB
 -- Versi PHP: 8.2.4
 
@@ -334,8 +334,30 @@ CREATE TABLE `participants` (
   `password_hash` varchar(255) NOT NULL,
   `bukti_transfer` varchar(255) DEFAULT '',
   `bukti_diri` varchar(255) DEFAULT '',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
+  `title` varchar(50) DEFAULT NULL,
+  `gender` varchar(50) DEFAULT NULL,
+  `org_type` varchar(100) DEFAULT NULL,
+  `country` varchar(100) DEFAULT NULL,
+  `attendance` varchar(100) DEFAULT NULL,
+  `funding` varchar(100) DEFAULT NULL,
+  `funding_source` varchar(255) DEFAULT NULL,
+  `allergies` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+--
+-- Dumping data untuk tabel `participants`
+--
+
+INSERT INTO `participants` (`id`, `participant_type`, `first_name`, `last_name`, `institution`, `email`, `phone`, `password_hash`, `bukti_transfer`, `bukti_diri`, `created_at`, `title`, `gender`, `org_type`, `country`, `attendance`, `funding`, `funding_source`, `allergies`) VALUES
+(3, 'author', 'Indira', 'Destriana', 'Telkom University', 'kunci027@gmail.com', '081234567890', '$2y$10$kNW8ZfYOOCG4MBkHg6hp6uh32vS8Q0Hm4fx9Ik5QqxFfi4.S2wzL.', '', '', '2026-05-15 09:17:27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(4, 'participant', 'Indira', 'Destriana', '', 'gionkys12@gmail.com', '081234567890', '$2y$10$mDXeS4WJFiWTROZD2.BDZOiRRxNPGq2kpbTL7niJfM0lQUfaIHBRK', '', '', '2026-05-21 01:45:50', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(5, 'participant', 'Indira', 'Destriana', '', 'dira@gmail.com', '081234567890', '$2y$10$vk5v7AweLN.7v2iDhHye9uSawVNQ2S/VdM.6pSHYjg9nlFKr3o.o.', '', '', '2026-05-26 02:05:07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(6, 'participant', 'Indira', 'Destriana', '', 'indira@biotrop.org', '081234567890', '$2y$10$eiq3B4nFOkdxiue6EC2p6u5T5le04vr/WpDvwkxinjYJK6QMIcLeK', '', '', '2026-06-02 04:10:13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(7, 'participant', 'Achmad', 'Fayad', '', 'fayad@biotrop.org', '081234567890', '$2y$10$XcQ7aHO.zIAWKq0ilaBC2uX.c1NUpKC0Gaaa.UKH.APwbMahcsJ9e', '', '', '2026-06-02 04:22:35', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(9, 'participant', 'Achmad', 'Fayad', '', 'fayad@biotrop.org1', '081234567890', '$2y$10$6lvVlyWEj03iIE2CzS7kJ.eQS8m6rbwIffn2qN1VW4wPRqh4Duz5q', '', '', '2026-06-02 06:31:14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(10, 'participant', 'Indira', 'Destriana', '', 'indiradstrna@student.telkomuniversity.ac.id', '081234567890', '$2y$10$MkvEF.Jp315ScAzSIARFueRAjKcoNG6IXIprerwMj6fvN6uOJnXv6', 'uploads/1780382499_receipt_iPhone 11_ Verification Report_0000785E0AE0802E.png', 'uploads/1780382491_proof_FZL04616.JPG', '2026-06-02 06:41:18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(11, 'participant', 'sheni', 'olvianda', 'Telkom University', 'test@gmail.com', '081234567890', '$2y$10$aHk.yICclKhsmWqOt8WVe.L1r2vZUBFfQ9ot3oQ1Jam.zMYpcIfTC', '', 'uploads/1780384947_proof_a8b0aed5cf58f96005c435f87dff8db5.jpg', '2026-06-02 07:17:39', 'Ms.', 'Female', 'Academic institution', 'Indonesia', 'Offline', 'No', '', '');
 
 -- --------------------------------------------------------
 
@@ -628,49 +650,49 @@ ALTER TABLE `applications`
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `participants`
 --
 ALTER TABLE `participants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
 
 --
 -- AUTO_INCREMENT untuk tabel `subthemes`
 --
 ALTER TABLE `subthemes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_application`
 --
 ALTER TABLE `type_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_organization`
 --
 ALTER TABLE `type_organization`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_publication`
 --
 ALTER TABLE `type_publication`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_title`
 --
 ALTER TABLE `type_title`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

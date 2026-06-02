@@ -30,11 +30,17 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     
     if (isset($_SESSION['participant_id'])) {
         $stmt = $conn->prepare("UPDATE participants SET title=?, gender=?, institution=?, org_type=?, country=?, attendance=?, funding=?, funding_source=?, allergies=? WHERE id=?");
+        if (!$stmt) {
+            die("Database Error in information.php (Update participants): " . $conn->error . ". Harap pastikan tabel participants di hosting sudah memiliki kolom baru (title, gender, dll). Hapus tabel lama dan import ulang ictb26.sql.");
+        }
         $stmt->bind_param("sssssssssi", $title, $gender, $organization, $org_type, $country, $attendance, $funding, $funding_source, $allergies, $_SESSION['participant_id']);
         $stmt->execute();
         
         if ($student_proof_path != '') {
             $stmt_proof = $conn->prepare("UPDATE participants SET bukti_diri = ? WHERE id = ?");
+            if (!$stmt_proof) {
+                die("Database Error in information.php (Update bukti_diri): " . $conn->error);
+            }
             $stmt_proof->bind_param("si", $student_proof_path, $_SESSION['participant_id']);
             $stmt_proof->execute();
         }

@@ -33,6 +33,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $target_path)) {
             if (isset($_SESSION['participant_id'])) {
                 $stmt = $conn->prepare("UPDATE participants SET bukti_transfer = ? WHERE id = ?");
+                if (!$stmt) {
+                    die("Database Error in Confirmation.php: " . $conn->error);
+                }
                 $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
                 $stmt->execute();
             }

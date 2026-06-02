@@ -26,6 +26,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     if (isset($_SESSION['participant_id'])) {
         $stmt = $conn->prepare("INSERT INTO applications (participant_id, apptype_id, subtheme_id, title, abstract, keyword, firstsubmit, publication_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+        if (!$stmt) {
+            die("Database Error in application.php: " . $conn->error . ". Pastikan kolom apptype_id, subtheme_id, publication_id bertipe VARCHAR di tabel applications hosting Anda.");
+        }
         $stmt->bind_param("isssssis", $_SESSION['participant_id'], $apptype_id, $subtheme_id, $title, $abstract_path, $keyword, $firstsubmit, $publication_id);
         $stmt->execute();
     }
