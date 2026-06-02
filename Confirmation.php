@@ -4,6 +4,28 @@ require_once 'includes/db.php';
 
 $upload_success = false;
 
+$user_data = [];
+$app_data = [];
+if (isset($_SESSION['participant_id'])) {
+    $stmt = $conn->prepare("SELECT * FROM participants WHERE id = ?");
+    $stmt->bind_param("i", $_SESSION['participant_id']);
+    $stmt->execute();
+    $result = $stmt->get_result();
+    if ($result->num_rows > 0) {
+        $user_data = $result->fetch_assoc();
+    }
+    $stmt->close();
+    
+    $stmt2 = $conn->prepare("SELECT * FROM applications WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+    $stmt2->bind_param("i", $_SESSION['participant_id']);
+    $stmt2->execute();
+    $result2 = $stmt2->get_result();
+    if ($result2->num_rows > 0) {
+        $app_data = $result2->fetch_assoc();
+    }
+    $stmt2->close();
+}
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['payment_receipt']) && $_FILES['payment_receipt']['error'] == UPLOAD_ERR_OK) {
         $filename = time() . '_receipt_' . basename($_FILES['payment_receipt']['name']);
@@ -262,32 +284,41 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
 
         <fieldset class="info-fieldset">
             <legend class="info-legend">Registrant Information</legend>
-            <div class="summary-line"><span class="summary-label">Registration ID:</span> <span class="summary-val">5ICTB-OR-0075</span></div>
-            <div class="summary-line"><span class="summary-label">Fullname:</span> <span class="summary-val">Ms. Destriana, Indira</span></div>
-            <div class="summary-line"><span class="summary-label">Registration Code:</span> <span class="summary-val">5ICTB-OR-0075</span></div>
-            <div class="summary-line"><span class="summary-label">Email address:</span> <span class="summary-val">kunci027@gmail.com</span></div>
-            <div class="summary-line"><span class="summary-label">Phone number:</span> <span class="summary-val">087711761206</span></div>
-            <div class="summary-line"><span class="summary-label">Gender:</span> <span class="summary-val">Female</span></div>
-            <div class="summary-line"><span class="summary-label">Organization:</span> <span class="summary-val">Telkom University (Private Company)</span></div>
-            <div class="summary-line"><span class="summary-label">Country:</span> <span class="summary-val">Indonesia</span></div>
-            <div class="summary-line"><span class="summary-label">Participant Type:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($participant_type)); ?></span></div>
-            <div class="summary-line"><span class="summary-label">Participant Category:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($participant_category)); ?></span> | <a href="#" style="color: #1a73e8; text-decoration: none;">Proof</a></div>
-            <div class="summary-line"><span class="summary-label">Food allergies:</span> <span class="summary-val"></span></div>
+            <?php
+            $reg_id = isset($user_data['id']) ? "5ICTB-".strtoupper(substr($user_data['participant_type']??'PART', 0, 3))."-".str_pad($user_data['id'], 4, "0", STR_PAD_LEFT) : 'N/A';
+            $fullname = trim(($user_data['title']??'').' '.($user_data['first_name']??'').' '.($user_data['last_name']??''));
+            $org_display = ($user_data['institution']??'');
+            if (!empty($user_data['org_type'])) $org_display .= ' (' . $user_data['org_type'] . ')';
+            ?>
+            <div class="summary-line"><span class="summary-label">Registration ID:</span> <span class="summary-val"><?php echo htmlspecialchars($reg_id); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Fullname:</span> <span class="summary-val"><?php echo htmlspecialchars($fullname); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Registration Code:</span> <span class="summary-val"><?php echo htmlspecialchars($reg_id); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Email address:</span> <span class="summary-val"><?php echo htmlspecialchars($user_data['email']??''); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Phone number:</span> <span class="summary-val"><?php echo htmlspecialchars($user_data['phone']??''); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Gender:</span> <span class="summary-val"><?php echo htmlspecialchars($user_data['gender']??''); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Organization:</span> <span class="summary-val"><?php echo htmlspecialchars($org_display); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Country:</span> <span class="summary-val"><?php echo htmlspecialchars($user_data['country']??''); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Participant Type:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($user_data['participant_type'] ?? $participant_type)); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Participant Category:</span> <span class="summary-val"><?php echo ucfirst(htmlspecialchars($participant_category)); ?> <?php if (!empty($user_data['bukti_diri'])): ?>| <a href="<?php echo htmlspecialchars($user_data['bukti_diri']); ?>" target="_blank" style="color: #1a73e8; text-decoration: none;">Proof</a><?php endif; ?></span></div>
+            <div class="summary-line"><span class="summary-label">Food allergies:</span> <span class="summary-val"><?php echo htmlspecialchars($user_data['allergies']??''); ?></span></div>
         </fieldset>
 
         <?php if (!$is_participant_only): ?>
         <fieldset class="info-fieldset">
             <legend class="info-legend">Application Information</legend>
-            <div class="summary-line"><span class="summary-label">Application Type:</span> <span class="summary-val">Oral</span></div>
+            <div class="summary-line"><span class="summary-label">Application Type:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['apptype_id']??''); ?></span></div>
             <div class="summary-line"><span class="summary-label">Theme:</span> <span class="summary-val">Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes</span></div>
-            <div class="summary-line"><span class="summary-label">Subtheme:</span> <span class="summary-val">Nature-Based Livelihoods</span></div>
-            <div class="summary-line"><span class="summary-label">Title:</span> <span class="summary-val">test</span></div>
+            <div class="summary-line"><span class="summary-label">Subtheme:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['subtheme_id']??''); ?></span></div>
+            <div class="summary-line"><span class="summary-label">Title:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['title']??''); ?></span></div>
             
-            <a href="#" class="btn-dark-blue">Extended Abstract File</a>
+            <?php if (!empty($app_data['abstract'])): ?>
+            <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" class="btn-dark-blue" style="text-decoration:none; display:inline-block; margin-top:10px; margin-bottom:10px;">Extended Abstract File</a>
+            <?php endif; ?>
             
             <div class="summary-line" style="margin-top: 5px;"><span class="summary-label">Keywords:</span></div>
-            <div class="summary-line"><span class="summary-val">test</span></div>
-            
+            <div style="font-family: 'Inter', sans-serif; font-size: 13px; color: #555; background: #f8f9fa; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef; margin-top: 5px;">
+                <?php echo nl2br(htmlspecialchars($app_data['keyword']??'')); ?>
+            </div>
             <div class="summary-line"><span class="summary-label">Publication Type:</span> <span class="summary-val"><?php echo htmlspecialchars($publication_type); ?> - <?php echo $pub_fee_label; ?></span></div>
         </fieldset>
         <?php endif; ?>

@@ -9,6 +9,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $is_student = $_POST['is_student'] ?? 'No';
     $_SESSION['is_student'] = $is_student;
     
+    $title = $_POST['title'] ?? '';
+    $gender = $_POST['gender'] ?? '';
+    $organization = $_POST['organization'] ?? '';
+    $org_type = $_POST['org_type'] ?? '';
+    $country = $_POST['country'] ?? '';
+    $attendance = $_POST['attendance'] ?? '';
+    $funding = $_POST['funding'] ?? '';
+    $funding_source = $_POST['funding_source'] ?? '';
+    $allergies = $_POST['allergies'] ?? '';
+
     $student_proof_path = '';
     if ($is_student == 'Yes' && isset($_FILES['student_proof']) && $_FILES['student_proof']['error'] == UPLOAD_ERR_OK) {
         $filename = time() . '_proof_' . basename($_FILES['student_proof']['name']);
@@ -18,10 +28,16 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
     
-    if (isset($_SESSION['participant_id']) && $student_proof_path != '') {
-        $stmt = $conn->prepare("UPDATE participants SET bukti_diri = ? WHERE id = ?");
-        $stmt->bind_param("si", $student_proof_path, $_SESSION['participant_id']);
+    if (isset($_SESSION['participant_id'])) {
+        $stmt = $conn->prepare("UPDATE participants SET title=?, gender=?, institution=?, org_type=?, country=?, attendance=?, funding=?, funding_source=?, allergies=? WHERE id=?");
+        $stmt->bind_param("sssssssssi", $title, $gender, $organization, $org_type, $country, $attendance, $funding, $funding_source, $allergies, $_SESSION['participant_id']);
         $stmt->execute();
+        
+        if ($student_proof_path != '') {
+            $stmt_proof = $conn->prepare("UPDATE participants SET bukti_diri = ? WHERE id = ?");
+            $stmt_proof->bind_param("si", $student_proof_path, $_SESSION['participant_id']);
+            $stmt_proof->execute();
+        }
     }
     
     if ($is_participant_only) {
