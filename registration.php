@@ -20,6 +20,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         // Check if email exists
         $stmt = $conn->prepare("SELECT id FROM participants WHERE email = ?");
+        if (!$stmt) {
+            die("Database Error (SELECT): " . $conn->error);
+        }
         $stmt->bind_param("s", $email);
         $stmt->execute();
         $stmt->store_result();
@@ -35,6 +38,9 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
             // Insert Database
             $stmt = $conn->prepare("INSERT INTO participants (participant_type, first_name, last_name, institution, email, phone, password_hash, bukti_transfer, bukti_diri) VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?)");
+            if (!$stmt) {
+                die("Database Error (INSERT): " . $conn->error);
+            }
             $stmt->bind_param("sssssssss", $participant_type, $first_name, $last_name, $institution, $email, $phone, $password_hash, $bukti_transfer, $bukti_diri);
             
             if ($stmt->execute()) {
