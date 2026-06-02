@@ -1,14 +1,13 @@
--- phpMyAdmin SQL Dump
--- version 4.7.5
+﻿-- phpMyAdmin SQL Dump
+-- version 5.2.1
 -- https://www.phpmyadmin.net/
 --
--- Host: localhost
--- Generation Time: May 05, 2018 at 07:20 AM
--- Server version: 5.7.19
--- PHP Version: 7.1.4
+-- Host: 127.0.0.1
+-- Waktu pembuatan: 02 Jun 2026 pada 06.30
+-- Versi server: 10.4.28-MariaDB
+-- Versi PHP: 8.2.4
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
-SET AUTOCOMMIT = 0;
 START TRANSACTION;
 SET time_zone = "+00:00";
 
@@ -21,16 +20,13 @@ SET time_zone = "+00:00";
 --
 -- Database: `ictb_db`
 --
-CREATE DATABASE IF NOT EXISTS `ictb_db` DEFAULT CHARACTER SET utf8mb4 COLLATE utf8mb4_unicode_ci;
-USE `ictb_db`;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `applications`
+-- Struktur dari tabel `applications`
 --
-set global innodb_file_format = BARRACUDA;
-set global innodb_large_prefix = ON;
+
 CREATE TABLE `applications` (
   `id` int(11) NOT NULL,
   `participant_id` int(11) NOT NULL,
@@ -41,159 +37,189 @@ CREATE TABLE `applications` (
   `keyword` varchar(255) NOT NULL,
   `firstsubmit` int(11) NOT NULL,
   `publication_id` int(11) NOT NULL,
-  `created_at` timestamp NOT NULL,
-  `updated_at` timestamp NOT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `updated_at` timestamp NOT NULL DEFAULT '0000-00-00 00:00:00'
+) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `countries`
+-- Struktur dari tabel `countries`
 --
 
 CREATE TABLE `countries` (
   `id` int(11) DEFAULT NULL,
-  `country_name` varchar(200) COLLATE utf8_bin DEFAULT NULL
+  `country_name` varchar(200) DEFAULT NULL
 ) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `migrations`
+-- Struktur dari tabel `migrations`
 --
 
 CREATE TABLE `migrations` (
   `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `migration` varchar(255) NOT NULL,
   `batch` int(11) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `password_resets`
+-- Struktur dari tabel `participants`
+--
+
+CREATE TABLE `participants` (
+  `id` int(11) NOT NULL,
+  `participant_type` varchar(50) NOT NULL,
+  `first_name` varchar(100) NOT NULL,
+  `last_name` varchar(100) NOT NULL,
+  `institution` varchar(255) NOT NULL,
+  `email` varchar(150) NOT NULL,
+  `phone` varchar(50) NOT NULL,
+  `password_hash` varchar(255) NOT NULL,
+  `bukti_transfer` varchar(255) DEFAULT '',
+  `bukti_diri` varchar(255) DEFAULT '',
+  `created_at` timestamp NOT NULL DEFAULT current_timestamp()
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
+
+
+
+-- --------------------------------------------------------
+
+--
+-- Struktur dari tabel `password_resets`
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) NOT NULL,
+  `token` varchar(255) NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `subthemes`
+-- Struktur dari tabel `subthemes`
 --
 
 CREATE TABLE `subthemes` (
   `id` int(11) NOT NULL,
   `id_theme` int(11) NOT NULL,
   `sub_theme` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `themes`
+-- Struktur dari tabel `themes`
 --
 
 CREATE TABLE `themes` (
   `id` int(11) NOT NULL,
   `theme` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `type_application`
+-- Struktur dari tabel `type_application`
 --
 
 CREATE TABLE `type_application` (
   `id` int(11) NOT NULL,
   `type` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `type_organization`
+-- Struktur dari tabel `type_organization`
 --
 
 CREATE TABLE `type_organization` (
   `id` int(11) NOT NULL,
   `type` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `type_participant`
+-- Struktur dari tabel `type_participant`
 --
 
 CREATE TABLE `type_participant` (
   `id` int(11) NOT NULL,
   `type` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `type_publication`
+-- Struktur dari tabel `type_publication`
 --
 
 CREATE TABLE `type_publication` (
   `id` int(11) NOT NULL,
   `kode` varchar(15) NOT NULL,
   `type` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `type_title`
+-- Struktur dari tabel `type_title`
 --
 
 CREATE TABLE `type_title` (
   `id` int(11) NOT NULL,
   `title` varchar(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table of Title';
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Table of Title';
+
 
 
 -- --------------------------------------------------------
 
 --
--- Table structure for table `users`
+-- Struktur dari tabel `users`
 --
 
 CREATE TABLE `users` (
   `id` int(10) UNSIGNED NOT NULL,
-  `registration_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `registration_id` varchar(255) NOT NULL,
+  `firstname` varchar(255) NOT NULL,
+  `lastname` varchar(255) NOT NULL,
+  `email` varchar(255) NOT NULL,
   `type_participant_id` int(11) NOT NULL,
   `type_organization_id` int(11) DEFAULT NULL,
-  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `organization` varchar(255) DEFAULT NULL,
   `type_title_id` int(11) DEFAULT NULL,
   `countries_id` int(11) DEFAULT NULL,
-  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `gender` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `student` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `studentid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `funding` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `fundingsource` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `contribution` text COLLATE utf8mb4_unicode_ci,
-  `allergies` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `payment` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `password` varchar(255) NOT NULL,
+  `gender` varchar(125) DEFAULT NULL,
+  `student` varchar(125) DEFAULT NULL,
+  `studentid` varchar(255) DEFAULT NULL,
+  `funding` varchar(125) DEFAULT NULL,
+  `fundingsource` varchar(255) DEFAULT NULL,
+  `contribution` text DEFAULT NULL,
+  `allergies` varchar(255) DEFAULT NULL,
+  `payment` varchar(125) DEFAULT NULL,
+  `remember_token` varchar(100) DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -203,131 +229,139 @@ CREATE TABLE `users` (
 --
 
 --
--- Indexes for table `applications`
+-- Indeks untuk tabel `applications`
 --
 ALTER TABLE `applications`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `migrations`
+-- Indeks untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `password_resets`
+-- Indeks untuk tabel `participants`
+--
+ALTER TABLE `participants`
+  ADD PRIMARY KEY (`id`),
+  ADD UNIQUE KEY `email` (`email`);
+
+--
+-- Indeks untuk tabel `password_resets`
 --
 ALTER TABLE `password_resets`
   ADD KEY `password_resets_email_index` (`email`);
 
 --
--- Indexes for table `subthemes`
+-- Indeks untuk tabel `subthemes`
 --
 ALTER TABLE `subthemes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `themes`
+-- Indeks untuk tabel `themes`
 --
 ALTER TABLE `themes`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `type_application`
+-- Indeks untuk tabel `type_application`
 --
 ALTER TABLE `type_application`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `type_organization`
+-- Indeks untuk tabel `type_organization`
 --
 ALTER TABLE `type_organization`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `type_participant`
+-- Indeks untuk tabel `type_participant`
 --
 ALTER TABLE `type_participant`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `type_publication`
+-- Indeks untuk tabel `type_publication`
 --
 ALTER TABLE `type_publication`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `type_title`
+-- Indeks untuk tabel `type_title`
 --
 ALTER TABLE `type_title`
   ADD PRIMARY KEY (`id`);
 
 --
--- Indexes for table `users`
+-- Indeks untuk tabel `users`
 --
 ALTER TABLE `users`
   ADD PRIMARY KEY (`id`),
   ADD UNIQUE KEY `users_email_unique` (`email`);
 
 --
--- AUTO_INCREMENT for dumped tables
+-- AUTO_INCREMENT untuk tabel yang dibuang
 --
 
 --
--- AUTO_INCREMENT for table `applications`
+-- AUTO_INCREMENT untuk tabel `applications`
 --
 ALTER TABLE `applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `migrations`
+-- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `subthemes`
+-- AUTO_INCREMENT untuk tabel `participants`
+--
+ALTER TABLE `participants`
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT untuk tabel `subthemes`
 --
 ALTER TABLE `subthemes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `themes`
+-- AUTO_INCREMENT untuk tabel `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `type_application`
+-- AUTO_INCREMENT untuk tabel `type_application`
 --
 ALTER TABLE `type_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `type_organization`
+-- AUTO_INCREMENT untuk tabel `type_organization`
 --
 ALTER TABLE `type_organization`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `type_publication`
+-- AUTO_INCREMENT untuk tabel `type_publication`
 --
 ALTER TABLE `type_publication`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 
 --
--- AUTO_INCREMENT for table `type_title`
+-- AUTO_INCREMENT untuk tabel `type_title`
 --
 ALTER TABLE `type_title`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
-
---
--- AUTO_INCREMENT for table `users`
---
-ALTER TABLE `users`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=1;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
 /*!40101 SET CHARACTER_SET_RESULTS=@OLD_CHARACTER_SET_RESULTS */;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
+
