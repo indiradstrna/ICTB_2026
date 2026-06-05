@@ -122,4 +122,4 @@
 </section>
 
 <?php include 'includes/footer.php'; ?>
-/bisa dong update git hub
+/update list topics
