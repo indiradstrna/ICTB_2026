@@ -47,6 +47,7 @@
                 <div class="cover-actions">
                     <a href="#schedule" class="btn btn-primary">View Schedule <i class="ph-bold ph-arrow-right"></i></a>
                     <a href="#pricing" class="btn btn-white">Register</a>
+                    <a href="javascript:void(0);" onclick="document.getElementById('flyerModal').style.display='flex'" class="btn btn-outline" style="color: white; border-color: white; margin-left: 10px;">Lihat Flyer <i class="ph-bold ph-image"></i></a>
                 </div>
             </div>
 
@@ -372,5 +373,16 @@
     </div>
 </section>
 
+
+<!-- Flyer Modal -->
+<div id="flyerModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); align-items:center; justify-content:center; flex-direction:column; transition: opacity 0.3s;" onclick="this.style.display='none'">
+    <div style="position:relative; max-width:90%; max-height:80vh; text-align:center;" onclick="event.stopPropagation();">
+        <span onclick="document.getElementById('flyerModal').style.display='none'" style="position:absolute; top:-40px; right:0; color:white; font-size:35px; cursor:pointer; line-height:1;">&times;</span>
+        <img src="assets/img/flyer.png" alt="Conference Flyer" style="max-width:100%; max-height:80vh; object-fit:contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <div style="margin-top: 20px;">
+            <a href="assets/img/flyer.png" class="btn btn-primary" download style="padding: 12px 24px; font-size: 16px; display:inline-block;">Download Flyer <i class="ph-bold ph-download-simple"></i></a>
+        </div>
+    </div>
+</div>
 
 <?php include 'includes/footer.php'; ?>
