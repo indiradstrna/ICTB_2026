@@ -315,7 +315,7 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             <div class="summary-line"><span class="summary-label">Title:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['title']??''); ?></span></div>
             
             <?php if (!empty($app_data['abstract'])): ?>
-            <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" class="btn-dark-blue" style="text-decoration:none; display:inline-block; margin-top:10px; margin-bottom:10px;">Extended Abstract File</a>
+            <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" class="btn-dark-blue" style="text-decoration:none; display:inline-block; margin-top:10px; margin-bottom:10px;">Abstract File</a>
             <?php endif; ?>
             
             <div class="summary-line" style="margin-top: 5px;"><span class="summary-label">Keywords:</span></div>
