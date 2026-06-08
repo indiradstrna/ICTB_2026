@@ -36,6 +36,21 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     header("Location: Confirmation.php?type=" . urlencode($participant_type));
     exit();
 }
+
+$themes_result = $conn->query("SELECT * FROM themes ORDER BY id ASC");
+$themes_data = [];
+while($row = $themes_result->fetch_assoc()) {
+    $themes_data[] = $row;
+}
+
+$subthemes_result = $conn->query("SELECT * FROM subthemes ORDER BY id ASC");
+$subthemes_data = [];
+while($row = $subthemes_result->fetch_assoc()) {
+    if(!isset($subthemes_data[$row['id_theme']])) {
+        $subthemes_data[$row['id_theme']] = [];
+    }
+    $subthemes_data[$row['id_theme']][] = $row;
+}
 ?>
 <?php include 'includes/header.php'; ?>
 
@@ -236,18 +251,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
                 <div class="info-form-group">
                     <label class="info-form-label" for="theme">Theme</label>
-                    <select id="theme" name="theme" class="info-form-control">
-                        <option value="Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes">Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes</option>
+                    <select id="theme" name="theme" class="info-form-control" onchange="updateSubthemes()">
+                        <option value="">Select Theme</option>
+                        <?php foreach($themes_data as $t): ?>
+                            <option value="<?php echo htmlspecialchars($t['theme']); ?>" data-id="<?php echo $t['id']; ?>"><?php echo htmlspecialchars($t['theme']); ?></option>
+                        <?php endforeach; ?>
                     </select>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label" for="sub_theme">Sub-Theme</label>
-                    <select id="sub_theme" name="sub_theme" class="info-form-control">
-                        <option value="Biodiversity Education through Geoparks, National Parks, and Landscape-Based Learning Systems">Biodiversity Education through Geoparks, National Parks, and Landscape-Based Learning Systems</option>
-                        <option value="Sustainable Management of Sub-optimal Lands and Post-Mining Landscapes">Sustainable Management of Sub-optimal Lands and Post-Mining Landscapes</option>
-                        <option value="Nature-Based Livelihoods">Nature-Based Livelihoods</option>
-                        <option value="Biotechnology for Biodiversity, Environment, and Climate Change">Biotechnology for Biodiversity, Environment, and Climate Change</option>
+                    <select id="sub_theme" name="sub_theme" class="info-form-control" required>
+                        <option value="">Select Sub-Theme</option>
                     </select>
                 </div>
 
@@ -310,6 +325,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 </section>
 
 <script>
+var subthemesMap = <?php echo json_encode($subthemes_data); ?>;
+
+function updateSubthemes() {
+    var themeSelect = document.getElementById('theme');
+    var subthemeSelect = document.getElementById('sub_theme');
+    var selectedOption = themeSelect.options[themeSelect.selectedIndex];
+    var themeId = selectedOption.getAttribute('data-id');
+
+    subthemeSelect.innerHTML = '<option value="">-- Select Topic --</option>';
+    
+    if (themeId && subthemesMap[themeId]) {
+        var topics = subthemesMap[themeId];
+        for (var i = 0; i < topics.length; i++) {
+            var option = document.createElement('option');
+            option.value = topics[i].sub_theme;
+            option.textContent = topics[i].sub_theme;
+            subthemeSelect.appendChild(option);
+        }
+    }
+}
+
 function validateAbstractForm() {
     var fileInput = document.getElementById('extended_abstract');
     if (fileInput && fileInput.files.length > 0) {

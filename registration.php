@@ -245,7 +245,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         </div>
                         <div class="form-group">
                             <label for="phone">Phone Number</label>
-                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="phone" required>
+                            <input type="tel" id="phone" name="phone" class="form-control" placeholder="e.g. +62 812 3456 7890" required>
                         </div>
                     </div>
                     

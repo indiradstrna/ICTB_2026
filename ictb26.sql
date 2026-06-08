@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 5.2.1
+-- version 5.2.1deb3
 -- https://www.phpmyadmin.net/
 --
--- Host: 127.0.0.1
--- Waktu pembuatan: 02 Jun 2026 pada 09.27
--- Versi server: 10.4.28-MariaDB
--- Versi PHP: 8.2.4
+-- Host: localhost:3306
+-- Waktu pembuatan: 08 Jun 2026 pada 03.07
+-- Versi server: 8.0.46-0ubuntu0.24.04.2
+-- Versi PHP: 8.2.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 START TRANSACTION;
@@ -18,7 +18,7 @@ SET time_zone = "+00:00";
 /*!40101 SET NAMES utf8mb4 */;
 
 --
--- Database: `ictb_db`
+-- Database: `ictb26`
 --
 
 -- --------------------------------------------------------
@@ -28,18 +28,25 @@ SET time_zone = "+00:00";
 --
 
 CREATE TABLE `applications` (
-  `id` int(11) NOT NULL,
-  `participant_id` int(11) NOT NULL,
+  `id` int NOT NULL,
+  `participant_id` int NOT NULL,
   `apptype_id` varchar(255) NOT NULL,
   `subtheme_id` varchar(255) NOT NULL,
   `title` varchar(255) NOT NULL,
   `abstract` text NOT NULL,
   `keyword` varchar(255) NOT NULL,
-  `firstsubmit` int(11) NOT NULL,
+  `firstsubmit` int NOT NULL,
   `publication_id` varchar(255) NOT NULL,
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp() ON UPDATE current_timestamp(),
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
   `updated_at` timestamp NULL DEFAULT NULL
-) ENGINE=InnoDB DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Dumping data untuk tabel `applications`
+--
+
+INSERT INTO `applications` (`id`, `participant_id`, `apptype_id`, `subtheme_id`, `title`, `abstract`, `keyword`, `firstsubmit`, `publication_id`, `created_at`, `updated_at`) VALUES
+(1, 13, 'Oral', 'Biodiversity Education through Geoparks, National Parks, and Landscape-Based Learning Systems', 'SEAMEO BIOTROP', 'uploads/1780387017_abstract_template_abstract.docx', '-', 1, 'Program book (abstract only) - free', '2026-06-02 07:56:57', NULL);
 
 -- --------------------------------------------------------
 
@@ -48,9 +55,9 @@ CREATE TABLE `applications` (
 --
 
 CREATE TABLE `countries` (
-  `id` int(11) DEFAULT NULL,
-  `country_name` varchar(200) DEFAULT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=utf8 COLLATE=utf8_bin;
+  `id` int DEFAULT NULL,
+  `country_name` varchar(200) COLLATE utf8mb3_bin DEFAULT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=utf8mb3 COLLATE=utf8mb3_bin;
 
 --
 -- Dumping data untuk tabel `countries`
@@ -312,9 +319,9 @@ INSERT INTO `countries` (`id`, `country_name`) VALUES
 --
 
 CREATE TABLE `migrations` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `migration` varchar(255) NOT NULL,
-  `batch` int(11) NOT NULL
+  `id` int UNSIGNED NOT NULL,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
 -- --------------------------------------------------------
@@ -324,25 +331,25 @@ CREATE TABLE `migrations` (
 --
 
 CREATE TABLE `participants` (
-  `id` int(11) NOT NULL,
-  `participant_type` varchar(50) NOT NULL,
-  `first_name` varchar(100) NOT NULL,
-  `last_name` varchar(100) NOT NULL,
-  `institution` varchar(255) NOT NULL,
-  `email` varchar(150) NOT NULL,
-  `phone` varchar(50) NOT NULL,
-  `password_hash` varchar(255) NOT NULL,
-  `bukti_transfer` varchar(255) DEFAULT '',
-  `bukti_diri` varchar(255) DEFAULT '',
-  `created_at` timestamp NOT NULL DEFAULT current_timestamp(),
-  `title` varchar(50) DEFAULT NULL,
-  `gender` varchar(50) DEFAULT NULL,
-  `org_type` varchar(100) DEFAULT NULL,
-  `country` varchar(100) DEFAULT NULL,
-  `attendance` varchar(100) DEFAULT NULL,
-  `funding` varchar(100) DEFAULT NULL,
-  `funding_source` varchar(255) DEFAULT NULL,
-  `allergies` varchar(255) DEFAULT NULL
+  `id` int NOT NULL,
+  `participant_type` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `first_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `last_name` varchar(100) COLLATE utf8mb4_general_ci NOT NULL,
+  `institution` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `email` varchar(150) COLLATE utf8mb4_general_ci NOT NULL,
+  `phone` varchar(50) COLLATE utf8mb4_general_ci NOT NULL,
+  `password_hash` varchar(255) COLLATE utf8mb4_general_ci NOT NULL,
+  `bukti_transfer` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `bukti_diri` varchar(255) COLLATE utf8mb4_general_ci DEFAULT '',
+  `created_at` timestamp NOT NULL DEFAULT CURRENT_TIMESTAMP,
+  `title` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `gender` varchar(50) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `org_type` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `country` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `attendance` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `funding` varchar(100) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `funding_source` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL,
+  `allergies` varchar(255) COLLATE utf8mb4_general_ci DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_general_ci;
 
 --
@@ -350,14 +357,17 @@ CREATE TABLE `participants` (
 --
 
 INSERT INTO `participants` (`id`, `participant_type`, `first_name`, `last_name`, `institution`, `email`, `phone`, `password_hash`, `bukti_transfer`, `bukti_diri`, `created_at`, `title`, `gender`, `org_type`, `country`, `attendance`, `funding`, `funding_source`, `allergies`) VALUES
-(3, 'author', 'Indira', 'Destriana', 'Telkom University', 'kunci027@gmail.com', '081234567890', '$2y$10$kNW8ZfYOOCG4MBkHg6hp6uh32vS8Q0Hm4fx9Ik5QqxFfi4.S2wzL.', '', '', '2026-05-15 09:17:27', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
+(3, 'author', 'Indira', 'Destriana', 'Telkom University', 'kunci027@gmail.com', '081234567890', '$2y$10$kNW8ZfYOOCG4MBkHg6hp6uh32vS8Q0Hm4fx9Ik5QqxFfi4.S2wzL.', '', 'uploads/1780386218_proof_6.  bukti upload foto formal.png', '2026-05-15 09:17:27', 'Mr.', 'Male', 'Academic institution', 'Indonesia', 'Offline', 'No', '', ''),
 (4, 'participant', 'Indira', 'Destriana', '', 'gionkys12@gmail.com', '081234567890', '$2y$10$mDXeS4WJFiWTROZD2.BDZOiRRxNPGq2kpbTL7niJfM0lQUfaIHBRK', '', '', '2026-05-21 01:45:50', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (5, 'participant', 'Indira', 'Destriana', '', 'dira@gmail.com', '081234567890', '$2y$10$vk5v7AweLN.7v2iDhHye9uSawVNQ2S/VdM.6pSHYjg9nlFKr3o.o.', '', '', '2026-05-26 02:05:07', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (6, 'participant', 'Indira', 'Destriana', '', 'indira@biotrop.org', '081234567890', '$2y$10$eiq3B4nFOkdxiue6EC2p6u5T5le04vr/WpDvwkxinjYJK6QMIcLeK', '', '', '2026-06-02 04:10:13', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (7, 'participant', 'Achmad', 'Fayad', '', 'fayad@biotrop.org', '081234567890', '$2y$10$XcQ7aHO.zIAWKq0ilaBC2uX.c1NUpKC0Gaaa.UKH.APwbMahcsJ9e', '', '', '2026-06-02 04:22:35', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (9, 'participant', 'Achmad', 'Fayad', '', 'fayad@biotrop.org1', '081234567890', '$2y$10$6lvVlyWEj03iIE2CzS7kJ.eQS8m6rbwIffn2qN1VW4wPRqh4Duz5q', '', '', '2026-06-02 06:31:14', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
 (10, 'participant', 'Indira', 'Destriana', '', 'indiradstrna@student.telkomuniversity.ac.id', '081234567890', '$2y$10$MkvEF.Jp315ScAzSIARFueRAjKcoNG6IXIprerwMj6fvN6uOJnXv6', 'uploads/1780382499_receipt_iPhone 11_ Verification Report_0000785E0AE0802E.png', 'uploads/1780382491_proof_FZL04616.JPG', '2026-06-02 06:41:18', NULL, NULL, NULL, NULL, NULL, NULL, NULL, NULL),
-(11, 'participant', 'sheni', 'olvianda', 'Telkom University', 'test@gmail.com', '081234567890', '$2y$10$aHk.yICclKhsmWqOt8WVe.L1r2vZUBFfQ9ot3oQ1Jam.zMYpcIfTC', '', 'uploads/1780384947_proof_a8b0aed5cf58f96005c435f87dff8db5.jpg', '2026-06-02 07:17:39', 'Ms.', 'Female', 'Academic institution', 'Indonesia', 'Offline', 'No', '', '');
+(11, 'participant', 'sheni', 'olvianda', 'Telkom University', 'test@gmail.com', '081234567890', '$2y$10$aHk.yICclKhsmWqOt8WVe.L1r2vZUBFfQ9ot3oQ1Jam.zMYpcIfTC', '', 'uploads/1780384947_proof_a8b0aed5cf58f96005c435f87dff8db5.jpg', '2026-06-02 07:17:39', 'Ms.', 'Female', 'Academic institution', 'Indonesia', 'Offline', 'No', '', ''),
+(12, 'participant', 'Achmad ', 'Fayad', 'Telkom University', 'indira1@biotrop.org', '081324708264', '$2y$10$/QbLemKTOBhhpytGPUAsEOCZNIOBfaOqIyJnueRx/7yaTP1GqocyG', 'uploads/1780386313_receipt_Screenshot (4).png', 'uploads/1780386292_proof_6.  bukti upload foto formal.png', '2026-06-02 07:44:31', 'Ms.', 'Female', 'Academic institution', 'Indonesia', 'Offline', 'No', '', ''),
+(13, 'author', 'M Raushan', 'Fiqr', 'SEAMEO BIOTROP', 'raushanfiqr14@gmail.com', '081383422616', '$2y$10$045IdeLPwNFGqa9ts1FCT.AU9/qi/jMkCyttdmFcb8kUebmIuuS2i', 'uploads/1780387066_receipt_WhatsApp_Image_2026-06-02_at_13.59.24-removebg-preview.png', '', '2026-06-02 07:53:57', 'Mr.', 'Male', 'Government', 'Indonesia', 'Offline', 'No', '', '-'),
+(14, 'author', 'Haritz', 'Cahya Nugraha', 'SEAMEO BIOTROP', 'haritzcn@gmail.com', '6285649838585', '$2y$10$HHRotoEVFEoLmo6HakEPbecyaYMBELzNu06wiLHMpAa7YRDiPy2N2', '', '', '2026-06-08 02:56:43', 'Mr.', 'Male', 'Government', 'Indonesia', 'Offline', 'No', '', 'Halal Food');
 
 -- --------------------------------------------------------
 
@@ -366,8 +376,8 @@ INSERT INTO `participants` (`id`, `participant_type`, `first_name`, `last_name`,
 --
 
 CREATE TABLE `password_resets` (
-  `email` varchar(255) NOT NULL,
-  `token` varchar(255) NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `token` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
   `created_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
 
@@ -378,29 +388,52 @@ CREATE TABLE `password_resets` (
 --
 
 CREATE TABLE `subthemes` (
-  `id` int(11) NOT NULL,
-  `id_theme` int(11) NOT NULL,
-  `sub_theme` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `id` int NOT NULL,
+  `id_theme` int NOT NULL,
+  `sub_theme` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `subthemes`
 --
 
 INSERT INTO `subthemes` (`id`, `id_theme`, `sub_theme`) VALUES
-(1, 1, 'Restoration in parks and protected areas'),
-(2, 1, 'Restoration in agro-ecological and silvicultural systems'),
-(3, 1, 'Restoration in an urban context'),
-(4, 1, 'Community and landscape scale restoration'),
-(5, 2, 'Traditional ecological knowledge and community-based restoration'),
-(6, 2, 'Monitoring and adaptive management'),
-(7, 3, 'Threatened and endangered species, populations and habitats'),
-(8, 3, 'Invasive species management'),
-(9, 3, 'The role of restoration in mitigating and adapting to climate change'),
-(10, 4, 'Planning and decision-making frameworks on ecological restoration'),
-(11, 1, 'Restoration in mined areas'),
-(12, 4, 'Effectivity & efficiency of policies and legal frameworks on ecological restoration'),
-(13, 4, 'Science and policy interactions in determining ecological restoration options');
+(1, 1, 'Geoparks & protected areas as living laboratories (aligned with UNESCO Global Geopark principles)'),
+(2, 1, 'Inclusive biodiversity education models (schools & communities, gender-responsive)'),
+(3, 1, 'Landscape-based, experiential, and community-driven learning'),
+(4, 1, 'Management of weeds & invasive alien species (IAS)'),
+(5, 1, 'Citizen science & participatory learning'),
+(6, 1, 'Eco-DRR & nature-based solutions (including hazard mapping)'),
+(7, 1, 'Strengthening community resilience & capacity'),
+(8, 1, 'Community empowerment for conservation & sustainable landscape governance'),
+(9, 1, 'Digital transformation in biodiversity education (e-learning, virtual labs, immersive technologies)'),
+(10, 1, 'Artificial intelligence (AI), GIS, and remote sensing for biodiversity monitoring and participatory mapping'),
+(11, 1, 'Digital citizen science platforms and data-driven environmental education'),
+(12, 2, 'Sustainable utilization of sub-optimal and degraded lands'),
+(13, 2, 'Ecological restoration and rehabilitation of post-mining areas'),
+(14, 2, 'Soil, water, and ecosystem recovery strategies'),
+(15, 2, 'Climate-resilient land management practices'),
+(16, 2, 'Policy, governance, and innovation in land restoration'),
+(17, 2, 'Circular economy approaches in land restoration and post-mining systems (waste-to-resource, resource efficiency)'),
+(18, 2, 'AI and digital technologies for land monitoring, degradation assessment, and restoration planning'),
+(19, 2, 'Remote sensing, big data, and digital twin technologies for landscape management'),
+(20, 3, 'Integration of agro-tourism and ecotourism for biodiversity conservation'),
+(21, 3, 'Community-based tourism and sustainable rural livelihoods'),
+(22, 3, 'Circular economy approaches in agro-ecosystems'),
+(23, 3, 'Conservation and sustainable utilization of edible insects'),
+(24, 3, 'Education and capacity building through agro-eco-tourism models'),
+(25, 3, 'Circular bioeconomy, regenerative agriculture, and zero-waste production systems'),
+(26, 3, 'Digital platforms and smart technologies for sustainable livelihoods and eco-tourism'),
+(27, 3, 'AI and precision agriculture for resource-efficient and climate-smart production systems'),
+(28, 4, 'Environmental biotechnology and bioremediation'),
+(29, 4, 'Microbial biotechnology for ecosystem restoration'),
+(30, 4, 'Plant biotechnology for resilience and sustainable production'),
+(31, 4, 'Biotechnology applications in biodiversity conservation'),
+(32, 4, 'Biotechnology and climate change mitigation and adaptation'),
+(33, 4, 'Biotechnological innovations for food, feed, fuel'),
+(34, 4, 'Biotechnology for forest conservation'),
+(35, 4, 'AI-driven biotechnology, bioinformatics, and big data analytics for biodiversity and environmental research'),
+(36, 4, 'Integration of digital technologies in biotechnology for sustainable solutions');
 
 -- --------------------------------------------------------
 
@@ -409,19 +442,19 @@ INSERT INTO `subthemes` (`id`, `id_theme`, `sub_theme`) VALUES
 --
 
 CREATE TABLE `themes` (
-  `id` int(11) NOT NULL,
-  `theme` varchar(100) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+  `id` int NOT NULL,
+  `theme` varchar(255) NOT NULL
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `themes`
 --
 
 INSERT INTO `themes` (`id`, `theme`) VALUES
-(1, 'Approaches, Techniques and Innovations in Ecological Restoration'),
-(2, 'Socio-economic, Cultural and Ethical Dimensions of Ecological Restoration'),
-(3, 'Ecological Restoration, Biodiversity, and Climate Change'),
-(4, 'Ecological Restoration Policies and Other Legal Frameworks');
+(1, 'Biodiversity Education through Geoparks, National Parks, and Landscape-Based Learning Systems'),
+(2, 'Sustainable Management of Sub-optimal Lands and Post-Mining Landscapes'),
+(3, 'Nature-Based Livelihoods'),
+(4, 'Biotechnology for Biodiversity, Environment, and Climate Change');
 
 -- --------------------------------------------------------
 
@@ -430,9 +463,9 @@ INSERT INTO `themes` (`id`, `theme`) VALUES
 --
 
 CREATE TABLE `type_application` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `type` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `type_application`
@@ -450,9 +483,9 @@ INSERT INTO `type_application` (`id`, `type`) VALUES
 --
 
 CREATE TABLE `type_organization` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `type` varchar(50) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `type_organization`
@@ -472,9 +505,9 @@ INSERT INTO `type_organization` (`id`, `type`) VALUES
 --
 
 CREATE TABLE `type_participant` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `type` varchar(20) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `type_participant`
@@ -492,10 +525,10 @@ INSERT INTO `type_participant` (`id`, `type`) VALUES
 --
 
 CREATE TABLE `type_publication` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `kode` varchar(15) NOT NULL,
   `type` varchar(255) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci;
+) ENGINE=MyISAM DEFAULT CHARSET=latin1;
 
 --
 -- Dumping data untuk tabel `type_publication`
@@ -513,9 +546,9 @@ INSERT INTO `type_publication` (`id`, `kode`, `type`) VALUES
 --
 
 CREATE TABLE `type_title` (
-  `id` int(11) NOT NULL,
+  `id` int NOT NULL,
   `title` varchar(5) NOT NULL
-) ENGINE=MyISAM DEFAULT CHARSET=latin1 COLLATE=latin1_swedish_ci COMMENT='Table of Title';
+) ENGINE=MyISAM DEFAULT CHARSET=latin1 COMMENT='Table of Title';
 
 --
 -- Dumping data untuk tabel `type_title`
@@ -534,26 +567,26 @@ INSERT INTO `type_title` (`id`, `title`) VALUES
 --
 
 CREATE TABLE `users` (
-  `id` int(10) UNSIGNED NOT NULL,
-  `registration_id` varchar(255) NOT NULL,
-  `firstname` varchar(255) NOT NULL,
-  `lastname` varchar(255) NOT NULL,
-  `email` varchar(255) NOT NULL,
-  `type_participant_id` int(11) NOT NULL,
-  `type_organization_id` int(11) DEFAULT NULL,
-  `organization` varchar(255) DEFAULT NULL,
-  `type_title_id` int(11) DEFAULT NULL,
-  `countries_id` int(11) DEFAULT NULL,
-  `password` varchar(255) NOT NULL,
-  `gender` varchar(125) DEFAULT NULL,
-  `student` varchar(125) DEFAULT NULL,
-  `studentid` varchar(255) DEFAULT NULL,
-  `funding` varchar(125) DEFAULT NULL,
-  `fundingsource` varchar(255) DEFAULT NULL,
-  `contribution` text DEFAULT NULL,
-  `allergies` varchar(255) DEFAULT NULL,
-  `payment` varchar(125) DEFAULT NULL,
-  `remember_token` varchar(100) DEFAULT NULL,
+  `id` int UNSIGNED NOT NULL,
+  `registration_id` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `firstname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `lastname` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `email` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `type_participant_id` int NOT NULL,
+  `type_organization_id` int DEFAULT NULL,
+  `organization` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `type_title_id` int DEFAULT NULL,
+  `countries_id` int DEFAULT NULL,
+  `password` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `gender` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `student` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `studentid` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `funding` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `fundingsource` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `contribution` text COLLATE utf8mb4_unicode_ci,
+  `allergies` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `payment` varchar(125) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `remember_token` varchar(100) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
   `created_at` timestamp NULL DEFAULT NULL,
   `updated_at` timestamp NULL DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
@@ -644,55 +677,55 @@ ALTER TABLE `users`
 -- AUTO_INCREMENT untuk tabel `applications`
 --
 ALTER TABLE `applications`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
 -- AUTO_INCREMENT untuk tabel `migrations`
 --
 ALTER TABLE `migrations`
-  MODIFY `id` int(10) UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+  MODIFY `id` int UNSIGNED NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT untuk tabel `participants`
 --
 ALTER TABLE `participants`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=12;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=15;
 
 --
 -- AUTO_INCREMENT untuk tabel `subthemes`
 --
 ALTER TABLE `subthemes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=14;
 
 --
 -- AUTO_INCREMENT untuk tabel `themes`
 --
 ALTER TABLE `themes`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_application`
 --
 ALTER TABLE `type_application`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_organization`
 --
 ALTER TABLE `type_organization`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=6;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_publication`
 --
 ALTER TABLE `type_publication`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT untuk tabel `type_title`
 --
 ALTER TABLE `type_title`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;
