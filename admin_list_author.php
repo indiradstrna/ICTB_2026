@@ -115,7 +115,13 @@ include 'includes/header.php';
                                     <?php if (!empty($row['bukti_transfer'])): ?>
                                         <a href="<?php echo htmlspecialchars($row['bukti_transfer']); ?>" target="_blank" class="link-action">View Proof</a>
                                     <?php else: ?>
-                                        <span style="color: #999;">-</span>
+                                        <span style="color: #e74c3c; font-weight: bold;">Unpaid</span><br>
+                                        <?php 
+                                            $wa_phone = preg_replace('/[^0-9]/', '', $row['phone'] ?? '');
+                                            if (substr($wa_phone, 0, 1) == '0') $wa_phone = '62' . substr($wa_phone, 1);
+                                            $wa_text = urlencode("Hello " . $name . ",\nThis is a gentle reminder from the ICTB Conference committee. We noticed you haven't uploaded your payment receipt yet. Please log in and upload your proof of transfer to confirm your participation.");
+                                        ?>
+                                        <a href="https://wa.me/<?php echo $wa_phone; ?>?text=<?php echo $wa_text; ?>" target="_blank" style="text-decoration: none; font-size: 11px; background: #25D366; color: #fff; padding: 2px 6px; border-radius: 3px; display: inline-block; margin-top: 4px; font-weight: bold;">Remind (WA)</a>
                                     <?php endif; ?>
                                 </td>
                                 <td>
