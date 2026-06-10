@@ -71,7 +71,13 @@ $site_title = "The 5th International Conference on Tropical Biology";
                     <?php if (isset($_SESSION['participant_id'])): ?>
                         <a href="#" class="nav-link" style="text-transform: uppercase;"><?php echo htmlspecialchars($_SESSION['first_name'] ?? 'USER'); ?></a>
                         <ul class="dropdown-menu">
-                            <li><a href="Confirmation.php?type=participant#important-info">MY REGISTRATION</a></li>
+                            <?php if (isset($_SESSION['is_admin']) && $_SESSION['is_admin']): ?>
+                                <li><a href="admin_list_author.php">LIST AUTHOR</a></li>
+                                <li><a href="admin_list_abstract.php">LIST ABSTRACT</a></li>
+                                <li><a href="admin_list_peserta.php">LIST PESERTA</a></li>
+                            <?php else: ?>
+                                <li><a href="Confirmation.php?type=participant#important-info">MY REGISTRATION</a></li>
+                            <?php endif; ?>
                             <li><a href="logout.php">LOGOUT</a></li>
                         </ul>
                     <?php else: ?>

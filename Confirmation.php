@@ -38,6 +38,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 }
                 $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
                 $stmt->execute();
+                
+                // Set explicitly for the current page load
+                $user_data['bukti_transfer'] = $target_path;
             }
             $upload_success = true;
         }
@@ -349,21 +352,24 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
 
                 <div style="margin-bottom: 10px;">After you have completed the payment, please upload your receipt here:</div>
                 
-                <?php if ($upload_success): ?>
-                    <div style="color: green; font-weight: bold; margin-bottom: 10px;">Payment receipt uploaded successfully!</div>
+                <?php if (!empty($user_data['bukti_transfer'])): ?>
+                    <div style="color: green; font-weight: bold; margin-bottom: 10px;">
+                        Upload Successful: <a href="<?php echo htmlspecialchars($user_data['bukti_transfer']); ?>" target="_blank" style="color: green; text-decoration: underline;"><?php echo htmlspecialchars(basename($user_data['bukti_transfer'])); ?></a>
+                    </div>
                 <?php endif; ?>
                 <form action="" method="POST" enctype="multipart/form-data">
                     <div class="highlight-box">
                         <input type="file" name="payment_receipt" id="payment_receipt" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
                     </div>
                     <div>
-                        <button type="submit" class="btn-yellow-submit">Submit Receipt</button>
+                        <button type="submit" class="btn-yellow-submit"><?php echo !empty($user_data['bukti_transfer']) ? 'Update Receipt' : 'Submit Receipt'; ?></button>
                     </div>
                 </form>
             </div>
         </fieldset>
 
-        <a href="success.php" class="btn-yellow-confirm" style="display: inline-block; text-decoration: none; text-align: center;">Confirm Data</a>
+        <?php $has_receipt = !empty($user_data['bukti_transfer']); ?>
+        <a href="<?php echo $has_receipt ? 'success.php' : '#'; ?>" class="btn-yellow-confirm" style="display: inline-block; text-decoration: none; text-align: center; <?php echo $has_receipt ? '' : 'opacity: 0.5; cursor: not-allowed; pointer-events: none;'; ?>">Confirm Data</a>
 
     </div>
 </section>

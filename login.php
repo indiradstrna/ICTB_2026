@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, first_name, password_hash FROM participants WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, first_name, password_hash, is_admin FROM participants WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -18,7 +18,13 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         if (password_verify($password, $user['password_hash'])) {
             $_SESSION['participant_id'] = $user['id'];
             $_SESSION['first_name'] = $user['first_name'];
-            header("Location: index.php");
+            $_SESSION['is_admin'] = (isset($user['is_admin']) && $user['is_admin'] == 1);
+            
+            if ($_SESSION['is_admin']) {
+                header("Location: admin_list_author.php");
+            } else {
+                header("Location: index.php");
+            }
             exit();
         } else {
             $error_msg = "Invalid password.";
