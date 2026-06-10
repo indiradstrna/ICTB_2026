@@ -8,7 +8,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $email = $_POST['email'];
     $password = $_POST['password'];
 
-    $stmt = $conn->prepare("SELECT id, first_name, password_hash, is_admin FROM participants WHERE email = ?");
+    $stmt = $conn->prepare("SELECT id, first_name, password_hash, is_admin, is_superadmin FROM participants WHERE email = ?");
     $stmt->bind_param("s", $email);
     $stmt->execute();
     $result = $stmt->get_result();
@@ -19,6 +19,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $_SESSION['participant_id'] = $user['id'];
             $_SESSION['first_name'] = $user['first_name'];
             $_SESSION['is_admin'] = (isset($user['is_admin']) && $user['is_admin'] == 1);
+            $_SESSION['is_superadmin'] = (isset($user['is_superadmin']) && $user['is_superadmin'] == 1);
             
             if ($_SESSION['is_admin']) {
                 header("Location: admin_list_author.php");
