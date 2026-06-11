@@ -111,7 +111,18 @@ include 'includes/header.php';
                                     <?php if (!empty($row['bukti_transfer'])): ?>
                                         <a href="<?php echo htmlspecialchars($row['bukti_transfer']); ?>" target="_blank" class="link-action">View Proof</a>
                                     <?php else: ?>
-                                        <span style="color: #999;">-</span>
+                                        <?php if (isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin']): ?>
+                                            <?php 
+                                                $wa_num = preg_replace('/[^0-9]/', '', $row['phone'] ?? ''); 
+                                                if (strpos($wa_num, '0') === 0) {
+                                                    $wa_num = '62' . substr($wa_num, 1);
+                                                }
+                                                $wa_text = urlencode("Halo {$name}, mohon segera mengunggah bukti transfer Anda untuk pendaftaran ICTB.");
+                                            ?>
+                                            <a href="https://wa.me/<?php echo $wa_num; ?>?text=<?php echo $wa_text; ?>" target="_blank" class="link-action" style="color: #0984e3; display: inline-block; padding: 2px 6px; border: 1px solid #0984e3; border-radius: 4px; font-size: 11px;">Remind WA</a>
+                                        <?php else: ?>
+                                            <span style="color: #999;">-</span>
+                                        <?php endif; ?>
                                     <?php endif; ?>
                                 </td>
                             </tr>

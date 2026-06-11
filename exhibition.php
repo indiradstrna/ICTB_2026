@@ -94,6 +94,20 @@
                 </div>
             </div>
 
+            <!-- Sponsorship Contact -->
+            <div class="article-section reveal-up" style="margin-top: 60px;">
+                <div style="background-color: #cce8d0; padding: 30px; color: #1f2937; line-height: 1.6; border-radius: 4px;">
+                    <p style="margin-bottom: 24px; color: #064e3b;">For sponsorship, please contact:</p>
+                    <p style="margin-bottom: 0; color: #064e3b;">
+                        <strong>Mr Slamet Widodo, M.Si</strong><br>
+                        5th ICTB Secretariat<br>
+                        SEAMEO BIOTROP<br>
+                        Jl. Raya Tajur Km 6, Bogor 16134, West Java, INDONESIA<br>
+                        E-mail: <a href="mailto:ictb@biotrop.org" style="color: #064e3b; text-decoration: none;">ictb@biotrop.org</a>
+                    </p>
+                </div>
+            </div>
+
         </div>
 
     </div>

@@ -115,18 +115,17 @@ include 'includes/header.php';
                                     <?php if (!empty($row['bukti_transfer'])): ?>
                                         <a href="<?php echo htmlspecialchars($row['bukti_transfer']); ?>" target="_blank" class="link-action">View Proof</a>
                                     <?php else: ?>
-                                        <div style="color: #999; margin-bottom: 5px;">-</div>
                                         <?php if (isset($_SESSION['is_superadmin']) && $_SESSION['is_superadmin']): ?>
                                             <?php 
-                                                $wa_number = preg_replace('/[^0-9]/', '', $row['phone']);
-                                                if (substr($wa_number, 0, 1) === '0') {
-                                                    $wa_number = '62' . substr($wa_number, 1);
+                                                $wa_num = preg_replace('/[^0-9]/', '', $row['phone'] ?? ''); 
+                                                if (strpos($wa_num, '0') === 0) {
+                                                    $wa_num = '62' . substr($wa_num, 1);
                                                 }
-                                                $wa_message = urlencode("Halo " . $name . ", kami mengingatkan Anda untuk segera mengunggah bukti transfer (payment receipt) Anda di website The 5th ICTB.");
+                                                $wa_text = urlencode("Halo {$name}, mohon segera mengunggah bukti transfer Anda untuk pendaftaran ICTB.");
                                             ?>
-                                            <a href="https://wa.me/<?php echo $wa_number; ?>?text=<?php echo $wa_message; ?>" target="_blank" style="background-color: #25D366; color: white; padding: 4px 8px; border-radius: 4px; text-decoration: none; font-size: 11px; font-weight: bold; display: inline-block;">Remind WA</a>
+                                            <a href="https://wa.me/<?php echo $wa_num; ?>?text=<?php echo $wa_text; ?>" target="_blank" class="link-action" style="color: #0984e3; display: inline-block; padding: 2px 6px; border: 1px solid #0984e3; border-radius: 4px; font-size: 11px;">Remind WA</a>
                                         <?php else: ?>
-                                            <span style="background-color: #ccc; color: white; padding: 4px 8px; border-radius: 4px; font-size: 11px; font-weight: bold; cursor: not-allowed;" title="Only Superadmin can send WA reminder">Remind WA</span>
+                                            <span style="color: #999;">-</span>
                                         <?php endif; ?>
                                     <?php endif; ?>
                                 </td>

@@ -251,7 +251,7 @@ while($row = $subthemes_result->fetch_assoc()) {
 
                 <div class="info-form-group">
                     <label class="info-form-label" for="theme">Theme</label>
-                    <select id="theme" name="theme" class="info-form-control" onchange="updateSubthemes()">
+                    <select id="theme" name="theme" class="info-form-control" onchange="updateSubthemes()" required>
                         <option value="">Select Theme</option>
                         <?php foreach($themes_data as $t): ?>
                             <option value="<?php echo htmlspecialchars($t['theme']); ?>" data-id="<?php echo $t['id']; ?>"><?php echo htmlspecialchars($t['theme']); ?></option>
@@ -269,21 +269,21 @@ while($row = $subthemes_result->fetch_assoc()) {
                 <div class="info-form-group">
                     <label class="info-form-label" for="title">Title</label>
                     <span class="hint-text">15 words left</span>
-                    <input type="text" id="title" name="title" class="info-form-control" placeholder="Title">
+                    <input type="text" id="title" name="title" class="info-form-control" placeholder="Title" required>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label">Abstract</label>
                     <a href="template_abstract.docx" download class="btn-dark">Download Abstract Template</a>
                     <div class="highlight-box">
-                        <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;">
+                        <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;" required>
                     </div>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label" for="keywords">Keywords</label>
                     <span class="hint-text">(separate each keyword by comma)</span>
-                    <input type="text" id="keywords" name="keywords" class="info-form-control" placeholder="Keywords">
+                    <input type="text" id="keywords" name="keywords" class="info-form-control" placeholder="Keywords" required>
                 </div>
 
                 <div class="info-form-group">
@@ -302,16 +302,16 @@ while($row = $subthemes_result->fetch_assoc()) {
                     <label class="info-form-label">Which publication do you prefer for your abstract & full paper?</label>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Program book (abstract only) - free"> Program book (abstract only) - free
+                            <input type="radio" name="publication" value="Program book (abstract only) - free" required> Program book (abstract only) - free
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Program book and proceeding (full paper) - Rp. 800.000 / USD 80"> Program book and proceeding (full paper) - Rp. 800.000 / USD 80
+                            <input type="radio" name="publication" value="Program book and proceeding (full paper) - Rp. 800.000 / USD 80" required> Program book and proceeding (full paper) - Rp. 800.000 / USD 80
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="IoP Proceeding (full paper) - Fees to be informed upon acceptance"> IoP Proceeding (full paper) - Fees to be informed upon acceptance
+                            <input type="radio" name="publication" value="IoP Proceeding (full paper) - Fees to be informed upon acceptance" required> IoP Proceeding (full paper) - Fees to be informed upon acceptance
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Scopus Indexed Journal (full paper) - Fees to be informed upon acceptance"> Scopus Indexed Journal (full paper) - Fees to be informed upon acceptance
+                            <input type="radio" name="publication" value="Scopus Indexed Journal (full paper) - Fees to be informed upon acceptance" required> Scopus Indexed Journal (full paper) - Fees to be informed upon acceptance
                         </label>
                     </div>
                 </div>
