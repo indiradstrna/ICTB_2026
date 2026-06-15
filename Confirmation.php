@@ -45,6 +45,27 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $upload_success = true;
         }
     }
+
+    if (isset($_FILES['update_abstract']) && $_FILES['update_abstract']['error'] == UPLOAD_ERR_OK) {
+        $filename = time() . '_abstract_' . basename($_FILES['update_abstract']['name']);
+        $target_path = 'uploads/' . $filename;
+        if (move_uploaded_file($_FILES['update_abstract']['tmp_name'], $target_path)) {
+            if (isset($_SESSION['participant_id'])) {
+                if (!empty($app_data)) {
+                    $stmt = $conn->prepare("UPDATE applications SET abstract = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+                    $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                    $stmt->execute();
+                    $app_data['abstract'] = $target_path;
+                } else {
+                    $stmt = $conn->prepare("INSERT INTO applications (participant_id, abstract) VALUES (?, ?)");
+                    $stmt->bind_param("is", $_SESSION['participant_id'], $target_path);
+                    $stmt->execute();
+                    $app_data['abstract'] = $target_path;
+                }
+            }
+            $upload_success = true;
+        }
+    }
 }
 
 // Dynamic Pricing Logic based on Registration Type (Indonesian Participants)
@@ -318,8 +339,18 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             <div class="summary-line"><span class="summary-label">Title:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['title']??''); ?></span></div>
             
             <?php if (!empty($app_data['abstract'])): ?>
-            <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" class="btn-dark-blue" style="text-decoration:none; display:inline-block; margin-top:10px; margin-bottom:10px;">Abstract File</a>
+            <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" class="btn-dark-blue" style="text-decoration:none; display:inline-block; margin-top:10px; margin-bottom:10px;">Current Abstract File</a>
             <?php endif; ?>
+            
+            <div style="margin-top: 15px; margin-bottom: 10px;">
+                <strong>Upload / Update Abstract File (.docx):</strong>
+                <form action="" method="POST" enctype="multipart/form-data" onsubmit="return validateAbstractUpdate()">
+                    <div class="highlight-box" style="margin-top: 5px; margin-bottom: 5px;">
+                        <input type="file" name="update_abstract" id="update_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
+                    </div>
+                    <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;">Submit Abstract</button>
+                </form>
+            </div>
             
             <div class="summary-line" style="margin-top: 5px;"><span class="summary-label">Keywords:</span></div>
             <div style="font-family: 'Inter', sans-serif; font-size: 13px; color: #555; background: #f8f9fa; padding: 10px; border-radius: 4px; border: 1px solid #e9ecef; margin-top: 5px;">
@@ -373,5 +404,26 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
 
     </div>
 </section>
+
+<script>
+function validateAbstractUpdate() {
+    var fileInput = document.getElementById('update_abstract');
+    if (fileInput && fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        var fileName = file.name;
+        var extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+        
+        if (extension !== '.docx') {
+            alert('Format file tidak didukung! Harap unggah file dengan format .docx saja.');
+            fileInput.value = ''; 
+            return false;
+        }
+    } else {
+        alert('Harap pilih file abstrak Anda (.docx) terlebih dahulu.');
+        return false;
+    }
+    return true;
+}
+</script>
 
 <?php include 'includes/footer.php'; ?>
