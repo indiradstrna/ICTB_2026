@@ -76,7 +76,7 @@ $site_title = "The 5th International Conference on Tropical Biology";
                                 <li><a href="admin_list_abstract.php">LIST ABSTRACT</a></li>
                                 <li><a href="admin_list_peserta.php">LIST PESERTA</a></li>
                             <?php else: ?>
-                                <li><a href="Confirmation.php?type=participant#important-info">MY REGISTRATION</a></li>
+                                <li><a href="Confirmation.php#important-info">MY REGISTRATION</a></li>
                             <?php endif; ?>
                             <li><a href="logout.php">LOGOUT</a></li>
                         </ul>

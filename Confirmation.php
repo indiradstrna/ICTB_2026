@@ -69,7 +69,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 }
 
 // Dynamic Pricing Logic based on Registration Type (Indonesian Participants)
-$participant_type = isset($_GET['type']) ? $_GET['type'] : (isset($_SESSION['participant_type']) ? $_SESSION['participant_type'] : 'Author');
+$participant_type = isset($user_data['participant_type']) && !empty($user_data['participant_type']) ? $user_data['participant_type'] : (isset($_GET['type']) ? $_GET['type'] : 'Author');
 
 // Determine category based on is_student
 $is_student = isset($_SESSION['is_student']) ? $_SESSION['is_student'] : 'No';
@@ -338,17 +338,20 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             <div class="summary-line"><span class="summary-label">Subtheme:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['subtheme_id']??''); ?></span></div>
             <div class="summary-line"><span class="summary-label">Title:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['title']??''); ?></span></div>
             
-            <?php if (!empty($app_data['abstract'])): ?>
-            <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" class="btn-dark-blue" style="text-decoration:none; display:inline-block; margin-top:10px; margin-bottom:10px;">Current Abstract File</a>
-            <?php endif; ?>
-            
             <div style="margin-top: 15px; margin-bottom: 10px;">
                 <strong>Upload / Update Abstract File (.docx):</strong>
+                
+                <?php if (!empty($app_data['abstract'])): ?>
+                    <div style="color: green; font-weight: bold; margin-top: 5px; margin-bottom: 10px;">
+                        Upload Successful: <a href="<?php echo htmlspecialchars($app_data['abstract']); ?>" target="_blank" style="color: green; text-decoration: underline;"><?php echo htmlspecialchars(basename($app_data['abstract'])); ?></a>
+                    </div>
+                <?php endif; ?>
+
                 <form action="" method="POST" enctype="multipart/form-data" onsubmit="return validateAbstractUpdate()">
                     <div class="highlight-box" style="margin-top: 5px; margin-bottom: 5px;">
                         <input type="file" name="update_abstract" id="update_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
                     </div>
-                    <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;">Submit Abstract</button>
+                    <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;"><?php echo !empty($app_data['abstract']) ? 'Update Abstract' : 'Submit Abstract'; ?></button>
                 </form>
             </div>
             
