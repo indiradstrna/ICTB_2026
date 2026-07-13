@@ -3,6 +3,7 @@ session_start();
 require_once 'includes/db.php';
 
 $upload_success = false;
+$upload_error_msg = "";
 
 $user_data = [];
 $app_data = [];
@@ -46,6 +47,34 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    // Handling PPT Upload
+    if (isset($_FILES['update_ppt'])) {
+        if ($_FILES['update_ppt']['error'] == UPLOAD_ERR_OK) {
+            $max_size = 20 * 1024 * 1024; // 20 MB
+            if ($_FILES['update_ppt']['size'] > $max_size) {
+                $upload_error_msg = "Error: Ukuran file PPT/PDF maksimal adalah 20 MB.";
+            } else {
+                $filename = time() . '_ppt_' . basename($_FILES['update_ppt']['name']);
+                $target_path = 'uploads/' . $filename;
+                if (move_uploaded_file($_FILES['update_ppt']['tmp_name'], $target_path)) {
+                    if (isset($_SESSION['participant_id'])) {
+                        if (!empty($app_data)) {
+                            $stmt = $conn->prepare("UPDATE applications SET ppt_file = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+                            if ($stmt) {
+                                $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                                $stmt->execute();
+                                $app_data['ppt_file'] = $target_path;
+                            }
+                        }
+                    }
+                    $upload_success = true;
+                }
+            }
+        } else if ($_FILES['update_ppt']['error'] != UPLOAD_ERR_NO_FILE) {
+            $upload_error_msg = "Error uploading PPT. Please ensure the file size does not exceed the maximum allowed size (20 MB).";
+        }
+    }
+
     if (isset($_FILES['update_abstract']) && $_FILES['update_abstract']['error'] == UPLOAD_ERR_OK) {
         $filename = time() . '_abstract_' . basename($_FILES['update_abstract']['name']);
         $target_path = 'uploads/' . $filename;
@@ -82,8 +111,15 @@ $early_bird_deadline = strtotime('2026-08-31 23:59:59');
 $current_time = time();
 $is_early_bird = ($current_time <= $early_bird_deadline);
 
-// Get publication type from session
-$publication_type = isset($_SESSION['publication']) ? $_SESSION['publication'] : 'ICTB proceeding book (ISBN)';
+// Get publication type from database or session
+$publication_type = "";
+if (!empty($app_data['publication_id'])) {
+    $publication_type = $app_data['publication_id'];
+} elseif (isset($_SESSION['publication'])) {
+    $publication_type = $_SESSION['publication'];
+} else {
+    $publication_type = 'ICTB proceeding book (ISBN) - IDR 800,000 / USD 80'; // Default fallback
+}
 
 $participation_fee = 0;
 $fee_label = "";
@@ -117,19 +153,19 @@ if ($is_participant_only) {
     $pub_fee_label = "Not Applicable";
     $publication_type = "None";
 } else {
-    if ($publication_type == 'Scopus-indexed proceedings') {
+    if (strpos($publication_type, 'Scopus-indexed proceedings') !== false && strpos($publication_type, '2,500,000') !== false) {
         $publication_fee = 2500000;
         $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
-    } elseif ($publication_type == 'ICTB proceeding book (ISBN)' || $publication_type == 'Program book and proceeding (full paper) - Rp. 800.000 / USD 80') {
+    } elseif (strpos($publication_type, 'ICTB proceeding book') !== false || strpos($publication_type, 'Rp. 800.000') !== false) {
         $publication_fee = 800000;
         $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
-    } elseif (strpos(strtolower($publication_type), 'free') !== false || $publication_type == 'Program book (abstract only) - free') {
+    } elseif (strpos(strtolower($publication_type), 'free') !== false) {
         $publication_fee = 0;
         $pub_fee_label = "Free";
     }
 }
 
-$total_payment = $participation_fee + $publication_fee;
+$total_payment = $participation_fee;
 $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
 ?>
 <?php include 'includes/header.php'; ?>
@@ -308,6 +344,11 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
         <div class="info-alert">
             Summary of all the information that you have entered earlier. Please make sure all information shown are correct before clicking on Confirmation Button.
         </div>
+        <?php if (!empty($upload_error_msg)): ?>
+            <div style="background: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px; border: 1px solid #f5c6cb; border-radius: 4px;">
+                <?php echo htmlspecialchars($upload_error_msg); ?>
+            </div>
+        <?php endif; ?>
 
         <fieldset class="info-fieldset">
             <legend class="info-legend">Registrant Information</legend>
@@ -360,6 +401,37 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                 <?php echo nl2br(htmlspecialchars($app_data['keyword']??'')); ?>
             </div>
             <div class="summary-line"><span class="summary-label">Publication Type:</span> <span class="summary-val"><?php echo htmlspecialchars($publication_type); ?> - <?php echo $pub_fee_label; ?></span></div>
+            
+            <?php if (strtolower($participant_type) == 'author'): ?>
+                <?php if (!empty($user_data['bukti_transfer'])): ?>
+                <div style="margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 15px;">
+                    <strong>Upload / Update Presentation File (PPT/PDF):</strong>
+                    <div style="font-size: 11px; color: #d9534f; margin-bottom: 5px;">
+                        <em>Note: Maximum file size allowed is 20 MB.</em>
+                    </div>
+                    
+                    <?php if (!empty($app_data['ppt_file'])): ?>
+                        <div style="color: green; font-weight: bold; margin-top: 5px; margin-bottom: 10px;">
+                            Upload Successful: <a href="<?php echo htmlspecialchars($app_data['ppt_file']); ?>" target="_blank" style="color: green; text-decoration: underline;"><?php echo htmlspecialchars(basename($app_data['ppt_file'])); ?></a>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="return validatePPTUpdate()">
+                        <div class="highlight-box" style="margin-top: 5px; margin-bottom: 5px;">
+                            <input type="file" name="update_ppt" id="update_ppt" accept=".ppt,.pptx,.pdf" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
+                        </div>
+                        <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;"><?php echo !empty($app_data['ppt_file']) ? 'Update Presentation' : 'Submit Presentation'; ?></button>
+                    </form>
+                </div>
+                <?php else: ?>
+                <div style="margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 15px;">
+                    <div style="font-size: 13px; color: #856404; background-color: #fff3cd; border: 1px solid #ffeeba; padding: 12px; border-radius: 4px; text-align: center;">
+                        <strong>Note for Presenters:</strong><br>
+                        The form to upload your presentation file (PPT/PPTX/PDF) will appear here <strong>after you have successfully uploaded your payment receipt</strong> at the Payment Information section below.
+                    </div>
+                </div>
+                <?php endif; ?>
+            <?php endif; ?>
         </fieldset>
         <?php endif; ?>
 
@@ -423,6 +495,33 @@ function validateAbstractUpdate() {
         }
     } else {
         alert('Harap pilih file abstrak Anda (.docx) terlebih dahulu.');
+        return false;
+    }
+    return true;
+}
+
+function validatePPTUpdate() {
+    var fileInput = document.getElementById('update_ppt');
+    if (fileInput && fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        var fileName = file.name;
+        var extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+        
+        var allowedExtensions = ['.ppt', '.pptx', '.pdf'];
+        if (!allowedExtensions.includes(extension)) {
+            alert('Format file tidak didukung! Harap unggah file dengan format .ppt, .pptx, atau .pdf.');
+            fileInput.value = ''; 
+            return false;
+        }
+        
+        var maxSize = 20 * 1024 * 1024; // 20 MB
+        if (file.size > maxSize) {
+            alert('Ukuran file melebihi batas maksimal yang diizinkan (20 MB).');
+            fileInput.value = '';
+            return false;
+        }
+    } else {
+        alert('Harap pilih file presentasi Anda terlebih dahulu.');
         return false;
     }
     return true;

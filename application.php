@@ -305,13 +305,16 @@ while($row = $subthemes_result->fetch_assoc()) {
                             <input type="radio" name="publication" value="Program book (abstract only) - free" required> Program book (abstract only) - free
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Program book and proceeding (full paper) - Rp. 800.000 / USD 80" required> Program book and proceeding (full paper) - Rp. 800.000 / USD 80
+                            <input type="radio" name="publication" value="ICTB proceeding book (ISBN) - IDR 800,000 / USD 80" required> ICTB proceeding book (ISBN) - IDR 800,000 / USD 80
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="IoP Proceeding (full paper) - Fees to be informed upon acceptance" required> IoP Proceeding (full paper) - Fees to be informed upon acceptance
+                            <input type="radio" name="publication" value="Scopus-indexed proceedings - IDR 2,500,000" required> Scopus-indexed proceedings - IDR 2,500,000
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Scopus Indexed Journal (full paper) - Fees to be informed upon acceptance" required> Scopus Indexed Journal (full paper) - Fees to be informed upon acceptance
+                            <input type="radio" name="publication" value="Sinta accredited journal - To be determined by the journal" required> Sinta accredited journal - To be determined by the journal
+                        </label>
+                        <label class="info-radio-label">
+                            <input type="radio" name="publication" value="In selected Scopus-indexed journals - To be determined by the journal" required> In selected Scopus-indexed journals - To be determined by the journal
                         </label>
                     </div>
                 </div>

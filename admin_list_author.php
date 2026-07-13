@@ -11,13 +11,21 @@ if (!isset($_SESSION['is_admin']) || !$_SESSION['is_admin']) {
 // Fetch authors
 $query = "SELECT p.*, a.apptype_id, a.abstract as abstract_file 
           FROM participants p 
-          LEFT JOIN applications a ON p.id = a.participant_id 
+          LEFT JOIN (
+              SELECT participant_id, MAX(id) as max_id 
+              FROM applications 
+              GROUP BY participant_id
+          ) latest_app ON p.id = latest_app.participant_id
+          LEFT JOIN applications a ON latest_app.max_id = a.id
           WHERE p.participant_type = 'author' 
           ORDER BY p.id DESC";
 $result = $conn->query($query);
 
 include 'includes/header.php';
 ?>
+
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
 
 <style>
     .admin-container {
@@ -76,8 +84,8 @@ include 'includes/header.php';
             <h2 class="admin-title">List of Author</h2>
         </div>
         
-        <div style="overflow-x: auto;">
-            <table class="admin-table">
+        <div style="overflow-x: auto; padding-bottom: 20px;">
+            <table class="admin-table display" id="authorTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -148,5 +156,17 @@ include 'includes/header.php';
         </div>
     </div>
 </div>
+
+<!-- jQuery and DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#authorTable').DataTable({
+        "pageLength": 25,
+        "order": [] // disable initial sort to keep DESC order from query
+    });
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>
