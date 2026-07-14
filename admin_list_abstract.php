@@ -18,6 +18,9 @@ $result = $conn->query($query);
 include 'includes/header.php';
 ?>
 
+<!-- DataTables CSS -->
+<link rel="stylesheet" href="https://cdn.datatables.net/1.13.6/css/jquery.dataTables.min.css">
+
 <style>
     .admin-container {
         padding: 120px 20px 50px;
@@ -76,7 +79,7 @@ include 'includes/header.php';
         </div>
         
         <div style="overflow-x: auto;">
-            <table class="admin-table">
+            <table class="admin-table display" id="abstractTable" style="width:100%">
                 <thead>
                     <tr>
                         <th>No</th>
@@ -125,5 +128,17 @@ include 'includes/header.php';
         </div>
     </div>
 </div>
+
+<!-- jQuery and DataTables JS -->
+<script src="https://code.jquery.com/jquery-3.7.0.min.js"></script>
+<script src="https://cdn.datatables.net/1.13.6/js/jquery.dataTables.min.js"></script>
+<script>
+$(document).ready(function() {
+    $('#abstractTable').DataTable({
+        "pageLength": 25,
+        "order": [] // disable initial sort to keep DESC order from query
+    });
+});
+</script>
 
 <?php include 'includes/footer.php'; ?>
