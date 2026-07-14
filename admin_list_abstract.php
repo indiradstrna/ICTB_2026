@@ -78,7 +78,7 @@ include 'includes/header.php';
             <h2 class="admin-title">List of Abstract</h2>
         </div>
         
-        <div style="overflow-x: auto;">
+        <div style="overflow-x: auto; padding-bottom: 20px;">
             <table class="admin-table display" id="abstractTable" style="width:100%">
                 <thead>
                     <tr>

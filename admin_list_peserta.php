@@ -76,7 +76,7 @@ include 'includes/header.php';
             <p style="color: #666; font-family: 'Inter', sans-serif; font-size: 14px; margin-top: 40px; margin-bottom: 20px;">the list of participants:</p>
         </div>
         
-        <div style="overflow-x: auto;">
+        <div style="overflow-x: auto; padding-bottom: 20px;">
             <table class="admin-table display" id="pesertaTable" style="width:100%">
                 <thead>
                     <tr>
