@@ -28,22 +28,30 @@ if (isset($_SESSION['participant_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-    if (isset($_FILES['payment_receipt']) && $_FILES['payment_receipt']['error'] == UPLOAD_ERR_OK) {
-        $filename = time() . '_receipt_' . basename($_FILES['payment_receipt']['name']);
-        $target_path = 'uploads/' . $filename;
-        if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $target_path)) {
-            if (isset($_SESSION['participant_id'])) {
-                $stmt = $conn->prepare("UPDATE participants SET bukti_transfer = ? WHERE id = ?");
-                if (!$stmt) {
-                    die("Database Error in Confirmation.php: " . $conn->error);
+    if (isset($_FILES['payment_receipt'])) {
+        if ($_FILES['payment_receipt']['error'] == UPLOAD_ERR_OK) {
+            $filename = time() . '_receipt_' . basename($_FILES['payment_receipt']['name']);
+            $target_path = 'uploads/' . $filename;
+            if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $target_path)) {
+                if (isset($_SESSION['participant_id'])) {
+                    $stmt = $conn->prepare("UPDATE participants SET bukti_transfer = ? WHERE id = ?");
+                    if (!$stmt) {
+                        die("Database Error in Confirmation.php: " . $conn->error);
+                    }
+                    $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                    $stmt->execute();
+                    
+                    // Set explicitly for the current page load
+                    $user_data['bukti_transfer'] = $target_path;
                 }
-                $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
-                $stmt->execute();
-                
-                // Set explicitly for the current page load
-                $user_data['bukti_transfer'] = $target_path;
+                $upload_success = true;
             }
-            $upload_success = true;
+        } else if ($_FILES['payment_receipt']['error'] != UPLOAD_ERR_NO_FILE) {
+            if ($_FILES['payment_receipt']['error'] == UPLOAD_ERR_INI_SIZE || $_FILES['payment_receipt']['error'] == UPLOAD_ERR_FORM_SIZE) {
+                $upload_error_msg = "Error: Ukuran file bukti pembayaran terlalu besar (melebihi batas maksimal server). Harap kompres file Anda.";
+            } else {
+                $upload_error_msg = "Error uploading receipt: Code " . $_FILES['payment_receipt']['error'];
+            }
         }
     }
 
@@ -463,9 +471,9 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                         Upload Successful: <a href="<?php echo htmlspecialchars($user_data['bukti_transfer']); ?>" target="_blank" style="color: green; text-decoration: underline;"><?php echo htmlspecialchars(basename($user_data['bukti_transfer'])); ?></a>
                     </div>
                 <?php endif; ?>
-                <form action="" method="POST" enctype="multipart/form-data">
+                <form action="" method="POST" enctype="multipart/form-data" onsubmit="return validateReceiptUpdate()">
                     <div class="highlight-box">
-                        <input type="file" name="payment_receipt" id="payment_receipt" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
+                        <input type="file" name="payment_receipt" id="payment_receipt" accept="image/*,.pdf" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
                     </div>
                     <div>
                         <button type="submit" class="btn-yellow-submit"><?php echo !empty($user_data['bukti_transfer']) ? 'Update Receipt' : 'Submit Receipt'; ?></button>
@@ -522,6 +530,23 @@ function validatePPTUpdate() {
         }
     } else {
         alert('Harap pilih file presentasi Anda terlebih dahulu.');
+        return false;
+    }
+    return true;
+}
+function validateReceiptUpdate() {
+    var fileInput = document.getElementById('payment_receipt');
+    if (fileInput && fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        
+        var maxSize = 5 * 1024 * 1024; // 5 MB limit
+        if (file.size > maxSize) {
+            alert('Gagal: Ukuran file bukti transfer terlalu besar (' + (file.size/1024/1024).toFixed(2) + ' MB). Batas maksimal adalah 5 MB. Harap kompres/resize foto bukti transfer Anda.');
+            fileInput.value = '';
+            return false;
+        }
+    } else {
+        alert('Harap pilih file bukti transfer Anda terlebih dahulu.');
         return false;
     }
     return true;
