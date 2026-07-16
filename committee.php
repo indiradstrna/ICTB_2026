@@ -44,6 +44,7 @@
             <h2 class="article-title">Scientific Committee</h2>
             <div class="article-content">
                 <ol style="margin-left: 20px; padding-left: 15px; font-size: 15px; color: var(--text-muted); line-height: 1.8;">
+                    <li style="margin-bottom: 6px;"><strong>Prof. Dr. Arif Satria, S.P., M.Si.</strong> &ndash; The Chairman of the Scientific Committee, IPB University</li>
                     <li style="margin-bottom: 6px;"><strong>Dr. Supriyanto</strong> &ndash; SEAMEO BIOTROP</li>
                     <li style="margin-bottom: 6px;"><strong>Dr. Ir. Soekisman Tjitrosemito</strong> &ndash; SEAMEO BIOTROP</li>
                     <li style="margin-bottom: 6px;"><strong>Dr. Sri Sudarmiyati Tjitrosoedirjo</strong> &ndash; SEAMEO BIOTROP</li>
