@@ -5,6 +5,21 @@ require_once 'includes/db.php';
 $is_student = isset($_SESSION['is_student']) ? $_SESSION['is_student'] : 'No';
 $participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
 
+$existing_app = [];
+if (isset($_SESSION['participant_id'])) {
+    $stmt = $conn->prepare("SELECT * FROM applications WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+    if ($stmt) {
+        $stmt->bind_param("i", $_SESSION['participant_id']);
+        $stmt->execute();
+        $res = $stmt->get_result();
+        if ($res->num_rows > 0) {
+            $existing_app = $res->fetch_assoc();
+        }
+        $stmt->close();
+    }
+}
+
+
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     $apptype_id = $_POST['application_type'] ?? '';
     $subtheme_id = $_POST['sub_theme'] ?? '';
@@ -25,12 +40,25 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (isset($_SESSION['participant_id'])) {
-        $stmt = $conn->prepare("INSERT INTO applications (participant_id, apptype_id, subtheme_id, title, abstract, keyword, firstsubmit, publication_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
-        if (!$stmt) {
-            die("Database Error in application.php: " . $conn->error . ". Pastikan kolom apptype_id, subtheme_id, publication_id bertipe VARCHAR di tabel applications hosting Anda.");
+        if ($abstract_path == '' && !empty($existing_app['abstract'])) {
+            $abstract_path = $existing_app['abstract'];
         }
-        $stmt->bind_param("isssssis", $_SESSION['participant_id'], $apptype_id, $subtheme_id, $title, $abstract_path, $keyword, $firstsubmit, $publication_id);
-        $stmt->execute();
+
+        if (!empty($existing_app)) {
+            $stmt = $conn->prepare("UPDATE applications SET apptype_id=?, subtheme_id=?, title=?, abstract=?, keyword=?, firstsubmit=?, publication_id=? WHERE id=?");
+            if (!$stmt) {
+                die("Database Error in application.php (Update): " . $conn->error);
+            }
+            $stmt->bind_param("sssssisi", $apptype_id, $subtheme_id, $title, $abstract_path, $keyword, $firstsubmit, $publication_id, $existing_app['id']);
+            $stmt->execute();
+        } else {
+            $stmt = $conn->prepare("INSERT INTO applications (participant_id, apptype_id, subtheme_id, title, abstract, keyword, firstsubmit, publication_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)");
+            if (!$stmt) {
+                die("Database Error in application.php: " . $conn->error . ". Pastikan kolom apptype_id, subtheme_id, publication_id bertipe VARCHAR di tabel applications hosting Anda.");
+            }
+            $stmt->bind_param("isssssis", $_SESSION['participant_id'], $apptype_id, $subtheme_id, $title, $abstract_path, $keyword, $firstsubmit, $publication_id);
+            $stmt->execute();
+        }
     }
     
     header("Location: Confirmation.php?type=" . urlencode($participant_type));
@@ -244,8 +272,8 @@ while($row = $subthemes_result->fetch_assoc()) {
                 <div class="info-form-group">
                     <label class="info-form-label" for="application_type">Application type</label>
                     <select id="application_type" name="application_type" class="info-form-control">
-                        <option value="Oral">Oral</option>
-                        <option value="Poster">Poster</option>
+                        <option value="Oral" <?php echo (isset($existing_app['apptype_id']) && $existing_app['apptype_id'] == 'Oral') ? 'selected' : ''; ?>>Oral</option>
+                        <option value="Poster" <?php echo (isset($existing_app['apptype_id']) && $existing_app['apptype_id'] == 'Poster') ? 'selected' : ''; ?>>Poster</option>
                     </select>
                 </div>
 
@@ -254,7 +282,22 @@ while($row = $subthemes_result->fetch_assoc()) {
                     <select id="theme" name="theme" class="info-form-control" onchange="updateSubthemes()" required>
                         <option value="">Select Theme</option>
                         <?php foreach($themes_data as $t): ?>
-                            <option value="<?php echo htmlspecialchars($t['theme']); ?>" data-id="<?php echo $t['id']; ?>"><?php echo htmlspecialchars($t['theme']); ?></option>
+                            <?php 
+                                // Determine if this theme is selected based on the subtheme. 
+                                // This is tricky because existing_app only has subtheme_id.
+                                // We can use JS to pre-select, or find the theme_id of the existing subtheme in PHP.
+                                $is_selected_theme = false;
+                                if (!empty($existing_app['subtheme_id'])) {
+                                    foreach($subthemes_data as $tid => $st_arr) {
+                                        foreach($st_arr as $st) {
+                                            if ($st['sub_theme'] == $existing_app['subtheme_id'] && $tid == $t['id']) {
+                                                $is_selected_theme = true;
+                                            }
+                                        }
+                                    }
+                                }
+                            ?>
+                            <option value="<?php echo htmlspecialchars($t['theme']); ?>" data-id="<?php echo $t['id']; ?>" <?php echo $is_selected_theme ? 'selected' : ''; ?>><?php echo htmlspecialchars($t['theme']); ?></option>
                         <?php endforeach; ?>
                     </select>
                 </div>
@@ -263,37 +306,43 @@ while($row = $subthemes_result->fetch_assoc()) {
                     <label class="info-form-label" for="sub_theme">Sub-Theme</label>
                     <select id="sub_theme" name="sub_theme" class="info-form-control" required>
                         <option value="">Select Sub-Theme</option>
+                        <?php if(!empty($existing_app['subtheme_id'])): ?>
+                            <option value="<?php echo htmlspecialchars($existing_app['subtheme_id']); ?>" selected><?php echo htmlspecialchars($existing_app['subtheme_id']); ?></option>
+                        <?php endif; ?>
                     </select>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label" for="title">Title</label>
                     <span class="hint-text">15 words left</span>
-                    <input type="text" id="title" name="title" class="info-form-control" placeholder="Title" required>
+                    <input type="text" id="title" name="title" class="info-form-control" placeholder="Title" value="<?php echo htmlspecialchars($existing_app['title'] ?? ''); ?>" required>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label">Abstract</label>
                     <a href="template_abstract.docx" download class="btn-dark">Download Abstract Template</a>
                     <div class="highlight-box">
-                        <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;" required>
+                        <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;" <?php echo empty($existing_app['abstract']) ? 'required' : ''; ?>>
                     </div>
+                    <?php if(!empty($existing_app['abstract'])): ?>
+                        <div style="font-size: 11px; margin-top: 5px;">Current file: <a href="<?php echo htmlspecialchars($existing_app['abstract']); ?>" target="_blank">View Abstract</a></div>
+                    <?php endif; ?>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label" for="keywords">Keywords</label>
                     <span class="hint-text">(separate each keyword by comma)</span>
-                    <input type="text" id="keywords" name="keywords" class="info-form-control" placeholder="Keywords" required>
+                    <input type="text" id="keywords" name="keywords" class="info-form-control" placeholder="Keywords" value="<?php echo htmlspecialchars($existing_app['keyword'] ?? ''); ?>" required>
                 </div>
 
                 <div class="info-form-group">
                     <label class="info-form-label">Is it the first time this abstract has been submitted for publication?</label>
                     <div class="info-radio-group-horizontal">
                         <label class="info-radio-label">
-                            <input type="radio" name="first_time" value="No"> No
+                            <input type="radio" name="first_time" value="No" <?php echo (isset($existing_app['firstsubmit']) && $existing_app['firstsubmit'] == 0) ? 'checked' : ''; ?>> No
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="first_time" value="Yes" checked> Yes
+                            <input type="radio" name="first_time" value="Yes" <?php echo (!isset($existing_app['firstsubmit']) || $existing_app['firstsubmit'] == 1) ? 'checked' : ''; ?>> Yes
                         </label>
                     </div>
                 </div>
@@ -302,26 +351,26 @@ while($row = $subthemes_result->fetch_assoc()) {
                     <label class="info-form-label">Which publication do you prefer for your abstract & full paper?</label>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Program book (abstract only) - free" required> Program book (abstract only) - free
+                            <input type="radio" name="publication" value="Program book (abstract only) - free" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Program book (abstract only) - free') ? 'checked' : ''; ?> required> Program book (abstract only) - free
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="ICTB proceeding book (ISBN) - IDR 800,000 / USD 80" required> ICTB proceeding book (ISBN) - IDR 800,000 / USD 80
+                            <input type="radio" name="publication" value="ICTB proceeding book (ISBN) - IDR 800,000 / USD 80" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'ICTB proceeding book (ISBN) - IDR 800,000 / USD 80') ? 'checked' : ''; ?> required> ICTB proceeding book (ISBN) - IDR 800,000 / USD 80
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Scopus-indexed proceedings - IDR 2,500,000" required> Scopus-indexed proceedings - IDR 2,500,000
+                            <input type="radio" name="publication" value="Scopus-indexed proceedings - IDR 2,500,000" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Scopus-indexed proceedings - IDR 2,500,000') ? 'checked' : ''; ?> required> Scopus-indexed proceedings - IDR 2,500,000
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Sinta accredited journal - To be determined by the journal" required> Sinta accredited journal - To be determined by the journal
+                            <input type="radio" name="publication" value="Sinta accredited journal - To be determined by the journal" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Sinta accredited journal - To be determined by the journal') ? 'checked' : ''; ?> required> Sinta accredited journal - To be determined by the journal
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="In selected Scopus-indexed journals - To be determined by the journal" required> In selected Scopus-indexed journals - To be determined by the journal
+                            <input type="radio" name="publication" value="In selected Scopus-indexed journals - To be determined by the journal" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'In selected Scopus-indexed journals - To be determined by the journal') ? 'checked' : ''; ?> required> In selected Scopus-indexed journals - To be determined by the journal
                         </label>
                     </div>
                 </div>
 
             </fieldset>
 
-            <button type="submit" class="btn-submit">Submit</button>
+            <button type="submit" class="btn-submit"><?php echo !empty($existing_app) ? 'Update Data' : 'Submit'; ?></button>
         </form>
 
     </div>
@@ -330,7 +379,7 @@ while($row = $subthemes_result->fetch_assoc()) {
 <script>
 var subthemesMap = <?php echo json_encode($subthemes_data); ?>;
 
-function updateSubthemes() {
+function updateSubthemes(initialVal = null) {
     var themeSelect = document.getElementById('theme');
     var subthemeSelect = document.getElementById('sub_theme');
     var selectedOption = themeSelect.options[themeSelect.selectedIndex];
@@ -344,13 +393,26 @@ function updateSubthemes() {
             var option = document.createElement('option');
             option.value = topics[i].sub_theme;
             option.textContent = topics[i].sub_theme;
+            if (initialVal && topics[i].sub_theme == initialVal) {
+                option.selected = true;
+            }
             subthemeSelect.appendChild(option);
         }
     }
 }
 
+// On load, if sub_theme is already in the options and we need to populate properly without removing the selected
+document.addEventListener('DOMContentLoaded', function() {
+    var existingSubtheme = '<?php echo isset($existing_app['subtheme_id']) ? addslashes($existing_app['subtheme_id']) : ''; ?>';
+    if (existingSubtheme) {
+        updateSubthemes(existingSubtheme);
+    }
+});
+
+
 function validateAbstractForm() {
     var fileInput = document.getElementById('extended_abstract');
+    var hasExisting = <?php echo !empty($existing_app['abstract']) ? 'true' : 'false'; ?>;
     if (fileInput && fileInput.files.length > 0) {
         var file = fileInput.files[0];
         var fileName = file.name;
@@ -361,7 +423,7 @@ function validateAbstractForm() {
             fileInput.value = ''; // Reset input file
             return false;
         }
-    } else {
+    } else if (!hasExisting) {
         alert('Harap unggah file abstrak Anda (.docx) terlebih dahulu.');
         return false;
     }

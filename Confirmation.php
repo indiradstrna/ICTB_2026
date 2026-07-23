@@ -359,7 +359,10 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
         <?php endif; ?>
 
         <fieldset class="info-fieldset">
-            <legend class="info-legend">Registrant Information</legend>
+            <legend class="info-legend">
+                Registrant Information
+                <a href="information.php?type=<?php echo urlencode($participant_type); ?>" class="btn-dark-blue" style="float: right; font-size: 11px; padding: 4px 8px; margin-left: 15px;">Edit</a>
+            </legend>
             <?php
             $reg_id = isset($user_data['id']) ? "5ICTB-".strtoupper(substr($user_data['participant_type']??'PART', 0, 3))."-".str_pad($user_data['id'], 4, "0", STR_PAD_LEFT) : 'N/A';
             $fullname = trim(($user_data['title']??'').' '.($user_data['first_name']??'').' '.($user_data['last_name']??''));
@@ -381,7 +384,10 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
 
         <?php if (!$is_participant_only): ?>
         <fieldset class="info-fieldset">
-            <legend class="info-legend">Application Information</legend>
+            <legend class="info-legend">
+                Application Information
+                <a href="application.php?type=<?php echo urlencode($participant_type); ?>" class="btn-dark-blue" style="float: right; font-size: 11px; padding: 4px 8px; margin-left: 15px;">Edit</a>
+            </legend>
             <div class="summary-line"><span class="summary-label">Application Type:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['apptype_id']??''); ?></span></div>
             <div class="summary-line"><span class="summary-label">Theme:</span> <span class="summary-val">Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes</span></div>
             <div class="summary-line"><span class="summary-label">Subtheme:</span> <span class="summary-val"><?php echo htmlspecialchars($app_data['subtheme_id']??''); ?></span></div>
