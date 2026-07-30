@@ -27,23 +27,23 @@
                 </thead>
                 <tbody>
                     <tr>
-                        <td style="font-weight: 600; padding: 16px;">Call for abstracts</td>
-                        <td style="padding: 16px;">30 May – 30 July 2026</td>
+                        <td style="font-weight: 600; padding: 16px;">Call for Abstracts</td>
+                        <td style="padding: 16px;">1 June – 1 September 2026</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: 600; padding: 16px;">Abstract submission deadline</td>
-                        <td style="padding: 16px;">30 July 2026</td>
+                        <td style="font-weight: 600; padding: 16px;">Abstract Submission Deadline</td>
+                        <td style="padding: 16px;">20 June – 4 September 2026</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: 600; padding: 16px;">Announcement of accepted abstracts</td>
-                        <td style="padding: 16px;">1 July - 25 August 2026</td>
+                        <td style="font-weight: 600; padding: 16px;">Announcement of Accepted Abstracts</td>
+                        <td style="padding: 16px;">7 September 2026</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: 600; padding: 16px;">Registration deadline</td>
-                        <td style="padding: 16px;">25 September 2026</td>
+                        <td style="font-weight: 600; padding: 16px;">Registration Deadline</td>
+                        <td style="padding: 16px;">7 – 24 September 2026</td>
                     </tr>
                     <tr style="background-color: rgba(13, 148, 136, 0.05);">
-                        <td style="font-weight: 700; color: var(--primary-color); font-size: 16px; padding: 16px;">Conference</td>
+                        <td style="font-weight: 700; color: var(--primary-color); font-size: 16px; padding: 16px;">Conference Proper</td>
                         <td style="font-weight: 700; color: var(--primary-color); font-size: 16px; padding: 16px;">5 – 7 October 2026</td>
                     </tr>
                 </tbody>
