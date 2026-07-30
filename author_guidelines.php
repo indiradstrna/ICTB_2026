@@ -61,24 +61,24 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="font-weight: 600; width: 60%;">Call for Abstracts</td>
-                                <td>30 May - 30 Jul</td>
+                                <td style="font-weight: 600; width: 60%;">Call for abstracts</td>
+                                <td>30 May - 30 July 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Abstract Submission Deadline</td>
-                                <td>30 Jul 2026</td>
+                                <td style="font-weight: 600;">Abstract submission deadline</td>
+                                <td>30 July 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Announcement of Accepted Abstracts</td>
-                                <td>1 Jul - 25 Aug</td>
+                                <td style="font-weight: 600;">Announcement of accepted abstracts</td>
+                                <td>1 July - 25 August 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Registration Deadline</td>
-                                <td>25 Sep 2026</td>
+                                <td style="font-weight: 600;">Registration deadline</td>
+                                <td>25 September 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Conference Dates</td>
-                                <td>5 - 7 Oct 2026</td>
+                                <td style="font-weight: 600;">Conference</td>
+                                <td>5 - 7 October 2026</td>
                             </tr>
                         </tbody>
                     </table>

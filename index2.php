@@ -39,16 +39,20 @@
                 <div class="cover-dates-list vertical">
                     <div class="side-panel-header">Important Dates</div>
                     <div class="cover-date-item">
-                        <div class="date-label">Abstract Submission</div>
-                        <div class="date-value">1 Jun – 1 Sep 2026</div>
+                        <div class="date-label">Call for abstracts</div>
+                        <div class="date-value">30 May – 30 Jul 2026</div>
                     </div>
                     <div class="cover-date-item">
-                        <div class="date-label">Announcement</div>
-                        <div class="date-value">7 Sep 2026</div>
+                        <div class="date-label">Abstract submission deadline</div>
+                        <div class="date-value">30 Jul 2026</div>
                     </div>
                     <div class="cover-date-item">
-                        <div class="date-label">Registration & Payment</div>
-                        <div class="date-value">7 – 24 Sep 2026</div>
+                        <div class="date-label">Announcement of accepted abstracts</div>
+                        <div class="date-value">1 Jul - 25 Aug 2026</div>
+                    </div>
+                    <div class="cover-date-item">
+                        <div class="date-label">Registration deadline</div>
+                        <div class="date-value">25 Sep 2026</div>
                     </div>
                     <div class="cover-date-item">
                         <div class="date-label highlight">Conference Dates</div>
