@@ -40,19 +40,19 @@
                     <div class="side-panel-header">Important Dates</div>
                     <div class="cover-date-item">
                         <div class="date-label">Call for Abstracts</div>
-                        <div class="date-value">1 Jun – 1 Sep 2026</div>
+                        <div class="date-value">1 Jun – 30 Sep 2026</div>
                     </div>
                     <div class="cover-date-item">
                         <div class="date-label">Abstract Submission Deadline</div>
-                        <div class="date-value">20 Jun – 4 Sep 2026</div>
+                        <div class="date-value">20 Jun – 2 Oct 2026</div>
                     </div>
                     <div class="cover-date-item">
                         <div class="date-label">Announcement of Accepted Abstracts</div>
-                        <div class="date-value">7 Sep 2026</div>
+                        <div class="date-value">7 Sep – 4 Oct 2026</div>
                     </div>
                     <div class="cover-date-item">
                         <div class="date-label">Registration Deadline</div>
-                        <div class="date-value">7 – 24 Sep 2026</div>
+                        <div class="date-value">7 – 30 Sep 2026</div>
                     </div>
                     <div class="cover-date-item">
                         <div class="date-label highlight">Conference Proper</div>

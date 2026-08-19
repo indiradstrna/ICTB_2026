@@ -166,26 +166,32 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
                         <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent-color);"></span>
-                        <div style="font-size: 12px; font-weight: bold; color: var(--accent-color); text-transform: uppercase;">20 June – 4 September 2026</div>
-                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Abstract Submission Deadline</div>
+                        <div style="font-size: 12px; font-weight: bold; color: var(--accent-color); text-transform: uppercase;">1 June – 30 September 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Abstract Submission</div>
                     </div>
 
                     <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
                         <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--primary-color);"></span>
-                        <div style="font-size: 12px; font-weight: bold; color: var(--primary-color); text-transform: uppercase;">7 September 2026</div>
-                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Announcement of Accepted Abstracts</div>
+                        <div style="font-size: 12px; font-weight: bold; color: var(--primary-color); text-transform: uppercase;">20 June – 2 October 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Abstract Review</div>
+                    </div>
+
+                    <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
+                        <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #fd7e14;"></span>
+                        <div style="font-size: 12px; font-weight: bold; color: #fd7e14; text-transform: uppercase;">7 September – 4 October 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Acceptance Announcement</div>
                     </div>
 
                     <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
                         <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #17a2b8;"></span>
-                        <div style="font-size: 12px; font-weight: bold; color: #17a2b8; text-transform: uppercase;">7 – 24 September 2026</div>
-                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Registration Deadline</div>
+                        <div style="font-size: 12px; font-weight: bold; color: #17a2b8; text-transform: uppercase;">7 – 30 September 2026</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Registration & Payment</div>
                     </div>
 
                     <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
                         <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: #28a745;"></span>
                         <div style="font-size: 12px; font-weight: bold; color: #28a745; text-transform: uppercase;">5 – 7 October 2026</div>
-                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Conference Proper</div>
+                        <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Conference Dates</div>
                     </div>
 
                 </div>

@@ -48,7 +48,7 @@
                     </li>
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
-                        <div>Authors are required to complete the online registration process before they can submit their Abstract   s. Once completed, authors will be given a username, password, and registration number. The authors will have access to submit and edit their Abstract   s using username, password and registration number given to them until the deadline submission on 10 August 2026 at 23:59 GMT+7. An icon to upload their Abstract  s will be provided in the account.</div>
+                        <div>Authors are required to complete the online registration process before they can submit their Abstract   s. Once completed, authors will be given a username, password, and registration number. The authors will have access to submit and edit their Abstract   s using username, password and registration number given to them until the deadline submission on 30 September 2026 at 23:59 GMT+7. An icon to upload their Abstract  s will be provided in the account.</div>
                     </li>
                 </ul>
                 <div class="fee-table-container" style="margin: 20px 0 30px;">
@@ -61,23 +61,23 @@
                         </thead>
                         <tbody>
                             <tr>
-                                <td style="font-weight: 600; width: 60%;">Call for Abstracts</td>
-                                <td>1 June – 1 September 2026</td>
+                                <td style="font-weight: 600; width: 60%;">Abstract Submission</td>
+                                <td>1 June – 30 September 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Abstract Submission Deadline</td>
-                                <td>20 June – 4 September 2026</td>
+                                <td style="font-weight: 600;">Abstract Review</td>
+                                <td>20 June – 2 October 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Announcement of Accepted Abstracts</td>
-                                <td>7 September 2026</td>
+                                <td style="font-weight: 600;">Acceptance Announcement</td>
+                                <td>7 September – 4 October 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Registration Deadline</td>
-                                <td>7 – 24 September 2026</td>
+                                <td style="font-weight: 600;">Registration & Payment</td>
+                                <td>7 – 30 September 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Conference Proper</td>
+                                <td style="font-weight: 600;">Conference Dates</td>
                                 <td>5 – 7 October 2026</td>
                             </tr>
                         </tbody>
@@ -111,10 +111,10 @@
                     <li><i class="ph-bold ph-check-circle"></i> Each poster must be prepared in A0 size or 841 x 1189 mm, portrait style, and brought on the day of the Seminar.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Posters which are not in the correct size as the prescribed-size will not be allowed to be displayed.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Poster must contain information on the following: poster title, names of authors, institution and e-mail address of each author, introduction, method, result & discussion, conclusion, reference, acknowledgment (if necessary).</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Poster must also show the Registration number of the poster, the Conference name and Theme, Conference Organizer (SEAMEO BIOTROP), and place and date of conference (SEAMEO BIOTROP, Bogor-Indonesia, 25 - 26 October 2026).</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Poster must also show the Registration number of the poster, the Conference name and Theme, Conference Organizer (SEAMEO BIOTROP), and place and date of conference (SEAMEO BIOTROP, Bogor-Indonesia, 5 - 7 October 2026).</li>
                     <li><i class="ph-bold ph-check-circle"></i> The Organizing Committee will only provide space for the printed poster.</li>
                     <li><i class="ph-bold ph-check-circle"></i> All posters must be placed in their corresponding plot. Registration Number of each poster will be posted on the plot.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Posters must be placed on the designated area on 25 October 2026 before the opening ceremony.</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Posters must be placed on the designated area on 5 October 2026 before the opening ceremony.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Poster would be displayed throughout the Conference dates.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Posters should be removed by the presenters after the Conference is finished or will be disposed-off by the Organizing Committee.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Authors should attend their posters at the scheduled time slot: at lunch time and refreshment break time.</li>

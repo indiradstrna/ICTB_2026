@@ -55,24 +55,24 @@
                 <div class="cover-dates-list vertical">
                     <div class="side-panel-header">Important Dates</div>
                     <div class="cover-date-item">
-                        <div class="date-label">Call for Abstracts</div>
-                        <div class="date-value">1 Jun – 1 Sep 2026</div>
+                        <div class="date-label">Abstract Submission</div>
+                        <div class="date-value">1 June – 30 September 2026</div>
                     </div>
                     <div class="cover-date-item">
-                        <div class="date-label">Abstract Submission Deadline</div>
-                        <div class="date-value">20 Jun – 4 Sep 2026</div>
+                        <div class="date-label">Abstract Review</div>
+                        <div class="date-value">20 June – 2 October 2026</div>
                     </div>
                     <div class="cover-date-item">
-                        <div class="date-label">Announcement of Accepted Abstracts</div>
-                        <div class="date-value">7 Sep 2026</div>
+                        <div class="date-label">Acceptance Announcement</div>
+                        <div class="date-value">7 September – 4 October 2026</div>
                     </div>
                     <div class="cover-date-item">
-                        <div class="date-label">Registration Deadline</div>
-                        <div class="date-value">7 – 24 Sep 2026</div>
+                        <div class="date-label">Registration & Payment</div>
+                        <div class="date-value">7 – 30 September 2026</div>
                     </div>
                     <div class="cover-date-item">
-                        <div class="date-label highlight">Conference Proper</div>
-                        <div class="date-value">5 – 7 Oct 2026</div>
+                        <div class="date-label highlight">Conference Dates</div>
+                        <div class="date-value">5 – 7 October 2026</div>
                     </div>
                 </div>
             </div>
@@ -222,6 +222,84 @@
             <h2 class="section-title">Conference Schedule</h2>
         </div>
         
+        <style>
+            .schedule-preview-list {
+                max-height: 450px;
+                overflow-y: auto;
+                padding-right: 15px;
+                padding-bottom: 10px;
+                display: flex;
+                flex-direction: column;
+                gap: 15px;
+            }
+            .schedule-preview-list::-webkit-scrollbar {
+                width: 6px;
+            }
+            .schedule-preview-list::-webkit-scrollbar-track {
+                background: #f1f1f1; 
+                border-radius: 4px;
+            }
+            .schedule-preview-list::-webkit-scrollbar-thumb {
+                background: var(--primary-color); 
+                border-radius: 4px;
+            }
+            .schedule-preview-card {
+                background: #fff;
+                border-radius: 12px;
+                box-shadow: 0 4px 10px rgba(0,0,0,0.05);
+                border: 1px solid var(--border-color);
+                padding: 20px;
+                display: flex;
+                align-items: center;
+                gap: 20px;
+                transition: var(--transition);
+            }
+            .schedule-preview-card:hover {
+                box-shadow: 0 6px 15px rgba(0,0,0,0.08);
+                transform: translateY(-2px);
+                border-color: var(--primary-color);
+            }
+            .schedule-preview-time {
+                font-family: var(--font-heading);
+                font-size: 28px;
+                color: var(--primary-color);
+                min-width: 90px;
+                text-align: center;
+                border-right: 2px solid var(--border-color);
+                padding-right: 20px;
+            }
+            .schedule-preview-info h4 {
+                font-size: 18px;
+                color: var(--text-dark);
+                margin-bottom: 5px;
+                font-weight: 700;
+            }
+            .schedule-preview-info p.location {
+                font-size: 14px;
+                color: var(--text-muted);
+                margin: 0;
+                display: flex;
+                align-items: center;
+                gap: 6px;
+            }
+            @media (max-width: 768px) {
+                .schedule-preview-card {
+                    flex-direction: column;
+                    align-items: flex-start;
+                    gap: 10px;
+                    padding: 15px;
+                }
+                .schedule-preview-time {
+                    border-right: none;
+                    border-bottom: 2px solid var(--border-color);
+                    padding-right: 0;
+                    padding-bottom: 10px;
+                    text-align: left;
+                    width: 100%;
+                }
+            }
+        </style>
+
         <div class="schedule-tabs reveal-up">
             <button class="tab-btn active" data-target="day1">Day 1 <span>Oct 5</span></button>
             <button class="tab-btn" data-target="day2">Day 2 <span>Oct 6</span></button>
@@ -231,29 +309,47 @@
         <div class="schedule-content reveal-up">
             <!-- Day 1 Content -->
             <div class="schedule-pane active" id="day1">
-                <div class="schedule-list">
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Opening Ceremony</h4>
+                <div class="schedule-preview-list">
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">08.00</div>
+                        <div class="schedule-preview-info">
+                            <h4>Registration</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Registration Desk</p>
+                        </div>
+                    </div>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">08.50</div>
+                        <div class="schedule-preview-info">
+                            <h4>Opening Ceremony & Program Launching</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
                         </div>
                     </div>
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Keynote Speech</h4>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">09.45</div>
+                        <div class="schedule-preview-info">
+                            <h4>Keynote Sessions</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
                         </div>
                     </div>
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Plenary Session</h4>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">11.00</div>
+                        <div class="schedule-preview-info">
+                            <h4>Panel Session</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
                         </div>
                     </div>
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Parallel Sessions</h4>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">13.30</div>
+                        <div class="schedule-preview-info">
+                            <h4>Parallel Sessions & Paper Presentations</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Breakout Rooms</p>
+                        </div>
+                    </div>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">18.00</div>
+                        <div class="schedule-preview-info">
+                            <h4>Welcome Dinner</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Dining Hall</p>
                         </div>
                     </div>
                 </div>
@@ -261,22 +357,32 @@
 
             <!-- Day 2 Content -->
             <div class="schedule-pane" id="day2">
-                <div class="schedule-list">
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Parallel Sessions</h4>
+                <div class="schedule-preview-list">
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">08.30</div>
+                        <div class="schedule-preview-info">
+                            <h4>Keynote Sessions</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
+                        </div>
+                    </div>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">09.15</div>
+                        <div class="schedule-preview-info">
+                            <h4>Parallel Agenda & Presentations</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Breakout Rooms</p>
                         </div>
                     </div>
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Poster Presentations</h4>
-                            <p class="location"><i class="ph-fill ph-map-pin"></i> Exhibition Hall</p>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">13.30</div>
+                        <div class="schedule-preview-info">
+                            <h4>Conference Synthesis</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
                         </div>
                     </div>
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Conference Synthesis & Closing Ceremony</h4>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">14.30</div>
+                        <div class="schedule-preview-info">
+                            <h4>Closing Ceremony & Awards</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Grand Auditorium</p>
                         </div>
                     </div>
@@ -285,14 +391,33 @@
 
             <!-- Day 3 Content -->
             <div class="schedule-pane" id="day3">
-                <div class="schedule-list">
-                    <div class="schedule-item">
-                        <div class="details">
-                            <h4>Excursion to Bogor Botanical Garden</h4>
+                <div class="schedule-preview-list">
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">08.00</div>
+                        <div class="schedule-preview-info">
+                            <h4>Excursions to Bogor Botanical Garden</h4>
                             <p class="location"><i class="ph-fill ph-map-pin"></i> Bogor Botanical Garden</p>
                         </div>
                     </div>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">10.00</div>
+                        <div class="schedule-preview-info">
+                            <h4>SEAMEO BIOTROP Campus Tour</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> SEAMEO BIOTROP</p>
+                        </div>
+                    </div>
+                    <div class="schedule-preview-card">
+                        <div class="schedule-preview-time">12.00</div>
+                        <div class="schedule-preview-info">
+                            <h4>Lunch Break – Closing Session</h4>
+                            <p class="location"><i class="ph-fill ph-map-pin"></i> Dining Hall</p>
+                        </div>
+                    </div>
                 </div>
+            </div>
+            
+            <div class="text-center mt-4 reveal-up">
+                <a href="schedule.php" class="btn btn-primary">See Full Schedule</a>
             </div>
         </div>
     </div>
@@ -378,9 +503,9 @@
 <div id="flyerModal" style="display:none; position:fixed; z-index:9999; left:0; top:0; width:100%; height:100%; background-color:rgba(0,0,0,0.8); align-items:center; justify-content:center; flex-direction:column; transition: opacity 0.3s;" onclick="this.style.display='none'">
     <div style="position:relative; max-width:90%; max-height:80vh; text-align:center;" onclick="event.stopPropagation();">
         <span onclick="document.getElementById('flyerModal').style.display='none'" style="position:absolute; top:-40px; right:0; color:white; font-size:35px; cursor:pointer; line-height:1;">&times;</span>
-        <img src="assets/img/flyer.png" alt="Conference Flyer" style="max-width:100%; max-height:80vh; object-fit:contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
+        <img src="assets/img/2nd%20Announcement%20ICTB%20Flyer.PNG" alt="Conference Flyer" style="max-width:100%; max-height:80vh; object-fit:contain; border-radius: 8px; box-shadow: 0 10px 30px rgba(0,0,0,0.5);">
         <div style="margin-top: 20px;">
-            <a href="assets/img/flyer.png" class="btn btn-primary" download style="padding: 12px 24px; font-size: 16px; display:inline-block;">Download Flyer <i class="ph-bold ph-download-simple"></i></a>
+            <a href="assets/img/2nd%20Announcement%20ICTB%20Flyer.PNG" class="btn btn-primary" download style="padding: 12px 24px; font-size: 16px; display:inline-block;">Download Flyer <i class="ph-bold ph-download-simple"></i></a>
         </div>
     </div>
 </div>
