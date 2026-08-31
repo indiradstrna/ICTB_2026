@@ -36,10 +36,10 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $student_proof_path = '';
     if ($is_student == 'Yes' && isset($_FILES['student_proof']) && $_FILES['student_proof']['error'] == UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'pdf'];
+        $allowed = ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx'];
         $ext = strtolower(pathinfo($_FILES['student_proof']['name'], PATHINFO_EXTENSION));
         if (!in_array($ext, $allowed)) {
-            die("<script>alert('Error: Hanya file JPG dan PDF yang diperbolehkan!'); history.back();</script>");
+            die("<script>alert('Error: Hanya file dokumen (PDF, Word, PPT) dan gambar (JPG) yang diperbolehkan!'); history.back();</script>");
         }
         $filename = time() . '_proof_' . basename($_FILES['student_proof']['name']);
         $target_path = 'uploads/' . $filename;
