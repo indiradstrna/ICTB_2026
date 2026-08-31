@@ -30,6 +30,11 @@ if (isset($_SESSION['participant_id'])) {
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     if (isset($_FILES['payment_receipt'])) {
         if ($_FILES['payment_receipt']['error'] == UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'pdf'];
+            $ext = strtolower(pathinfo($_FILES['payment_receipt']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowed)) {
+                die("<script>alert('Error: Hanya file JPG dan PDF yang diperbolehkan!'); history.back();</script>");
+            }
             $filename = time() . '_receipt_' . basename($_FILES['payment_receipt']['name']);
             $target_path = 'uploads/' . $filename;
             if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $target_path)) {
@@ -58,6 +63,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     // Handling PPT Upload
     if (isset($_FILES['update_ppt'])) {
         if ($_FILES['update_ppt']['error'] == UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'pdf'];
+            $ext = strtolower(pathinfo($_FILES['update_ppt']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowed)) {
+                die("<script>alert('Error: Hanya file JPG dan PDF yang diperbolehkan!'); history.back();</script>");
+            }
             $max_size = 20 * 1024 * 1024; // 20 MB
             if ($_FILES['update_ppt']['size'] > $max_size) {
                 $upload_error_msg = "Error: Ukuran file PPT/PDF maksimal adalah 20 MB.";
@@ -84,6 +94,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
     }
 
     if (isset($_FILES['update_abstract']) && $_FILES['update_abstract']['error'] == UPLOAD_ERR_OK) {
+        $allowed = ['jpg', 'jpeg', 'pdf'];
+        $ext = strtolower(pathinfo($_FILES['update_abstract']['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowed)) {
+            die("<script>alert('Error: Hanya file JPG dan PDF yang diperbolehkan!'); history.back();</script>");
+        }
         $filename = time() . '_abstract_' . basename($_FILES['update_abstract']['name']);
         $target_path = 'uploads/' . $filename;
         if (move_uploaded_file($_FILES['update_abstract']['tmp_name'], $target_path)) {

@@ -50,7 +50,7 @@
             <h2 class="article-title">Submission</h2>
             <div class="article-content">
                 <p>Please check all boxes to ensure that they are completely filled up, before you click "Submit".</p>
-                <p>Author can return to the registration page and revise the information on abstract until the deadline of abstract submission date on <strong>30 September 2026</strong>.</p>
+                <p>Author can return to the registration page and revise the information on abstract until the deadline of abstract submission date on <strong>25 August 2026</strong>.</p>
                 <p>Abstract submission is done <strong>online via the link provided at the conference website/fanpage</strong>.</p>
             </div>
         </div>
@@ -64,8 +64,8 @@
                         <thead>
                             <tr>
                                 <th>Category</th>
-                                <th>Early Bird<br><span style="font-size:12px;font-weight:400;">(before 31 August 2026)</span></th>
-                                <th>Regular Rate<br><span style="font-size:12px;font-weight:400;">(1 – 25 September 2026)</span></th>
+                                <th>Early Bird<br><span style="font-size:12px;font-weight:400;">(until 31 August 2026)</span></th>
+                                <th>Regular Rate<br><span style="font-size:12px;font-weight:400;">(1 – 30 September 2026)</span></th>
                             </tr>
                         </thead>
                         <tbody>
@@ -75,7 +75,7 @@
                             <tr>
                                 <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                                 <td>USD 150</td>
-                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 30 September 2026</td>
+                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -94,7 +94,7 @@
                             <tr>
                                 <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                                 <td>IDR 1,200,000</td>
-                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 30 September 2026</td>
+                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>

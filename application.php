@@ -32,6 +32,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $abstract_path = '';
     if (isset($_FILES['extended_abstract']) && $_FILES['extended_abstract']['error'] == UPLOAD_ERR_OK) {
+        $allowed = ['jpg', 'jpeg', 'pdf'];
+        $ext = strtolower(pathinfo($_FILES['extended_abstract']['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowed)) {
+            die("<script>alert('Error: Hanya file JPG dan PDF yang diperbolehkan!'); history.back();</script>");
+        }
         $filename = time() . '_abstract_' . basename($_FILES['extended_abstract']['name']);
         $target_path = 'uploads/' . $filename;
         if (move_uploaded_file($_FILES['extended_abstract']['tmp_name'], $target_path)) {

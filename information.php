@@ -36,6 +36,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     $student_proof_path = '';
     if ($is_student == 'Yes' && isset($_FILES['student_proof']) && $_FILES['student_proof']['error'] == UPLOAD_ERR_OK) {
+        $allowed = ['jpg', 'jpeg', 'pdf'];
+        $ext = strtolower(pathinfo($_FILES['student_proof']['name'], PATHINFO_EXTENSION));
+        if (!in_array($ext, $allowed)) {
+            die("<script>alert('Error: Hanya file JPG dan PDF yang diperbolehkan!'); history.back();</script>");
+        }
         $filename = time() . '_proof_' . basename($_FILES['student_proof']['name']);
         $target_path = 'uploads/' . $filename;
         if (move_uploaded_file($_FILES['student_proof']['tmp_name'], $target_path)) {
