@@ -26,7 +26,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
         $stmt->store_result();
         
         if ($stmt->num_rows > 0) {
-            $error_msg = "Email already registered.";
+            $error_msg = "Email already registered. If you want to continue registering using this email, please log in through the Login menu and continue your registration.";
         } else {
             // Password hash
             $password_hash = password_hash($password, PASSWORD_DEFAULT);
@@ -88,7 +88,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <tr>
                         <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                         <td>USD 150</td>
-                        <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
+                        <td>USD 180</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -107,7 +107,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     <tr>
                         <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                         <td>IDR 1,200,000</td>
-                        <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
+                        <td>IDR 1,500,000</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>

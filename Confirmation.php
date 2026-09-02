@@ -485,7 +485,7 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                     <div>SWIFT CODE: BNINIDJABGR</div>
                 </div>
 
-                <div style="margin-bottom: 10px;">After you have completed the payment, please upload your receipt here:</div>
+                <div style="margin-bottom: 10px; color: #1a73e8; font-weight: 600;">Invoice will be provided later. Payment proof is optional at this stage.</div>
                 
                 <?php if (!empty($user_data['bukti_transfer'])): ?>
                     <div style="color: green; font-weight: bold; margin-bottom: 10px;">
@@ -503,8 +503,7 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             </div>
         </fieldset>
 
-        <?php $has_receipt = !empty($user_data['bukti_transfer']); ?>
-        <a href="<?php echo $has_receipt ? 'success.php' : '#'; ?>" class="btn-yellow-confirm" style="display: inline-block; text-decoration: none; text-align: center; <?php echo $has_receipt ? '' : 'opacity: 0.5; cursor: not-allowed; pointer-events: none;'; ?>">Confirm Data</a>
+        <a href="success.php" class="btn-yellow-confirm" style="display: inline-block; text-decoration: none; text-align: center;">Confirm Data</a>
 
     </div>
 </section>

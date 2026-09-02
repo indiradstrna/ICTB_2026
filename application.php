@@ -275,15 +275,16 @@ while($row = $subthemes_result->fetch_assoc()) {
                 <legend class="info-legend">Application</legend>
                 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="application_type">Application type</label>
-                    <select id="application_type" name="application_type" class="info-form-control">
+                    <label class="info-form-label required-label" for="application_type">Application type</label>
+                    <select id="application_type" name="application_type" class="info-form-control" required>
+                        <option value="">-- Select Application Type --</option>
                         <option value="Oral" <?php echo (isset($existing_app['apptype_id']) && $existing_app['apptype_id'] == 'Oral') ? 'selected' : ''; ?>>Oral</option>
                         <option value="Poster" <?php echo (isset($existing_app['apptype_id']) && $existing_app['apptype_id'] == 'Poster') ? 'selected' : ''; ?>>Poster</option>
                     </select>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="theme">Theme</label>
+                    <label class="info-form-label required-label" for="theme">Theme</label>
                     <select id="theme" name="theme" class="info-form-control" onchange="updateSubthemes()" required>
                         <option value="">Select Theme</option>
                         <?php foreach($themes_data as $t): ?>
@@ -308,7 +309,7 @@ while($row = $subthemes_result->fetch_assoc()) {
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="sub_theme">Sub-Theme</label>
+                    <label class="info-form-label required-label" for="sub_theme">Sub-Theme</label>
                     <select id="sub_theme" name="sub_theme" class="info-form-control" required>
                         <option value="">Select Sub-Theme</option>
                         <?php if(!empty($existing_app['subtheme_id'])): ?>
@@ -318,13 +319,13 @@ while($row = $subthemes_result->fetch_assoc()) {
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="title">Title</label>
+                    <label class="info-form-label required-label" for="title">Title</label>
                     <span class="hint-text">15 words left</span>
                     <input type="text" id="title" name="title" class="info-form-control" placeholder="Title" value="<?php echo htmlspecialchars($existing_app['title'] ?? ''); ?>" required>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">Abstract</label>
+                    <label class="info-form-label required-label">Abstract</label>
                     <a href="template_abstract.docx" download class="btn-dark">Download Abstract Template</a>
                     <div class="highlight-box">
                         <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;" <?php echo empty($existing_app['abstract']) ? 'required' : ''; ?>>
@@ -335,25 +336,25 @@ while($row = $subthemes_result->fetch_assoc()) {
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="keywords">Keywords</label>
+                    <label class="info-form-label required-label" for="keywords">Keywords</label>
                     <span class="hint-text">(separate each keyword by comma)</span>
                     <input type="text" id="keywords" name="keywords" class="info-form-control" placeholder="Keywords" value="<?php echo htmlspecialchars($existing_app['keyword'] ?? ''); ?>" required>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">Is it the first time this abstract has been submitted for publication?</label>
+                    <label class="info-form-label required-label">Is it the first time this abstract has been submitted for publication?</label>
                     <div class="info-radio-group-horizontal">
                         <label class="info-radio-label">
-                            <input type="radio" name="first_time" value="No" <?php echo (isset($existing_app['firstsubmit']) && $existing_app['firstsubmit'] == 0) ? 'checked' : ''; ?>> No
+                            <input type="radio" name="first_time" value="No" <?php echo (isset($existing_app['firstsubmit']) && $existing_app['firstsubmit'] == 0) ? 'checked' : ''; ?> required> No
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="first_time" value="Yes" <?php echo (!isset($existing_app['firstsubmit']) || $existing_app['firstsubmit'] == 1) ? 'checked' : ''; ?>> Yes
+                            <input type="radio" name="first_time" value="Yes" <?php echo (!isset($existing_app['firstsubmit']) || $existing_app['firstsubmit'] == 1) ? 'checked' : ''; ?> required> Yes
                         </label>
                     </div>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">Which publication do you prefer for your abstract & full paper?</label>
+                    <label class="info-form-label required-label">Which publication do you prefer for your abstract & full paper?</label>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
                             <input type="radio" name="publication" value="Program book (abstract only) - free" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Program book (abstract only) - free') ? 'checked' : ''; ?> required> Program book (abstract only) - free

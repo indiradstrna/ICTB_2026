@@ -78,6 +78,11 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 <?php include 'includes/header.php'; ?>
 
 <style>
+.required-label::after {
+    content: " *";
+    color: #d93025;
+    font-weight: 700;
+}
 .wizard-progress { 
     display: flex;
     justify-content: space-between;
@@ -234,13 +239,14 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 <legend class="info-legend">Other Information</legend>
                 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="organization">Organization</label>
-                    <input type="text" id="organization" name="organization" class="info-form-control" placeholder="Affiliated Organization" value="<?php echo htmlspecialchars($existing_data['institution'] ?? ''); ?>">
+                    <label class="info-form-label required-label" for="organization">Organization</label>
+                    <input type="text" id="organization" name="organization" class="info-form-control" placeholder="Affiliated Organization" value="<?php echo htmlspecialchars($existing_data['institution'] ?? ''); ?>" required>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="org_type">Organization type</label>
-                    <select id="org_type" name="org_type" class="info-form-control">
+                    <label class="info-form-label required-label" for="org_type">Organization type</label>
+                    <select id="org_type" name="org_type" class="info-form-control" required>
+                        <option value="">-- Select Organization Type --</option>
                         <option value="Government" <?php echo (isset($existing_data['org_type']) && $existing_data['org_type'] == 'Government') ? 'selected' : ''; ?>>Government</option>
                         <option value="Non-government" <?php echo (isset($existing_data['org_type']) && $existing_data['org_type'] == 'Non-government') ? 'selected' : ''; ?>>Non-government</option>
                         <option value="Private company" <?php echo (isset($existing_data['org_type']) && $existing_data['org_type'] == 'Private company') ? 'selected' : ''; ?>>Private company</option>
@@ -250,8 +256,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="title">Title</label>
-                    <select id="title" name="title" class="info-form-control">
+                    <label class="info-form-label required-label" for="title">Title</label>
+                    <select id="title" name="title" class="info-form-control" required>
+                        <option value="">-- Select Title --</option>
                         <option value="Mr." <?php echo (isset($existing_data['title']) && $existing_data['title'] == 'Mr.') ? 'selected' : ''; ?>>Mr.</option>
                         <option value="Ms." <?php echo (isset($existing_data['title']) && $existing_data['title'] == 'Ms.') ? 'selected' : ''; ?>>Ms.</option>
                         <option value="Dr." <?php echo (isset($existing_data['title']) && $existing_data['title'] == 'Dr.') ? 'selected' : ''; ?>>Dr.</option>
@@ -260,8 +267,8 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label" for="country">Country</label>
-                    <select id="country" name="country" class="info-form-control">
+                    <label class="info-form-label required-label" for="country">Country</label>
+                    <select id="country" name="country" class="info-form-control" required>
                         <option value="">-- Select Country --</option>
                         <?php 
                         $countries_list = ["Afghanistan", "Albania", "Algeria", "Andorra", "Angola", "Antigua and Barbuda", "Argentina", "Armenia", "Australia", "Austria", "Azerbaijan", "Bahamas", "Bahrain", "Bangladesh", "Barbados", "Belarus", "Belgium", "Belize", "Benin", "Bhutan", "Bolivia", "Bosnia and Herzegovina", "Botswana", "Brazil", "Brunei", "Bulgaria", "Burkina Faso", "Burundi", "Cabo Verde", "Cambodia", "Cameroon", "Canada", "Central African Republic", "Chad", "Chile", "China", "Colombia", "Comoros", "Congo", "Costa Rica", "Croatia", "Cuba", "Cyprus", "Czechia", "Denmark", "Djibouti", "Dominica", "Dominican Republic", "Ecuador", "Egypt", "El Salvador", "Equatorial Guinea", "Eritrea", "Estonia", "Eswatini", "Ethiopia", "Fiji", "Finland", "France", "Gabon", "Gambia", "Georgia", "Germany", "Ghana", "Greece", "Grenada", "Guatemala", "Guinea", "Guinea-Bissau", "Guyana", "Haiti", "Honduras", "Hungary", "Iceland", "India", "Indonesia", "Iran", "Iraq", "Ireland", "Israel", "Italy", "Jamaica", "Japan", "Jordan", "Kazakhstan", "Kenya", "Kiribati", "Kuwait", "Kyrgyzstan", "Laos", "Latvia", "Lebanon", "Lesotho", "Liberia", "Libya", "Liechtenstein", "Lithuania", "Luxembourg", "Madagascar", "Malawi", "Malaysia", "Maldives", "Mali", "Malta", "Marshall Islands", "Mauritania", "Mauritius", "Mexico", "Micronesia", "Moldova", "Monaco", "Mongolia", "Montenegro", "Morocco", "Mozambique", "Myanmar", "Namibia", "Nauru", "Nepal", "Netherlands", "New Zealand", "Nicaragua", "Niger", "Nigeria", "North Korea", "North Macedonia", "Norway", "Oman", "Pakistan", "Palau", "Palestine State", "Panama", "Papua New Guinea", "Paraguay", "Peru", "Philippines", "Poland", "Portugal", "Qatar", "Romania", "Russia", "Rwanda", "Saint Kitts and Nevis", "Saint Lucia", "Saint Vincent and the Grenadines", "Samoa", "San Marino", "Sao Tome and Principe", "Saudi Arabia", "Senegal", "Serbia", "Seychelles", "Sierra Leone", "Singapore", "Slovakia", "Slovenia", "Solomon Islands", "Somalia", "South Africa", "South Korea", "South Sudan", "Spain", "Sri Lanka", "Sudan", "Suriname", "Sweden", "Switzerland", "Syria", "Tajikistan", "Tanzania", "Thailand", "Timor-Leste", "Togo", "Tonga", "Trinidad and Tobago", "Tunisia", "Turkey", "Turkmenistan", "Tuvalu", "Uganda", "Ukraine", "United Arab Emirates", "United Kingdom", "United States of America", "Uruguay", "Uzbekistan", "Vanuatu", "Venezuela", "Vietnam", "Yemen", "Zambia", "Zimbabwe"];
@@ -274,66 +281,66 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">Gender</label>
+                    <label class="info-form-label required-label">Gender</label>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="gender" value="Male" <?php echo (isset($existing_data['gender']) && $existing_data['gender'] == 'Male') ? 'checked' : ''; ?>> Male
+                            <input type="radio" name="gender" value="Male" <?php echo (isset($existing_data['gender']) && $existing_data['gender'] == 'Male') ? 'checked' : ''; ?> required> Male
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="gender" value="Female" <?php echo (isset($existing_data['gender']) && $existing_data['gender'] == 'Female') ? 'checked' : ''; ?>> Female
+                            <input type="radio" name="gender" value="Female" <?php echo (isset($existing_data['gender']) && $existing_data['gender'] == 'Female') ? 'checked' : ''; ?> required> Female
                         </label>
                     </div>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">Are you student?</label>
+                    <label class="info-form-label required-label">Are you student?</label>
                     <?php $is_student_val = isset($_SESSION['is_student']) ? $_SESSION['is_student'] : 'No'; ?>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="is_student" value="No" <?php echo ($is_student_val == 'No') ? 'checked' : ''; ?> onclick="document.getElementById('student_upload_wrapper').style.display='none'"> No
+                            <input type="radio" name="is_student" value="No" <?php echo ($is_student_val == 'No') ? 'checked' : ''; ?> onclick="toggleStudentProof(false)" required> No
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="is_student" value="Yes" <?php echo ($is_student_val == 'Yes') ? 'checked' : ''; ?> onclick="document.getElementById('student_upload_wrapper').style.display='block'"> Yes
+                            <input type="radio" name="is_student" value="Yes" <?php echo ($is_student_val == 'Yes') ? 'checked' : ''; ?> onclick="toggleStudentProof(true)" required> Yes
                         </label>
                     </div>
                 </div>
 
                 <div class="info-form-group" id="student_upload_wrapper" style="display: <?php echo ($is_student_val == 'Yes') ? 'block' : 'none'; ?>; margin-top: 10px; margin-bottom: 20px;">
-                    <label class="info-form-label" for="student_proof" style="color: #555;">If "Yes", Provide your scanned-copy of student identification or other identification as proof (max. 300 Kb)</label>
-                    <input type="file" id="student_proof" name="student_proof" class="info-form-control" style="border: 1px solid #ccc; padding: 5px; background: #f9f9f9;">
+                    <label class="info-form-label required-label" for="student_proof" style="color: #555;">If "Yes", Provide your scanned-copy of student identification or other identification as proof (max. 300 Kb)</label>
+                    <input type="file" id="student_proof" name="student_proof" class="info-form-control" style="border: 1px solid #ccc; padding: 5px; background: #f9f9f9;" <?php echo ($is_student_val == 'Yes') ? 'required' : ''; ?>>
                     <?php if(!empty($existing_data['bukti_diri'])): ?>
                         <div style="font-size: 11px; margin-top: 5px;">Current file: <a href="<?php echo htmlspecialchars($existing_data['bukti_diri']); ?>" target="_blank">View Proof</a></div>
                     <?php endif; ?>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">How do you plan to attend the conference?</label>
+                    <label class="info-form-label required-label">How do you plan to attend the conference?</label>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="attendance" value="Offline" <?php echo (!isset($existing_data['attendance']) || $existing_data['attendance'] == 'Offline') ? 'checked' : ''; ?>> Offline in Bogor, Indonesia
+                            <input type="radio" name="attendance" value="Offline" <?php echo (!isset($existing_data['attendance']) || $existing_data['attendance'] == 'Offline') ? 'checked' : ''; ?> required> Offline in Bogor, Indonesia
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="attendance" value="Online" <?php echo (isset($existing_data['attendance']) && $existing_data['attendance'] == 'Online') ? 'checked' : ''; ?>> Online
+                            <input type="radio" name="attendance" value="Online" <?php echo (isset($existing_data['attendance']) && $existing_data['attendance'] == 'Online') ? 'checked' : ''; ?> required> Online
                         </label>
                     </div>
                 </div>
 
                 <div class="info-form-group">
-                    <label class="info-form-label">Do you have funding support for attending this conference?</label>
+                    <label class="info-form-label required-label">Do you have funding support for attending this conference?</label>
                     <?php $funding_val = isset($existing_data['funding']) ? $existing_data['funding'] : 'Yes'; ?>
                     <div class="info-radio-group">
                         <label class="info-radio-label">
-                            <input type="radio" name="funding" value="No" <?php echo ($funding_val == 'No') ? 'checked' : ''; ?> onclick="document.getElementById('funding_source_wrapper').style.display='none'"> No
+                            <input type="radio" name="funding" value="No" <?php echo ($funding_val == 'No') ? 'checked' : ''; ?> onclick="toggleFundingSource(false)" required> No
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="funding" value="Yes" <?php echo ($funding_val == 'Yes') ? 'checked' : ''; ?> onclick="document.getElementById('funding_source_wrapper').style.display='block'"> Yes
+                            <input type="radio" name="funding" value="Yes" <?php echo ($funding_val == 'Yes') ? 'checked' : ''; ?> onclick="toggleFundingSource(true)" required> Yes
                         </label>
                     </div>
                 </div>
 
                 <div class="info-form-group" id="funding_source_wrapper" style="display: <?php echo ($funding_val == 'Yes') ? 'block' : 'none'; ?>;">
-                    <label class="info-form-label" for="funding_source">If 'Yes', from where?</label>
-                    <input type="text" id="funding_source" name="funding_source" class="info-form-control" placeholder="Funding support" value="<?php echo htmlspecialchars($existing_data['funding_source'] ?? ''); ?>">
+                    <label class="info-form-label <?php echo ($funding_val == 'Yes') ? 'required-label' : ''; ?>" for="funding_source">If 'Yes', from where?</label>
+                    <input type="text" id="funding_source" name="funding_source" class="info-form-control" placeholder="Funding support" value="<?php echo htmlspecialchars($existing_data['funding_source'] ?? ''); ?>" <?php echo ($funding_val == 'Yes') ? 'required' : ''; ?>>
                 </div>
 
                 <div class="info-form-group" style="margin-bottom: 10px;">
@@ -348,5 +355,35 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
     </div>
 </section>
+
+<script>
+function toggleStudentProof(show) {
+    var wrapper = document.getElementById('student_upload_wrapper');
+    var input = document.getElementById('student_proof');
+    if (wrapper) {
+        wrapper.style.display = show ? 'block' : 'none';
+    }
+    if (input) {
+        input.required = show;
+    }
+}
+
+function toggleFundingSource(show) {
+    var wrapper = document.getElementById('funding_source_wrapper');
+    var input = document.getElementById('funding_source');
+    var label = input ? input.previousElementSibling : null;
+    if (wrapper) {
+        wrapper.style.display = show ? 'block' : 'none';
+    }
+    if (input) {
+        input.required = show;
+        if (show) {
+            if (label) label.classList.add('required-label');
+        } else {
+            if (label) label.classList.remove('required-label');
+        }
+    }
+}
+</script>
 
 <?php include 'includes/footer.php'; ?>

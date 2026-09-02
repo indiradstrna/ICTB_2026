@@ -75,7 +75,7 @@
                             <tr>
                                 <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                                 <td>USD 150</td>
-                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
+                                <td>USD 180</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>
@@ -94,7 +94,7 @@
                             <tr>
                                 <td style="font-weight: 600;">Presenter <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(oral, poster)</span></td>
                                 <td>IDR 1,200,000</td>
-                                <td style="font-size: 12px; color: var(--text-muted); font-style: italic;">Conference Organizer will no longer accept paper submission after 25 August 2026</td>
+                                <td>IDR 1,500,000</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">General <span style="color: var(--text-muted); font-size: 13px; font-weight: normal; margin-left: 8px;">(no paper)</span></td>

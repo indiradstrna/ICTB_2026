@@ -98,7 +98,8 @@ include 'includes/header.php';
                             <?php 
                                 $reg_id = "5ICTB-PA-" . str_pad($row['id'], 4, "0", STR_PAD_LEFT);
                                 $name = htmlspecialchars(trim(($row['first_name']??'') . ' ' . ($row['last_name']??'')));
-                                $is_student = !empty($row['bukti_diri']) ? 'Yes' : 'No';
+                                $has_student_proof = !empty($row['bukti_diri']);
+                                $is_student = $has_student_proof ? 'Yes' : 'No';
                             ?>
                             <tr>
                                 <td><?php echo $no++; ?></td>
@@ -107,7 +108,13 @@ include 'includes/header.php';
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                                 <td style="max-width: 250px; white-space: normal; line-height: 1.4;"><?php echo htmlspecialchars($row['institution'] ?? ''); ?></td>
                                 <td><?php echo htmlspecialchars($row['country'] ?? ''); ?></td>
-                                <td><?php echo $is_student; ?></td>
+                                <td>
+                                    <?php if ($has_student_proof): ?>
+                                        <a href="<?php echo htmlspecialchars($row['bukti_diri']); ?>" target="_blank" class="link-action"><?php echo $is_student; ?></a>
+                                    <?php else: ?>
+                                        <?php echo $is_student; ?>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo htmlspecialchars($row['allergies'] ?? ''); ?></td>
                                 <td><?php echo htmlspecialchars(strtolower($row['attendance'] ?? '')); ?></td>
                                 <td>
