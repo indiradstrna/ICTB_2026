@@ -166,7 +166,7 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                     
                     <div class="timeline-item" style="border-left: 2px solid #e2e8f0; padding-left: 15px; position: relative;">
                         <span style="position: absolute; left: -6px; top: 4px; width: 10px; height: 10px; border-radius: 50%; background: var(--accent-color);"></span>
-                        <div style="font-size: 12px; font-weight: bold; color: var(--accent-color); text-transform: uppercase;">1 June – 25 August 2026</div>
+                        <div style="font-size: 12px; font-weight: bold; color: var(--accent-color); text-transform: uppercase;">1 June – 30 September 2026</div>
                         <div style="font-size: 14px; font-weight: 600; color: var(--text-dark);">Abstract Submission</div>
                     </div>
 

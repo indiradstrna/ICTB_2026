@@ -56,7 +56,7 @@
                     <div class="side-panel-header">Important Dates</div>
                     <div class="cover-date-item">
                         <div class="date-label">Abstract Submission</div>
-                        <div class="date-value">1 June – 25 August 2026</div>
+                        <div class="date-value">1 June – 30 September 2026</div>
                     </div>
                     <div class="cover-date-item">
                         <div class="date-label">Abstract Review</div>

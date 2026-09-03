@@ -50,7 +50,7 @@
             <h2 class="article-title">Submission</h2>
             <div class="article-content">
                 <p>Please check all boxes to ensure that they are completely filled up, before you click "Submit".</p>
-                <p>Author can return to the registration page and revise the information on abstract until the deadline of abstract submission date on <strong>25 August 2026</strong>.</p>
+                <p>Author can return to the registration page and revise the information on abstract until the deadline of abstract submission date on <strong>30 September 2026</strong>.</p>
                 <p>Abstract submission is done <strong>online via the link provided at the conference website/fanpage</strong>.</p>
             </div>
         </div>

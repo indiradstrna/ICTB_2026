@@ -48,7 +48,7 @@
                     </li>
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
-                        <div>Authors are required to complete the online registration process before they can submit their Abstract   s. Once completed, authors will be given a username, password, and registration number. The authors will have access to submit and edit their Abstract   s using username, password and registration number given to them until the deadline submission on 25 August 2026 at 23:59 GMT+7. An icon to upload their Abstract  s will be provided in the account.</div>
+                        <div>Authors are required to complete the online registration process before they can submit their Abstract   s. Once completed, authors will be given a username, password, and registration number. The authors will have access to submit and edit their Abstract   s using username, password and registration number given to them until the deadline submission on 30 September 2026 at 23:59 GMT+7. An icon to upload their Abstract  s will be provided in the account.</div>
                     </li>
                 </ul>
                 <div class="fee-table-container" style="margin: 20px 0 30px;">
@@ -62,7 +62,7 @@
                         <tbody>
                             <tr>
                                 <td style="font-weight: 600; width: 60%;">Abstract Submission</td>
-                                <td>1 June – 25 August 2026</td>
+                                <td>1 June – 30 September 2026</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">Abstract Review</td>
