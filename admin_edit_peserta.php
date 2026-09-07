@@ -115,10 +115,40 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $application_columns[] = $column['Field'];
                 }
 
+                $has_abstract_upload = isset($uploaded_files['abstract_file']);
+                $has_ppt_upload = isset($uploaded_files['ppt_file']);
+                if (!$application && ($has_abstract_upload || $has_ppt_upload)) {
+                    if (!in_array('abstract', $application_columns, true)) {
+                        $error = 'Kolom abstract tidak tersedia pada tabel applications.';
+                    } elseif ($has_ppt_upload && !in_array('ppt_file', $application_columns, true)) {
+                        $error = 'Kolom ppt_file belum tersedia pada tabel applications. Abstract tetap bisa diunggah tanpa file PPT.';
+                    } else {
+                        $default_application_type = 'Admin upload';
+                        $default_subtheme = 'Belum diisi';
+                        $default_title = 'Abstract diunggah oleh admin';
+                        $default_abstract = '';
+                        $default_keyword = '';
+                        $default_firstsubmit = 0;
+                        $default_publication = 'Belum diisi';
+                        $create_application = $conn->prepare('INSERT INTO applications (participant_id, apptype_id, subtheme_id, title, abstract, keyword, firstsubmit, publication_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
+                        $create_application->bind_param('isssssis', $participant_id, $default_application_type, $default_subtheme, $default_title, $default_abstract, $default_keyword, $default_firstsubmit, $default_publication);
+                        if ($create_application->execute()) {
+                            $application = ['id' => $conn->insert_id];
+                        } else {
+                            $error = 'Aplikasi abstract tidak dapat dibuat: ' . $create_application->error;
+                        }
+                        $create_application->close();
+                    }
+                }
+
                 foreach ($uploaded_files as $input_name => $file_data) {
                     if (in_array($file_data['column'], ['abstract', 'ppt_file'], true)) {
-                        if (!$application || !in_array($file_data['column'], $application_columns, true)) {
-                            $error = 'Peserta belum memiliki aplikasi abstract atau kolom file PPT belum tersedia.';
+                        if (!$application) {
+                            $error = 'Data aplikasi peserta belum dapat dibuat.';
+                            break;
+                        }
+                        if (!in_array($file_data['column'], $application_columns, true)) {
+                            $error = 'Kolom ' . $file_data['column'] . ' belum tersedia pada tabel applications.';
                             break;
                         }
                     }
@@ -231,8 +261,8 @@ include 'includes/header.php';
                 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;">
                     <label>Bukti pembayaran<input type="file" name="payment_receipt" style="display:block;margin-top:7px;"><?php if (!empty($participant['bukti_transfer'])): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($participant['bukti_transfer']); ?>" target="_blank">Lihat</a></small><?php endif; ?></label>
                     <label>Bukti mahasiswa<input type="file" name="student_proof" style="display:block;margin-top:7px;"><?php if (!empty($participant['bukti_diri'])): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($participant['bukti_diri']); ?>" target="_blank">Lihat</a></small><?php endif; ?></label>
-                    <label>Abstract<?php if ($application): ?><input type="file" name="abstract_file" style="display:block;margin-top:7px;"><?php if (!empty($application['abstract'])): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($application['abstract']); ?>" target="_blank">Lihat</a></small><?php endif; ?><?php else: ?><small>Peserta ini belum memiliki aplikasi abstract.</small><?php endif; ?></label>
-                    <label>PPT<?php if ($application): ?><input type="file" name="ppt_file" style="display:block;margin-top:7px;"><?php if (!empty($application['ppt_file'] ?? '')): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($application['ppt_file']); ?>" target="_blank">Lihat</a></small><?php endif; ?><?php else: ?><small>Peserta ini belum memiliki aplikasi abstract.</small><?php endif; ?></label>
+                    <label>Abstract<input type="file" name="abstract_file" style="display:block;margin-top:7px;"><?php if (!empty($application['abstract'] ?? '')): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($application['abstract']); ?>" target="_blank">Lihat</a></small><?php else: ?><small>Belum ada file. Upload baru akan membuat data aplikasi otomatis.</small><?php endif; ?></label>
+                    <label>PPT<?php if ($application): ?><input type="file" name="ppt_file" style="display:block;margin-top:7px;"><?php if (!empty($application['ppt_file'] ?? '')): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($application['ppt_file']); ?>" target="_blank">Lihat</a></small><?php endif; ?><?php else: ?><small>Upload abstract terlebih dahulu agar data aplikasi dibuat.</small><?php endif; ?></label>
                 </div>
                 <button type="submit" style="margin-top:25px;padding:11px 20px;background:#17a2b8;color:#fff;border:0;cursor:pointer;">Simpan perubahan</button>
             </form>
