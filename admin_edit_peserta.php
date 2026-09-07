@@ -43,6 +43,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $funding = trim($_POST['funding'] ?? '');
             $funding_source = trim($_POST['funding_source'] ?? '');
             $allergies = trim($_POST['allergies'] ?? '');
+            $application_type = in_array($_POST['application_type'] ?? '', ['Oral', 'Poster'], true) ? $_POST['application_type'] : 'Oral';
 
             if ($first_name === '' || $last_name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = 'Nama depan, nama belakang, dan email yang valid wajib diisi.';
@@ -115,6 +116,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     $application_columns[] = $column['Field'];
                 }
 
+                if ($application) {
+                    $type_stmt = $conn->prepare('UPDATE applications SET apptype_id = ? WHERE id = ?');
+                    $type_stmt->bind_param('si', $application_type, $application['id']);
+                    $type_stmt->execute();
+                    $type_stmt->close();
+                }
+
                 $has_abstract_upload = isset($uploaded_files['abstract_file']);
                 $has_ppt_upload = isset($uploaded_files['ppt_file']);
                 if (!$application && ($has_abstract_upload || $has_ppt_upload)) {
@@ -123,7 +131,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } elseif ($has_ppt_upload && !in_array('ppt_file', $application_columns, true)) {
                         $error = 'Kolom ppt_file belum tersedia pada tabel applications. Abstract tetap bisa diunggah tanpa file PPT.';
                     } else {
-                        $default_application_type = 'Admin upload';
+                        $default_application_type = $application_type;
                         $default_subtheme = 'Belum diisi';
                         $default_title = 'Abstract diunggah oleh admin';
                         $default_abstract = '';
@@ -259,6 +267,7 @@ include 'includes/header.php';
                 <h3 style="margin:30px 0 12px;">Upload file</h3>
                 <p style="font-size:13px;color:#666;">Format: JPG, PNG, PDF, Word, atau PowerPoint. Maksimal 20 MB per file.</p>
                 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;">
+                    <label>Jenis aplikasi<select name="application_type" style="display:block;width:100%;padding:9px;margin-top:7px;border:1px solid #ccc;"><option value="Oral" <?php echo (($application['apptype_id'] ?? 'Oral') === 'Oral') ? 'selected' : ''; ?>>Oral</option><option value="Poster" <?php echo (($application['apptype_id'] ?? '') === 'Poster') ? 'selected' : ''; ?>>Poster</option></select></label>
                     <label>Bukti pembayaran<input type="file" name="payment_receipt" style="display:block;margin-top:7px;"><?php if (!empty($participant['bukti_transfer'])): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($participant['bukti_transfer']); ?>" target="_blank">Lihat</a></small><?php endif; ?></label>
                     <label>Bukti mahasiswa<input type="file" name="student_proof" style="display:block;margin-top:7px;"><?php if (!empty($participant['bukti_diri'])): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($participant['bukti_diri']); ?>" target="_blank">Lihat</a></small><?php endif; ?></label>
                     <label>Abstract<input type="file" name="abstract_file" style="display:block;margin-top:7px;"><?php if (!empty($application['abstract'] ?? '')): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($application['abstract']); ?>" target="_blank">Lihat</a></small><?php else: ?><small>Belum ada file. Upload baru akan membuat data aplikasi otomatis.</small><?php endif; ?></label>
