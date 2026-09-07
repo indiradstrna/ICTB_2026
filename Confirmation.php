@@ -4,6 +4,20 @@ require_once 'includes/db.php';
 
 $upload_success = false;
 $upload_error_msg = "";
+$upload_dir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR;
+
+function upload_error_message($error_code) {
+    $messages = [
+        UPLOAD_ERR_INI_SIZE => 'Ukuran file melebihi batas upload hosting (upload_max_filesize).',
+        UPLOAD_ERR_FORM_SIZE => 'Ukuran file melebihi batas form hosting.',
+        UPLOAD_ERR_PARTIAL => 'File hanya ter-upload sebagian. Silakan coba lagi.',
+        UPLOAD_ERR_NO_FILE => 'Tidak ada file yang dipilih.',
+        UPLOAD_ERR_NO_TMP_DIR => 'Folder sementara upload tidak tersedia di hosting.',
+        UPLOAD_ERR_CANT_WRITE => 'Hosting tidak dapat menulis file. Periksa permission folder uploads.',
+        UPLOAD_ERR_EXTENSION => 'Upload dihentikan oleh extension PHP di hosting.'
+    ];
+    return $messages[$error_code] ?? ('Upload gagal dengan kode PHP: ' . $error_code);
+}
 
 $user_data = [];
 $app_data = [];
@@ -28,6 +42,10 @@ if (isset($_SESSION['participant_id'])) {
 }
 
 if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+    if (!is_dir($upload_dir) || !is_writable($upload_dir)) {
+        $upload_error_msg = 'Folder uploads tidak ditemukan atau tidak bisa ditulis oleh hosting. Buat folder uploads dan beri permission 755 atau 775.';
+    }
+
     if (isset($_FILES['payment_receipt'])) {
         if ($_FILES['payment_receipt']['error'] == UPLOAD_ERR_OK) {
             $allowed = ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx'];
@@ -37,26 +55,26 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             }
             $filename = time() . '_receipt_' . basename($_FILES['payment_receipt']['name']);
             $target_path = 'uploads/' . $filename;
-            if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $target_path)) {
+            if (move_uploaded_file($_FILES['payment_receipt']['tmp_name'], $upload_dir . $filename)) {
                 if (isset($_SESSION['participant_id'])) {
                     $stmt = $conn->prepare("UPDATE participants SET bukti_transfer = ? WHERE id = ?");
                     if (!$stmt) {
                         die("Database Error in Confirmation.php: " . $conn->error);
                     }
                     $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
-                    $stmt->execute();
+                    if (!$stmt->execute()) {
+                        $upload_error_msg = 'File berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
+                    }
                     
                     // Set explicitly for the current page load
                     $user_data['bukti_transfer'] = $target_path;
                 }
                 $upload_success = true;
+            } else {
+                $upload_error_msg = 'File bukti pembayaran tidak dapat disimpan. Periksa permission folder uploads di hosting.';
             }
         } else if ($_FILES['payment_receipt']['error'] != UPLOAD_ERR_NO_FILE) {
-            if ($_FILES['payment_receipt']['error'] == UPLOAD_ERR_INI_SIZE || $_FILES['payment_receipt']['error'] == UPLOAD_ERR_FORM_SIZE) {
-                $upload_error_msg = "Error: Ukuran file bukti pembayaran terlalu besar (melebihi batas maksimal server). Harap kompres file Anda.";
-            } else {
-                $upload_error_msg = "Error uploading receipt: Code " . $_FILES['payment_receipt']['error'];
-            }
+            $upload_error_msg = 'Upload bukti pembayaran gagal: ' . upload_error_message($_FILES['payment_receipt']['error']);
         }
     }
 
@@ -74,48 +92,63 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             } else {
                 $filename = time() . '_ppt_' . basename($_FILES['update_ppt']['name']);
                 $target_path = 'uploads/' . $filename;
-                if (move_uploaded_file($_FILES['update_ppt']['tmp_name'], $target_path)) {
+                if (move_uploaded_file($_FILES['update_ppt']['tmp_name'], $upload_dir . $filename)) {
                     if (isset($_SESSION['participant_id'])) {
                         if (!empty($app_data)) {
                             $stmt = $conn->prepare("UPDATE applications SET ppt_file = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
                             if ($stmt) {
                                 $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
-                                $stmt->execute();
-                                $app_data['ppt_file'] = $target_path;
+                                if ($stmt->execute()) {
+                                    $app_data['ppt_file'] = $target_path;
+                                } else {
+                                    $upload_error_msg = 'PPT berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
+                                }
                             }
                         }
                     }
                     $upload_success = true;
+                } else {
+                    $upload_error_msg = 'File PPT tidak dapat disimpan. Periksa permission folder uploads di hosting.';
                 }
             }
         } else if ($_FILES['update_ppt']['error'] != UPLOAD_ERR_NO_FILE) {
-            $upload_error_msg = "Error uploading PPT. Please ensure the file size does not exceed the maximum allowed size (20 MB).";
+            $upload_error_msg = 'Upload PPT gagal: ' . upload_error_message($_FILES['update_ppt']['error']);
         }
     }
 
-    if (isset($_FILES['update_abstract']) && $_FILES['update_abstract']['error'] == UPLOAD_ERR_OK) {
-        $allowed = ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx'];
-        $ext = strtolower(pathinfo($_FILES['update_abstract']['name'], PATHINFO_EXTENSION));
-        if (!in_array($ext, $allowed)) {
-            die("<script>alert('Error: Hanya file dokumen (PDF, Word, PPT) dan gambar (JPG) yang diperbolehkan!'); history.back();</script>");
-        }
-        $filename = time() . '_abstract_' . basename($_FILES['update_abstract']['name']);
-        $target_path = 'uploads/' . $filename;
-        if (move_uploaded_file($_FILES['update_abstract']['tmp_name'], $target_path)) {
-            if (isset($_SESSION['participant_id'])) {
-                if (!empty($app_data)) {
-                    $stmt = $conn->prepare("UPDATE applications SET abstract = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
-                    $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
-                    $stmt->execute();
-                    $app_data['abstract'] = $target_path;
+    if (isset($_FILES['update_abstract'])) {
+        if ($_FILES['update_abstract']['error'] == UPLOAD_ERR_OK) {
+            $allowed = ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx'];
+            $ext = strtolower(pathinfo($_FILES['update_abstract']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowed)) {
+                $upload_error_msg = 'Format abstract tidak diperbolehkan. Gunakan PDF, Word, PowerPoint, atau JPG.';
+            } else {
+                $filename = time() . '_abstract_' . bin2hex(random_bytes(4)) . '.' . $ext;
+                $target_path = 'uploads/' . $filename;
+                if (move_uploaded_file($_FILES['update_abstract']['tmp_name'], $upload_dir . $filename)) {
+                    if (isset($_SESSION['participant_id'])) {
+                        if (!empty($app_data)) {
+                            $stmt = $conn->prepare("UPDATE applications SET abstract = ? WHERE participant_id = ?");
+                            $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                            $database_saved = $stmt->execute();
+                        } else {
+                            $stmt = $conn->prepare("INSERT INTO applications (participant_id, abstract) VALUES (?, ?)");
+                            $stmt->bind_param("is", $_SESSION['participant_id'], $target_path);
+                            $database_saved = $stmt->execute();
+                        }
+                        if ($database_saved) {
+                            $app_data['abstract'] = $target_path;
+                        } else {
+                            $upload_error_msg = 'Abstract berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
+                        }
+                    }
+                    $upload_success = true;
                 } else {
-                    $stmt = $conn->prepare("INSERT INTO applications (participant_id, abstract) VALUES (?, ?)");
-                    $stmt->bind_param("is", $_SESSION['participant_id'], $target_path);
-                    $stmt->execute();
-                    $app_data['abstract'] = $target_path;
+                    $upload_error_msg = 'File abstract tidak dapat disimpan. Periksa permission folder uploads di hosting.';
                 }
             }
-            $upload_success = true;
+        } else if ($_FILES['update_abstract']['error'] != UPLOAD_ERR_NO_FILE) {
+            $upload_error_msg = 'Upload abstract gagal: ' . upload_error_message($_FILES['update_abstract']['error']);
         }
     }
 }
