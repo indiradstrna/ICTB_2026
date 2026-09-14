@@ -31,7 +31,7 @@ if (isset($_SESSION['participant_id'])) {
     }
     $stmt->close();
     
-    $stmt2 = $conn->prepare("SELECT * FROM applications WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+    $stmt2 = $conn->prepare("SELECT * FROM applications WHERE participant_id = ? ORDER BY id ASC LIMIT 1");
     $stmt2->bind_param("i", $_SESSION['participant_id']);
     $stmt2->execute();
     $result2 = $stmt2->get_result();

@@ -44,6 +44,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $funding_source = trim($_POST['funding_source'] ?? '');
             $allergies = trim($_POST['allergies'] ?? '');
             $application_type = in_array($_POST['application_type'] ?? '', ['Oral', 'Poster'], true) ? $_POST['application_type'] : 'Oral';
+            $app_title       = trim($_POST['app_title'] ?? '');
+            $app_subtheme    = trim($_POST['app_subtheme'] ?? '');
+            $app_publication = trim($_POST['app_publication'] ?? '');
 
             if ($first_name === '' || $last_name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
                 $error = 'Nama depan, nama belakang, dan email yang valid wajib diisi.';
@@ -103,7 +106,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 $stmt->execute();
                 $stmt->close();
 
-                $application_stmt = $conn->prepare('SELECT id FROM applications WHERE participant_id = ? ORDER BY id DESC LIMIT 1');
+                $application_stmt = $conn->prepare('SELECT * FROM applications WHERE participant_id = ? ORDER BY id ASC LIMIT 1');
                 $application_stmt->bind_param('i', $participant_id);
                 $application_stmt->execute();
                 $application_result = $application_stmt->get_result();
@@ -117,8 +120,17 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 if ($application) {
-                    $type_stmt = $conn->prepare('UPDATE applications SET apptype_id = ? WHERE id = ?');
-                    $type_stmt->bind_param('si', $application_type, $application['id']);
+                    // Update apptype_id; only update title/subtheme/publication jika diisi oleh admin
+                    if ($app_title !== '' || $app_subtheme !== '' || $app_publication !== '') {
+                        $upd_title       = $app_title !== ''       ? $app_title       : $application['title'];
+                        $upd_subtheme    = $app_subtheme !== ''    ? $app_subtheme    : $application['subtheme_id'];
+                        $upd_publication = $app_publication !== '' ? $app_publication : $application['publication_id'];
+                        $type_stmt = $conn->prepare('UPDATE applications SET apptype_id=?, title=?, subtheme_id=?, publication_id=? WHERE id=?');
+                        $type_stmt->bind_param('ssssi', $application_type, $upd_title, $upd_subtheme, $upd_publication, $application['id']);
+                    } else {
+                        $type_stmt = $conn->prepare('UPDATE applications SET apptype_id = ? WHERE id = ?');
+                        $type_stmt->bind_param('si', $application_type, $application['id']);
+                    }
                     $type_stmt->execute();
                     $type_stmt->close();
                 }
@@ -131,19 +143,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     } elseif ($has_ppt_upload && !in_array('ppt_file', $application_columns, true)) {
                         $error = 'Kolom ppt_file belum tersedia pada tabel applications. Abstract tetap bisa diunggah tanpa file PPT.';
                     } else {
-                        $default_application_type = $application_type;
-                        $default_subtheme = 'Belum diisi';
-                        $default_title = 'Abstract diunggah oleh admin';
-                        $default_abstract = '';
-                        $default_keyword = '';
-                        $default_firstsubmit = 0;
-                        $default_publication = 'Belum diisi';
+                        // Gunakan nilai dari form jika ada, jangan pakai dummy
+                        $new_title       = $app_title !== '' ? $app_title : '-';
+                        $new_subtheme    = $app_subtheme !== '' ? $app_subtheme : '-';
+                        $new_publication = $app_publication !== '' ? $app_publication : '-';
+                        $new_keyword     = '';
+                        $new_firstsubmit = 0;
                         $create_application = $conn->prepare('INSERT INTO applications (participant_id, apptype_id, subtheme_id, title, abstract, keyword, firstsubmit, publication_id) VALUES (?, ?, ?, ?, ?, ?, ?, ?)');
-                        $create_application->bind_param('isssssis', $participant_id, $default_application_type, $default_subtheme, $default_title, $default_abstract, $default_keyword, $default_firstsubmit, $default_publication);
+                        $create_application->bind_param('isssssis', $participant_id, $application_type, $new_subtheme, $new_title, $new_keyword, $new_keyword, $new_firstsubmit, $new_publication);
                         if ($create_application->execute()) {
                             $application = ['id' => $conn->insert_id];
                         } else {
-                            $error = 'Aplikasi abstract tidak dapat dibuat: ' . $create_application->error;
+                            $error = 'Aplikasi tidak dapat dibuat: ' . $create_application->error;
                         }
                         $create_application->close();
                     }
@@ -196,7 +207,7 @@ if ($participant_id) {
     $stmt->close();
 
     if ($participant) {
-        $application_stmt = $conn->prepare('SELECT * FROM applications WHERE participant_id = ? ORDER BY id DESC LIMIT 1');
+        $application_stmt = $conn->prepare('SELECT * FROM applications WHERE participant_id = ? ORDER BY id ASC LIMIT 1');
         $application_stmt->bind_param('i', $participant_id);
         $application_stmt->execute();
         $application = $application_stmt->get_result()->fetch_assoc() ?: null;
@@ -264,7 +275,21 @@ include 'includes/header.php';
                     <label>Jenis peserta<select name="participant_type" style="display:block;width:100%;padding:9px;margin-top:5px;border:1px solid #ccc;"><option value="participant" <?php echo ($participant['participant_type'] ?? '') === 'participant' ? 'selected' : ''; ?>>Participant</option><option value="author" <?php echo ($participant['participant_type'] ?? '') === 'author' ? 'selected' : ''; ?>>Author</option></select></label>
                 </div>
 
-                <h3 style="margin:30px 0 12px;">Upload file</h3>
+                <h3 style="margin:30px 0 8px;">Data Abstrak</h3>
+                <p style="font-size:13px;color:#e74c3c;margin:0 0 12px;">⚠ Field berikut hanya tampil untuk referensi dan koreksi. Kosongkan jika tidak ingin mengubah nilai yang sudah ada.</p>
+                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;background:#fffbe6;border:1px solid #ffe08a;padding:15px;border-radius:4px;">
+                    <label style="grid-column:1/-1;">Judul Abstrak / Paper
+                        <input type="text" name="app_title" value="<?php echo htmlspecialchars($application['title'] ?? ''); ?>" placeholder="Kosongkan jika tidak ingin mengubah" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                    </label>
+                    <label>Sub-tema
+                        <input type="text" name="app_subtheme" value="<?php echo htmlspecialchars($application['subtheme_id'] ?? ''); ?>" placeholder="Kosongkan jika tidak ingin mengubah" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                    </label>
+                    <label>Publikasi
+                        <input type="text" name="app_publication" value="<?php echo htmlspecialchars($application['publication_id'] ?? ''); ?>" placeholder="Kosongkan jika tidak ingin mengubah" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                    </label>
+                </div>
+
+                <h3 style="margin:25px 0 12px;">Upload file</h3>
                 <p style="font-size:13px;color:#666;">Format: JPG, PNG, PDF, Word, atau PowerPoint. Maksimal 20 MB per file.</p>
                 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;">
                     <label>Jenis aplikasi<select name="application_type" style="display:block;width:100%;padding:9px;margin-top:7px;border:1px solid #ccc;"><option value="Oral" <?php echo (($application['apptype_id'] ?? 'Oral') === 'Oral') ? 'selected' : ''; ?>>Oral</option><option value="Poster" <?php echo (($application['apptype_id'] ?? '') === 'Poster') ? 'selected' : ''; ?>>Poster</option></select></label>
@@ -274,6 +299,7 @@ include 'includes/header.php';
                     <label>PPT<?php if ($application): ?><input type="file" name="ppt_file" style="display:block;margin-top:7px;"><?php if (!empty($application['ppt_file'] ?? '')): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($application['ppt_file']); ?>" target="_blank">Lihat</a></small><?php endif; ?><?php else: ?><small>Upload abstract terlebih dahulu agar data aplikasi dibuat.</small><?php endif; ?></label>
                 </div>
                 <button type="submit" style="margin-top:25px;padding:11px 20px;background:#17a2b8;color:#fff;border:0;cursor:pointer;">Simpan perubahan</button>
+
             </form>
         <?php elseif ($participant_id): ?>
             <div style="background:#fff;padding:20px;">Peserta dengan ID tersebut tidak ditemukan.</div>

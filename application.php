@@ -7,7 +7,7 @@ $participant_type = isset($_GET['type']) ? $_GET['type'] : 'author';
 
 $existing_app = [];
 if (isset($_SESSION['participant_id'])) {
-    $stmt = $conn->prepare("SELECT * FROM applications WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+    $stmt = $conn->prepare("SELECT * FROM applications WHERE participant_id = ? ORDER BY id ASC LIMIT 1");
     if ($stmt) {
         $stmt->bind_param("i", $_SESSION['participant_id']);
         $stmt->execute();
