@@ -46,6 +46,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $application_type = in_array($_POST['application_type'] ?? '', ['Oral', 'Poster'], true) ? $_POST['application_type'] : 'Oral';
             $app_title       = trim($_POST['app_title'] ?? '');
             $app_subtheme    = trim($_POST['app_subtheme'] ?? '');
+            $app_keywords    = trim($_POST['app_keywords'] ?? '');
             $app_publication = trim($_POST['app_publication'] ?? '');
 
             if ($first_name === '' || $last_name === '' || !filter_var($email, FILTER_VALIDATE_EMAIL)) {
@@ -120,17 +121,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 }
 
                 if ($application) {
-                    // Update apptype_id; only update title/subtheme/publication jika diisi oleh admin
-                    if ($app_title !== '' || $app_subtheme !== '' || $app_publication !== '') {
-                        $upd_title       = $app_title !== ''       ? $app_title       : $application['title'];
-                        $upd_subtheme    = $app_subtheme !== ''    ? $app_subtheme    : $application['subtheme_id'];
-                        $upd_publication = $app_publication !== '' ? $app_publication : $application['publication_id'];
-                        $type_stmt = $conn->prepare('UPDATE applications SET apptype_id=?, title=?, subtheme_id=?, publication_id=? WHERE id=?');
-                        $type_stmt->bind_param('ssssi', $application_type, $upd_title, $upd_subtheme, $upd_publication, $application['id']);
-                    } else {
-                        $type_stmt = $conn->prepare('UPDATE applications SET apptype_id = ? WHERE id = ?');
-                        $type_stmt->bind_param('si', $application_type, $application['id']);
-                    }
+                    // Selalu update semua field abstrak; gunakan nilai DB jika form dikosongkan
+                    $upd_title       = $app_title !== ''       ? $app_title       : ($application['title'] ?? '');
+                    $upd_subtheme    = $app_subtheme !== ''    ? $app_subtheme    : ($application['subtheme_id'] ?? '');
+                    $upd_keywords    = $app_keywords !== ''    ? $app_keywords    : ($application['keyword'] ?? '');
+                    $upd_publication = $app_publication !== '' ? $app_publication : ($application['publication_id'] ?? '');
+                    $type_stmt = $conn->prepare('UPDATE applications SET apptype_id=?, title=?, subtheme_id=?, keyword=?, publication_id=? WHERE id=?');
+                    $type_stmt->bind_param('ssssi', $application_type, $upd_title, $upd_subtheme, $upd_keywords, $upd_publication, $application['id']);
                     $type_stmt->execute();
                     $type_stmt->close();
                 }
@@ -226,6 +223,17 @@ if ($search_term !== '') {
     $search_stmt->close();
 }
 
+// Fetch themes & subthemes for the form dropdowns
+$themes_data = [];
+$subthemes_data = [];
+$tr = $conn->query('SELECT * FROM themes ORDER BY id ASC');
+if ($tr) { while ($row = $tr->fetch_assoc()) { $themes_data[] = $row; } }
+$sr = $conn->query('SELECT * FROM subthemes ORDER BY id ASC');
+if ($sr) { while ($row = $sr->fetch_assoc()) {
+    if (!isset($subthemes_data[$row['id_theme']])) { $subthemes_data[$row['id_theme']] = []; }
+    $subthemes_data[$row['id_theme']][] = $row;
+} }
+
 include 'includes/header.php';
 ?>
 
@@ -275,18 +283,72 @@ include 'includes/header.php';
                     <label>Jenis peserta<select name="participant_type" style="display:block;width:100%;padding:9px;margin-top:5px;border:1px solid #ccc;"><option value="participant" <?php echo ($participant['participant_type'] ?? '') === 'participant' ? 'selected' : ''; ?>>Participant</option><option value="author" <?php echo ($participant['participant_type'] ?? '') === 'author' ? 'selected' : ''; ?>>Author</option></select></label>
                 </div>
 
-                <h3 style="margin:30px 0 8px;">Data Abstrak</h3>
-                <p style="font-size:13px;color:#e74c3c;margin:0 0 12px;">⚠ Field berikut hanya tampil untuk referensi dan koreksi. Kosongkan jika tidak ingin mengubah nilai yang sudah ada.</p>
-                <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;background:#fffbe6;border:1px solid #ffe08a;padding:15px;border-radius:4px;">
-                    <label style="grid-column:1/-1;">Judul Abstrak / Paper
-                        <input type="text" name="app_title" value="<?php echo htmlspecialchars($application['title'] ?? ''); ?>" placeholder="Kosongkan jika tidak ingin mengubah" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
-                    </label>
-                    <label>Sub-tema
-                        <input type="text" name="app_subtheme" value="<?php echo htmlspecialchars($application['subtheme_id'] ?? ''); ?>" placeholder="Kosongkan jika tidak ingin mengubah" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
-                    </label>
-                    <label>Publikasi
-                        <input type="text" name="app_publication" value="<?php echo htmlspecialchars($application['publication_id'] ?? ''); ?>" placeholder="Kosongkan jika tidak ingin mengubah" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
-                    </label>
+                <h3 style="margin:30px 0 8px;">Data Abstrak / Aplikasi</h3>
+                <div style="background:#fffbe6;border:1px solid #ffe08a;padding:20px;border-radius:4px;">
+
+                    <div style="display:grid;grid-template-columns:1fr 1fr;gap:15px;margin-bottom:15px;">
+                        <label style="grid-column:1/-1;">Judul Abstrak / Paper
+                            <input type="text" name="app_title" value="<?php echo htmlspecialchars($application['title'] ?? ''); ?>" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                        </label>
+
+                        <label>Theme
+                            <select id="admin_theme" name="admin_theme" onchange="adminUpdateSubthemes()" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                                <option value="">-- Select Theme --</option>
+                                <?php foreach ($themes_data as $t):
+                                    $sel_theme = false;
+                                    if (!empty($application['subtheme_id'])) {
+                                        foreach ($subthemes_data as $tid => $st_arr) {
+                                            foreach ($st_arr as $st) {
+                                                if ($st['sub_theme'] === $application['subtheme_id'] && $tid == $t['id']) {
+                                                    $sel_theme = true;
+                                                }
+                                            }
+                                        }
+                                    }
+                                ?>
+                                    <option value="<?php echo htmlspecialchars($t['theme']); ?>" data-id="<?php echo $t['id']; ?>" <?php echo $sel_theme ? 'selected' : ''; ?>>
+                                        <?php echo htmlspecialchars($t['theme']); ?>
+                                    </option>
+                                <?php endforeach; ?>
+                            </select>
+                        </label>
+
+                        <label>Sub-Theme
+                            <select id="admin_sub_theme" name="app_subtheme" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                                <option value="">-- Select Sub-Theme --</option>
+                                <?php if (!empty($application['subtheme_id'])): ?>
+                                    <option value="<?php echo htmlspecialchars($application['subtheme_id']); ?>" selected>
+                                        <?php echo htmlspecialchars($application['subtheme_id']); ?>
+                                    </option>
+                                <?php endif; ?>
+                            </select>
+                        </label>
+
+                        <label>Keywords <small style="color:#888;font-weight:normal;">(pisahkan dengan koma)</small>
+                            <input type="text" name="app_keywords" value="<?php echo htmlspecialchars($application['keyword'] ?? ''); ?>" placeholder="contoh: tropical, biodiversity, ecology" style="display:block;width:100%;box-sizing:border-box;padding:9px;margin-top:5px;border:1px solid #ccc;">
+                        </label>
+
+                        <label style="grid-column:1/-1;">Publikasi
+                            <?php
+                            $pub_options = [
+                                'Program book (abstract only) - free',
+                                'ICTB proceeding book (ISBN) - IDR 800,000 / USD 80',
+                                'Scopus-indexed proceedings - IDR 2,500,000',
+                                'Sinta accredited journal - To be determined by the journal',
+                                'In selected Scopus-indexed journals - To be determined by the journal',
+                            ];
+                            $cur_pub = $application['publication_id'] ?? '';
+                            ?>
+                            <div style="margin-top:8px;display:flex;flex-direction:column;gap:8px;font-weight:normal;">
+                                <?php foreach ($pub_options as $po): ?>
+                                    <label style="display:flex;align-items:center;gap:8px;font-weight:normal;cursor:pointer;">
+                                        <input type="radio" name="app_publication" value="<?php echo htmlspecialchars($po); ?>" <?php echo ($cur_pub === $po) ? 'checked' : ''; ?>>
+                                        <?php echo htmlspecialchars($po); ?>
+                                    </label>
+                                <?php endforeach; ?>
+                            </div>
+                        </label>
+                    </div>
                 </div>
 
                 <h3 style="margin:25px 0 12px;">Upload file</h3>
@@ -308,3 +370,37 @@ include 'includes/header.php';
 </div>
 
 <?php include 'includes/footer.php'; ?>
+
+<script>
+var adminSubthemesMap = <?php echo json_encode($subthemes_data); ?>;
+
+function adminUpdateSubthemes(initialVal) {
+    var themeSelect = document.getElementById('admin_theme');
+    var subthemeSelect = document.getElementById('admin_sub_theme');
+    if (!themeSelect || !subthemeSelect) return;
+
+    var selectedOption = themeSelect.options[themeSelect.selectedIndex];
+    var themeId = selectedOption ? selectedOption.getAttribute('data-id') : null;
+
+    subthemeSelect.innerHTML = '<option value="">-- Select Sub-Theme --</option>';
+
+    if (themeId && adminSubthemesMap[themeId]) {
+        adminSubthemesMap[themeId].forEach(function(st) {
+            var opt = document.createElement('option');
+            opt.value = st.sub_theme;
+            opt.textContent = st.sub_theme;
+            if (initialVal && st.sub_theme === initialVal) {
+                opt.selected = true;
+            }
+            subthemeSelect.appendChild(opt);
+        });
+    }
+}
+
+document.addEventListener('DOMContentLoaded', function() {
+    var existingSub = '<?php echo isset($application['subtheme_id']) ? addslashes($application['subtheme_id']) : ''; ?>';
+    if (existingSub) {
+        adminUpdateSubthemes(existingSub);
+    }
+});
+</script>
