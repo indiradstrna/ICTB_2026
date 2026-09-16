@@ -30,7 +30,10 @@
                     <li><i class="ph-bold ph-check-circle"></i> References</li>
                 </ul>
                 <p> Abstract  s should be at least three pages or no more than 2000 words, excluding references.</p>
-                <p><a href="template_abstract.docx" download class="btn btn-outline" style="margin-top: 10px;"><i class="ph-bold ph-download-simple"></i> Download Abstract Template</a></p>
+                <p>
+                    <a href="assets/files/template_abstract.docx" download class="btn btn-outline" style="margin-top: 10px; margin-right: 10px;"><i class="ph-bold ph-download-simple"></i> Download Abstract Template</a>
+                    <a href="assets/files/template_ppt_ICTB.pptx" download class="btn btn-outline" style="margin-top: 10px;"><i class="ph-bold ph-download-simple"></i> Download PPT Template</a>
+                </p>
             </div>
         </div>
 

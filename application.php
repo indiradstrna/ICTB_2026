@@ -326,7 +326,7 @@ while($row = $subthemes_result->fetch_assoc()) {
 
                 <div class="info-form-group">
                     <label class="info-form-label required-label">Abstract</label>
-                    <a href="template_abstract.docx" download class="btn-dark">Download Abstract Template</a>
+                    <a href="assets/files/template_abstract.docx" download class="btn-dark">Download Abstract Template</a>
                     <div class="highlight-box">
                         <input type="file" name="extended_abstract" id="extended_abstract" accept=".docx" style="font-size: 12px; background: #e9ecef; border: 1px solid #ced4da; padding: 2px;" <?php echo empty($existing_app['abstract']) ? 'required' : ''; ?>>
                     </div>

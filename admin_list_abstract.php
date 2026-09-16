@@ -86,6 +86,8 @@ include 'includes/header.php';
                         <th>Registration ID</th>
                         <th>Title</th>
                         <th>Abstract</th>
+                        <th>PPT</th>
+                        <th>Full Paper</th>
                         <th>App Type</th>
                         <th>Theme</th>
                         <th>Subtheme</th>
@@ -112,6 +114,20 @@ include 'includes/header.php';
                                         <span style="color: #999;">-</span>
                                     <?php endif; ?>
                                 </td>
+                                <td>
+                                    <?php if (!empty($row['ppt_file'] ?? '')): ?>
+                                        <a href="<?php echo htmlspecialchars($row['ppt_file'] ?? ''); ?>" target="_blank" class="link-action" style="font-weight: bold;" download>PPT</a>
+                                    <?php else: ?>
+                                        <span style="color: #999;">-</span>
+                                    <?php endif; ?>
+                                </td>
+                                <td>
+                                    <?php if (!empty($row['full_paper'] ?? '')): ?>
+                                        <a href="<?php echo htmlspecialchars($row['full_paper'] ?? ''); ?>" target="_blank" class="link-action" style="font-weight: bold;" download>Full Paper</a>
+                                    <?php else: ?>
+                                        <span style="color: #999;">-</span>
+                                    <?php endif; ?>
+                                </td>
                                 <td><?php echo htmlspecialchars($row['apptype_id'] ?? ''); ?></td>
                                 <td style="max-width: 200px; white-space: normal; line-height: 1.4;"><?php echo htmlspecialchars($theme); ?></td>
                                 <td style="max-width: 200px; white-space: normal; line-height: 1.4;"><?php echo htmlspecialchars($row['subtheme_id'] ?? ''); ?></td>
@@ -120,7 +136,7 @@ include 'includes/header.php';
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="8" style="text-align: center; padding: 20px;">No abstracts found.</td>
+                            <td colspan="10" style="text-align: center; padding: 20px;">No abstracts found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>

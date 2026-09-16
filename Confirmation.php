@@ -116,6 +116,44 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
         }
     }
 
+    if (isset($_FILES['update_full_paper'])) {
+        if ($_FILES['update_full_paper']['error'] == UPLOAD_ERR_OK) {
+            $allowed = ['pdf', 'doc', 'docx'];
+            $ext = strtolower(pathinfo($_FILES['update_full_paper']['name'], PATHINFO_EXTENSION));
+            if (!in_array($ext, $allowed)) {
+                $upload_error_msg = 'Format Full Paper tidak diperbolehkan. Gunakan PDF atau Word (.doc, .docx).';
+            } else {
+                $max_size = 20 * 1024 * 1024; // 20 MB
+                if ($_FILES['update_full_paper']['size'] > $max_size) {
+                    $upload_error_msg = "Error: Ukuran file Full Paper maksimal adalah 20 MB.";
+                } else {
+                    $filename = time() . '_fullpaper_' . bin2hex(random_bytes(4)) . '.' . $ext;
+                    $target_path = 'uploads/' . $filename;
+                    if (move_uploaded_file($_FILES['update_full_paper']['tmp_name'], $upload_dir . $filename)) {
+                        if (isset($_SESSION['participant_id'])) {
+                            if (!empty($app_data)) {
+                                $stmt = $conn->prepare("UPDATE applications SET full_paper = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
+                                if ($stmt) {
+                                    $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                                    if ($stmt->execute()) {
+                                        $app_data['full_paper'] = $target_path;
+                                    } else {
+                                        $upload_error_msg = 'Full Paper berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
+                                    }
+                                }
+                            }
+                        }
+                        $upload_success = true;
+                    } else {
+                        $upload_error_msg = 'File Full Paper tidak dapat disimpan. Periksa permission folder uploads di hosting.';
+                    }
+                }
+            }
+        } else if ($_FILES['update_full_paper']['error'] != UPLOAD_ERR_NO_FILE) {
+            $upload_error_msg = 'Upload Full Paper gagal: ' . upload_error_message($_FILES['update_full_paper']['error']);
+        }
+    }
+
     if (isset($_FILES['update_abstract'])) {
         if ($_FILES['update_abstract']['error'] == UPLOAD_ERR_OK) {
             $allowed = ['jpg', 'jpeg', 'pdf', 'doc', 'docx', 'ppt', 'pptx'];
@@ -465,7 +503,6 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             <div class="summary-line"><span class="summary-label">Publication Type:</span> <span class="summary-val"><?php echo htmlspecialchars($publication_type); ?> - <?php echo $pub_fee_label; ?></span></div>
             
             <?php if (strtolower($participant_type) == 'author'): ?>
-                <?php if (!empty($user_data['bukti_transfer'])): ?>
                 <div style="margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 15px;">
                     <strong>Upload / Update Presentation File (PPT/PDF):</strong>
                     <div style="font-size: 11px; color: #d9534f; margin-bottom: 5px;">
@@ -485,14 +522,27 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                         <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;"><?php echo !empty($app_data['ppt_file']) ? 'Update Presentation' : 'Submit Presentation'; ?></button>
                     </form>
                 </div>
-                <?php else: ?>
+
                 <div style="margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 15px;">
-                    <div style="font-size: 13px; color: #856404; background-color: #fff3cd; border: 1px solid #ffeeba; padding: 12px; border-radius: 4px; text-align: center;">
-                        <strong>Note for Presenters:</strong><br>
-                        The form to upload your presentation file (PPT/PPTX/PDF) will appear here <strong>after you have successfully uploaded your payment receipt</strong> at the Payment Information section below.
+                    <strong>Upload / Update Full Paper (DOC/DOCX/PDF):</strong>
+                    <div style="font-size: 13px; color: #31708f; background-color: #d9edf7; border: 1px solid #bce8f1; padding: 12px; border-radius: 4px; margin-top: 10px; margin-bottom: 10px;">
+                        <strong><i class="ph-bold ph-info"></i> Full Paper Instructions:</strong><br>
+                        Please follow the standard full paper format provided in the <a href="author_guidelines.php" target="_blank" style="color: #245269; text-decoration: underline; font-weight: bold;">Author Guidelines</a>. Your paper will undergo a peer-review process for publication. Ensure your file is in DOC, DOCX, or PDF format and does not exceed 20 MB.
                     </div>
+                    
+                    <?php if (!empty($app_data['full_paper'])): ?>
+                        <div style="color: green; font-weight: bold; margin-top: 5px; margin-bottom: 10px;">
+                            Upload Successful: <a href="<?php echo htmlspecialchars($app_data['full_paper']); ?>" target="_blank" style="color: green; text-decoration: underline;"><?php echo htmlspecialchars(basename($app_data['full_paper'])); ?></a>
+                        </div>
+                    <?php endif; ?>
+
+                    <form action="" method="POST" enctype="multipart/form-data" onsubmit="return validateFullPaperUpdate()">
+                        <div class="highlight-box" style="margin-top: 5px; margin-bottom: 5px;">
+                            <input type="file" name="update_full_paper" id="update_full_paper" accept=".doc,.docx,.pdf" style="font-size: 12px; background: #e9ecef; border: 1px solid #ccc; padding: 2px;">
+                        </div>
+                        <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;"><?php echo !empty($app_data['full_paper']) ? 'Update Full Paper' : 'Submit Full Paper'; ?></button>
+                    </form>
                 </div>
-                <?php endif; ?>
             <?php endif; ?>
         </fieldset>
         <?php endif; ?>
@@ -587,6 +637,34 @@ function validatePPTUpdate() {
     }
     return true;
 }
+
+function validateFullPaperUpdate() {
+    var fileInput = document.getElementById('update_full_paper');
+    if (fileInput && fileInput.files.length > 0) {
+        var file = fileInput.files[0];
+        var fileName = file.name;
+        var extension = fileName.substring(fileName.lastIndexOf('.')).toLowerCase();
+        
+        var allowedExtensions = ['.doc', '.docx', '.pdf'];
+        if (!allowedExtensions.includes(extension)) {
+            alert('Format file tidak didukung! Harap unggah file dengan format .doc, .docx, atau .pdf.');
+            fileInput.value = ''; 
+            return false;
+        }
+        
+        var maxSize = 20 * 1024 * 1024; // 20 MB
+        if (file.size > maxSize) {
+            alert('Ukuran file melebihi batas maksimal yang diizinkan (20 MB).');
+            fileInput.value = '';
+            return false;
+        }
+    } else {
+        alert('Harap pilih file Full Paper Anda terlebih dahulu.');
+        return false;
+    }
+    return true;
+}
+
 function validateReceiptUpdate() {
     var fileInput = document.getElementById('payment_receipt');
     if (fileInput && fileInput.files.length > 0) {
