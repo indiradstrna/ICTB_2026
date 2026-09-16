@@ -126,7 +126,7 @@
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">Scopus-indexed proceedings</td>
-                                <td>IDR 2,500,000</td>
+                                <td>IDR 3,000,000</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">ICTB proceeding book (ISBN)</td>

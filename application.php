@@ -160,6 +160,10 @@ while($row = $subthemes_result->fetch_assoc()) {
     color: #555;
     margin-bottom: 5px;
 }
+.required-label::after {
+    content: " *";
+    color: red;
+}
 .info-form-control {
     width: 100%;
     border: 1px solid #ccc;
@@ -363,7 +367,7 @@ while($row = $subthemes_result->fetch_assoc()) {
                             <input type="radio" name="publication" value="ICTB proceeding book (ISBN) - IDR 800,000 / USD 80" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'ICTB proceeding book (ISBN) - IDR 800,000 / USD 80') ? 'checked' : ''; ?> required> ICTB proceeding book (ISBN) - IDR 800,000 / USD 80
                         </label>
                         <label class="info-radio-label">
-                            <input type="radio" name="publication" value="Scopus-indexed proceedings - IDR 2,500,000" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Scopus-indexed proceedings - IDR 2,500,000') ? 'checked' : ''; ?> required> Scopus-indexed proceedings - IDR 2,500,000
+                            <input type="radio" name="publication" value="Scopus-indexed proceedings - IDR 3,000,000" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Scopus-indexed proceedings - IDR 3,000,000') ? 'checked' : ''; ?> required> Scopus-indexed proceedings - IDR 3,000,000
                         </label>
                         <label class="info-radio-label">
                             <input type="radio" name="publication" value="Sinta accredited journal - To be determined by the journal" <?php echo (isset($existing_app['publication_id']) && $existing_app['publication_id'] == 'Sinta accredited journal - To be determined by the journal') ? 'checked' : ''; ?> required> Sinta accredited journal - To be determined by the journal

@@ -247,8 +247,8 @@ if ($is_participant_only) {
     $pub_fee_label = "Not Applicable";
     $publication_type = "None";
 } else {
-    if (strpos($publication_type, 'Scopus-indexed proceedings') !== false && strpos($publication_type, '2,500,000') !== false) {
-        $publication_fee = 2500000;
+    if (strpos($publication_type, 'Scopus-indexed proceedings') !== false && strpos($publication_type, '3,000,000') !== false) {
+        $publication_fee = 3000000;
         $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
     } elseif (strpos($publication_type, 'ICTB proceeding book') !== false || strpos($publication_type, 'Rp. 800.000') !== false) {
         $publication_fee = 800000;
@@ -548,6 +548,14 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                         </div>
                         <button type="submit" class="btn-yellow-submit" style="margin-bottom: 10px;"><?php echo !empty($app_data['full_paper']) ? 'Update Full Paper' : 'Submit Full Paper'; ?></button>
                     </form>
+                </div>
+
+                <div style="margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 20px;">
+                    <div style="background: linear-gradient(135deg, #fff3cd 0%, #ffe8a1 100%); border: 2px solid #ffeeba; padding: 20px; border-radius: 8px; box-shadow: 0 4px 10px rgba(0,0,0,0.08); text-align: center;">
+                        <h4 style="color: #856404; margin-top: 0; margin-bottom: 10px; font-weight: bold; font-size: 16px;"><i class="ph-bold ph-presentation-chart" style="font-size: 20px; vertical-align: middle;"></i> ICTB Poster Presentation</h4>
+                        <p style="font-size: 13px; color: #856404; margin-bottom: 15px;">Please use the official template provided below to prepare your poster presentation.</p>
+                        <a href="assets/files/Template_Poster_5th_ICTB.pptx" download class="btn-yellow-submit" style="display: inline-block; text-decoration: none; font-size: 14px; padding: 10px 25px; box-shadow: 0 2px 4px rgba(0,0,0,0.2); border-radius: 4px;"><i class="ph-bold ph-download-simple"></i> Download Poster Template</a>
+                    </div>
                 </div>
             <?php endif; ?>
         </fieldset>

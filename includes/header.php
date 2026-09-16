@@ -13,6 +13,9 @@ $site_title = "The 5th International Conference on Tropical Biology";
     <title><?php echo $site_title; ?></title>
     <meta name="description" content="Biodiversity Beyond Boundaries: Advancing Global Education, Bio-Science, and Sustainable Landscapes">
     
+    <!-- Favicon -->
+    <link rel="icon" href="assets/img/ICTB.jpeg" type="image/jpeg">
+
     <!-- Google Fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -33,7 +36,7 @@ $site_title = "The 5th International Conference on Tropical Biology";
             <a href="index.php" class="custom-logo">
                 <div class="custom-logo-top">
                     <span class="custom-logo-year">2026</span>
-                    <img src="assets/img/LOGO_ICTB_approved.png" alt="ICTB Logo" class="custom-logo-img">
+                    <img src="assets/img/ICTB.jpeg" alt="ICTB Logo" class="custom-logo-img" style="border-radius: 50%; object-fit: cover; aspect-ratio: 1/1;">
                 </div>
                 <div class="custom-logo-text">
                     International Conference

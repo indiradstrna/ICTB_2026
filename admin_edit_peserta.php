@@ -333,7 +333,7 @@ include 'includes/header.php';
                             $pub_options = [
                                 'Program book (abstract only) - free',
                                 'ICTB proceeding book (ISBN) - IDR 800,000 / USD 80',
-                                'Scopus-indexed proceedings - IDR 2,500,000',
+                                'Scopus-indexed proceedings - IDR 3,000,000',
                                 'Sinta accredited journal - To be determined by the journal',
                                 'In selected Scopus-indexed journals - To be determined by the journal',
                             ];
