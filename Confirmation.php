@@ -527,7 +527,13 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                     <strong>Upload / Update Full Paper (DOC/DOCX/PDF):</strong>
                     <div style="font-size: 13px; color: #31708f; background-color: #d9edf7; border: 1px solid #bce8f1; padding: 12px; border-radius: 4px; margin-top: 10px; margin-bottom: 10px;">
                         <strong><i class="ph-bold ph-info"></i> Full Paper Instructions:</strong><br>
-                        Please follow the standard full paper format provided in the <a href="author_guidelines.php" target="_blank" style="color: #245269; text-decoration: underline; font-weight: bold;">Author Guidelines</a>. Your paper will undergo a peer-review process for publication. Ensure your file is in DOC, DOCX, or PDF format and does not exceed 20 MB.
+                        Please follow the standard full paper format. Your paper will undergo a peer-review process for publication. Ensure your file is in DOC, DOCX, or PDF format and does not exceed 20 MB.
+                        <div style="margin-top: 10px;">
+                            <strong>Download Templates & Guidelines:</strong><br>
+                            <a href="assets/files/Style-guide-for-conference-organisers-and-authors.pdf" target="_blank" download style="color: #245269; text-decoration: underline; display: inline-block; margin-top: 5px;"><i class="ph-bold ph-file-pdf"></i> Style Guide for Conference Organisers and Authors</a><br>
+                            <a href="assets/files/Basic%20guidelines%20for%20preparing%20a%20paper.pdf" target="_blank" download style="color: #245269; text-decoration: underline; display: inline-block; margin-top: 5px;"><i class="ph-bold ph-file-pdf"></i> Basic Guidelines for Preparing a Paper</a><br>
+                            <a href="assets/files/Full_Paper_Template.docx" target="_blank" download style="color: #245269; text-decoration: underline; display: inline-block; margin-top: 5px;"><i class="ph-bold ph-file-doc"></i> Full Paper Template</a>
+                        </div>
                     </div>
                     
                     <?php if (!empty($app_data['full_paper'])): ?>

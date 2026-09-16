@@ -111,7 +111,7 @@
             <h2 class="article-title">Poster Preparation, Mounting and Dismantling, and Presentation</h2>
             <div class="article-content">
                 <ul class="article-list check-list">
-                    <li><i class="ph-bold ph-check-circle"></i> Each poster must be prepared in A0 size or 841 x 1189 mm, portrait style, and brought on the day of the Seminar.</li>
+                    <li><i class="ph-bold ph-check-circle"></i> Each poster must be prepared in A1 size or 594 x 841 mm, portrait style, and brought on the day of the Seminar.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Posters which are not in the correct size as the prescribed-size will not be allowed to be displayed.</li>
                     <li><i class="ph-bold ph-check-circle"></i> Poster must contain information on the following: poster title, names of authors, institution and e-mail address of each author, introduction, method, result & discussion, conclusion, reference, acknowledgment (if necessary).</li>
                     <li><i class="ph-bold ph-check-circle"></i> Poster must also show the Registration number of the poster, the Conference name and Theme, Conference Organizer (SEAMEO BIOTROP), and place and date of conference (SEAMEO BIOTROP, Bogor-Indonesia, 5 - 7 October 2026).</li>
