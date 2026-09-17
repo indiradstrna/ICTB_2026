@@ -34,7 +34,6 @@
                     <a href="assets/files/template_abstract.docx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download Abstract Template</a>
                     <a href="assets/files/template_ppt_ICTB.pptx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download PPT Template</a>
                     <a href="assets/files/Author%20Guidelines%20for%20website.docx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download Author Website Guide</a>
-                    <a href="assets/files/Email%20for%20accepted%20Authors.docx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download Email for Accepted Authors</a>
                 </div>
             </div>
         </div>
@@ -107,10 +106,55 @@
         <div class="reveal-up article-section">
             <h2 class="article-title">ICTB 2026 – Author Announcement</h2>
             <div class="article-content">
-                <p><strong>Submission Deadline:</strong> 30 September 2026<br>
+                <p style="margin-bottom: 15px;">Dear Authors,</p>
+                <p style="margin-bottom: 15px;">Congratulations on the acceptance of your submission for the 5th International Conference on Tropical Biology (ICTB 2026).</p>
+                <p style="margin-bottom: 20px;">As we prepare for the upcoming conference, please complete the following requirements no later than <strong>30 September 2026</strong>.</p>
+                
+                <ol style="padding-left: 20px; margin-bottom: 30px;">
+                    <li style="margin-bottom: 15px;">
+                        <strong>Letter of Acceptance and Invoice</strong><br>
+                        If you have not yet received your Letter of Acceptance (LoA) and/or invoice, please contact the ICTB Committee at <a href="mailto:ictb@biotrop.org" style="color: #1a73e8;">ictb@biotrop.org</a>.
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;">
+                        <strong>Full Manuscript Submission for All Author</strong><br>
+                        Please prepare your full manuscript according to the ICTB 2026 manuscript template and author guidelines.<br>
+                        The following resources are provided to assist you in preparing your manuscript:
+                        <ul style="padding-left: 20px; margin-top: 5px; margin-bottom: 5px;">
+                            <li><a href="assets/files/Full_Paper_Template.docx" target="_blank" style="color: #1a73e8;">Full Paper Template</a></li>
+                            <li><a href="assets/files/Basic%20guidelines%20for%20preparing%20a%20paper.pdf" target="_blank" style="color: #1a73e8;">Basic Guidelines for Preparing a Paper</a></li>
+                            <li><a href="assets/files/Style-guide-for-conference-organisers-and-authors.pdf" target="_blank" style="color: #1a73e8;">Style Guide for Conference Organisers and Authors</a></li>
+                        </ul>
+                        The completed full paper should be uploaded through your ICTB 2026 user dashboard: <a href="https://ictb.biotrop.org/" target="_blank" style="color: #1a73e8;">ICTB 2026 Submission Website</a>.
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;">
+                        <strong>Presentation File for Oral Presenter</strong><br>
+                        Authors who will deliver their presentation in person at the conference venue are requested to prepare and submit their PowerPoint presentation according to the ICTB 2026 presentation template.<br>
+                        <ul style="padding-left: 20px; margin-top: 5px; margin-bottom: 5px;">
+                            <li><a href="assets/files/template_ppt_ICTB.pptx" target="_blank" style="color: #1a73e8;">Presentation Template</a></li>
+                        </ul>
+                        The presentation file can be uploaded through your ICTB 2026 user dashboard: <a href="https://ictb.biotrop.org/" target="_blank" style="color: #1a73e8;">ICTB 2026 Submission Website</a>.
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;">
+                        <strong>Video Recording File for Online Presenter</strong><br>
+                        Authors who will present online are requested to prepare a recorded presentation video in accordance with the ICTB 2026 multimedia guidelines. Please review the following guideline before preparing your recording: <a href="assets/files/Multimedia%20guidelines.pdf" target="_blank" style="color: #1a73e8;">Multimedia Guidelines</a>.<br>
+                        Please upload your presentation recording through: <a href="https://docs.google.com/forms/d/e/1FAIpQLScHxdVb8GVY0L_5t84NDkSe4ZcySnvLx3_U2gyLi_IYU4h3WA/viewform" target="_blank" style="color: #1a73e8;">Online Presentation Video Submission</a>.
+                    </li>
+                    
+                    <li style="margin-bottom: 15px;">
+                        <strong>Poster Presenter</strong><br>
+                        Authors presenting a poster are requested to prepare their poster according to the ICTB 2026 poster template in A1 size (59.4 x 84.1 cm). You may use either of the following templates: <a href="https://canva.link/3gg1c58asqeh463" target="_blank" style="color: #1a73e8;">Canva Poster Template</a> or <a href="assets/files/Template%20Poster%205th%20ICTB.pptx" target="_blank" style="color: #1a73e8;">PowerPoint Poster Template</a>.<br>
+                        The submitted poster file will be used by the Committee for printing and display at the conference venue.<br>
+                        Please upload the final poster through: <a href="https://docs.google.com/forms/d/e/1FAIpQLScHxdVb8GVY0L_5t84NDkSe4ZcySnvLx3_U2gyLi_IYU4h3WA/viewform" target="_blank" style="color: #1a73e8;">Poster Submission Link</a>.
+                    </li>
+                </ol>
+
+                <p><strong>Submission Deadline: 30 September 2026</strong><br>
                 All required materials must be submitted no later than 30 September 2026.</p>
                 
-                <div class="fee-table-container" style="margin-top: 15px;">
+                <div class="fee-table-container" style="margin-top: 15px; margin-bottom: 25px;">
                     <table class="fee-table">
                         <thead>
                             <tr>
@@ -143,6 +187,17 @@
                         </tbody>
                     </table>
                 </div>
+                
+                <p style="margin-bottom: 15px;">We kindly ask all authors to ensure that the required materials are submitted by the deadline to facilitate the preparation and smooth implementation of ICTB 2026.</p>
+                
+                <p style="margin-bottom: 15px;">If you encounter any difficulties with the submission process, templates, or technical requirements, please do not hesitate to contact the ICTB Committee at <a href="mailto:ictb@biotrop.org" style="color: #1a73e8;">ictb@biotrop.org</a>.</p>
+                
+                <p style="margin-bottom: 15px;">Thank you for your cooperation. We look forward to welcoming you to the 5th International Conference on Tropical Biology (ICTB 2026).</p>
+                
+                <p>Best regards,<br>
+                <strong>ICTB 2026 Committee</strong><br>
+                SEAMEO BIOTROP<br>
+                <a href="mailto:ictb@biotrop.org" style="color: #1a73e8;">ictb@biotrop.org</a></p>
             </div>
         </div>
         
