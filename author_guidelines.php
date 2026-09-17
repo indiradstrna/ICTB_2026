@@ -29,11 +29,13 @@
                     <li><i class="ph-bold ph-check-circle"></i> Main Body Text (including a concise materials and methods, results and discussion, and conclusion sections)</li>
                     <li><i class="ph-bold ph-check-circle"></i> References</li>
                 </ul>
-                <p> Abstract  s should be at least three pages or no more than 2000 words, excluding references.</p>
-                <p>
-                    <a href="assets/files/template_abstract.docx" download class="btn btn-outline" style="margin-top: 10px; margin-right: 10px;"><i class="ph-bold ph-download-simple"></i> Download Abstract Template</a>
-                    <a href="assets/files/template_ppt_ICTB.pptx" download class="btn btn-outline" style="margin-top: 10px;"><i class="ph-bold ph-download-simple"></i> Download PPT Template</a>
-                </p>
+                <p> Abstracts should be at least three pages or no more than 2000 words, excluding references.</p>
+                <div style="display: grid; grid-template-columns: repeat(auto-fit, minmax(280px, 1fr)); gap: 12px; margin-top: 20px;">
+                    <a href="assets/files/template_abstract.docx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download Abstract Template</a>
+                    <a href="assets/files/template_ppt_ICTB.pptx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download PPT Template</a>
+                    <a href="assets/files/Author%20Guidelines%20for%20website.docx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download Author Website Guide</a>
+                    <a href="assets/files/Email%20for%20accepted%20Authors.docx" download class="btn btn-outline" style="margin: 0; text-align: center; display: flex; justify-content: center; align-items: center; gap: 8px;"><i class="ph-bold ph-download-simple"></i> Download Email for Accepted Authors</a>
+                </div>
             </div>
         </div>
 
@@ -43,7 +45,7 @@
                 <ul class="article-list icon-list" style="padding-left: 0;">
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
-                        <div>When submitting Abstract   s, authors should clearly indicate if they are either for oral or poster presentation or both.</div>
+                        <div>When submitting Abstracts, authors should clearly indicate if they are either for oral or poster presentation or both.</div>
                     </li>
                     <li style="margin-bottom: 15px; display: flex; gap: 10px; align-items: flex-start;">
                         <i class="ph-bold ph-caret-circle-right" style="color: var(--primary-color); margin-top: 4px;"></i>
@@ -68,20 +70,32 @@
                                 <td>1 June – 30 September 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Abstract Review</td>
-                                <td>20 June – 2 October 2026</td>
+                                <td style="font-weight: 600;">Selection of Abstract</td>
+                                <td>20 June – 30 September 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Acceptance Announcement</td>
-                                <td>7 September – 4 October 2026</td>
+                                <td style="font-weight: 600;">Announcement of accepted abstract for both poster and oral presentations</td>
+                                <td>1 October 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Registration & Payment</td>
-                                <td>7 – 30 September 2026</td>
+                                <td style="font-weight: 600;">Registration and full payment</td>
+                                <td>7 September – 2 October 2026</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Conference Dates</td>
+                                <td style="font-weight: 600;">Deadline for uploading for oral and poster presentation files</td>
+                                <td>15 September – 2 October 2026</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;">Conference Proper</td>
                                 <td>5 – 7 October 2026</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;">Full paper submission</td>
+                                <td>12 October – 12 November 2026</td>
+                            </tr>
+                            <tr>
+                                <td style="font-weight: 600;">Scopus proceeding submission</td>
+                                <td>12 March 2027</td>
                             </tr>
                         </tbody>
                     </table>
@@ -91,37 +105,44 @@
         </div>
 
         <div class="reveal-up article-section">
-            <h2 class="article-title">Oral Presentation</h2>
+            <h2 class="article-title">ICTB 2026 – Author Announcement</h2>
             <div class="article-content">
-                <ul class="article-list check-list">
-                    <li><i class="ph-bold ph-check-circle"></i> Participants whose Abstract  s are accepted for oral presentation will only be included in the session schedule of the Conference if they have fully paid the registration fee.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Each presenter will have 15-minute time slot (12 minutes presentation, 3 minutes for discussion). Thus, PowerPoint file should not exceed 15 slides.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Presentation file should be prepared using Microsoft PowerPoint.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Presenters must upload their presentation files by login to their account on or before 15 October 2026 at 23:59 GMT+7.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Maximum size for presentation file to be uploaded is 15 MB. Therefore, presentation files must use monochrome graphics or reduce the graphic quality to 150 ppi (for screen).</li>
-                    <li><i class="ph-bold ph-check-circle"></i> If the file could not be reduced to 15 MB, please contact the Organizing Committee (ictb@biotrop.org).</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Presenters are advised to bring their presentation files in flash drives or in any other appropriate format for backup.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> At the day of the Conference, presenters are advised to contact the Organizing Committee (ictb@biotrop.org) for validation purposes of their presentation files.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Presenters are also advised to be in their designated session room 10 minutes before their session starts and notify the session moderator of their presence.</li>
-                </ul>
-            </div>
-        </div>
-
-        <div class="reveal-up article-section">
-            <h2 class="article-title">Poster Preparation, Mounting and Dismantling, and Presentation</h2>
-            <div class="article-content">
-                <ul class="article-list check-list">
-                    <li><i class="ph-bold ph-check-circle"></i> Each poster must be prepared in A1 size or 594 x 841 mm, portrait style, and brought on the day of the Seminar.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Posters which are not in the correct size as the prescribed-size will not be allowed to be displayed.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Poster must contain information on the following: poster title, names of authors, institution and e-mail address of each author, introduction, method, result & discussion, conclusion, reference, acknowledgment (if necessary).</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Poster must also show the Registration number of the poster, the Conference name and Theme, Conference Organizer (SEAMEO BIOTROP), and place and date of conference (SEAMEO BIOTROP, Bogor-Indonesia, 5 - 7 October 2026).</li>
-                    <li><i class="ph-bold ph-check-circle"></i> The Organizing Committee will only provide space for the printed poster.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> All posters must be placed in their corresponding plot. Registration Number of each poster will be posted on the plot.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Posters must be placed on the designated area on 5 October 2026 before the opening ceremony.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Poster would be displayed throughout the Conference dates.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Posters should be removed by the presenters after the Conference is finished or will be disposed-off by the Organizing Committee.</li>
-                    <li><i class="ph-bold ph-check-circle"></i> Authors should attend their posters at the scheduled time slot: at lunch time and refreshment break time.</li>
-                </ul>
+                <p><strong>Submission Deadline:</strong> 30 September 2026<br>
+                All required materials must be submitted no later than 30 September 2026.</p>
+                
+                <div class="fee-table-container" style="margin-top: 15px;">
+                    <table class="fee-table">
+                        <thead>
+                            <tr>
+                                <th>Author / Presenter Category</th>
+                                <th>Required Submission</th>
+                                <th>Submission Platform</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td>All accepted authors</td>
+                                <td>Full manuscript</td>
+                                <td><a href="https://ictb.biotrop.org/" style="color: #1a73e8; text-decoration: underline;">ICTB 2026 User Dashboard</a></td>
+                            </tr>
+                            <tr>
+                                <td>Oral presenter – offline</td>
+                                <td>Full manuscript + PowerPoint presentation</td>
+                                <td><a href="https://ictb.biotrop.org/" style="color: #1a73e8; text-decoration: underline;">ICTB 2026 User Dashboard</a></td>
+                            </tr>
+                            <tr>
+                                <td>Oral presenter – online</td>
+                                <td>Full manuscript + PowerPoint presentation + recorded presentation</td>
+                                <td><a href="https://ictb.biotrop.org/" style="color: #1a73e8; text-decoration: underline;">ICTB 2026 User Dashboard</a> + <a href="https://docs.google.com/forms/d/e/1FAIpQLScHxdVb8GVY0L_5t84NDkSe4ZcySnvLx3_U2gyLi_IYU4h3WA/viewform" target="_blank" style="color: #1a73e8; text-decoration: underline;">Online Video Submission</a></td>
+                            </tr>
+                            <tr>
+                                <td>Poster presenter</td>
+                                <td>Full manuscript + final poster</td>
+                                <td><a href="https://ictb.biotrop.org/" style="color: #1a73e8; text-decoration: underline;">ICTB 2026 User Dashboard</a> + <a href="https://docs.google.com/forms/d/e/1FAIpQLScHxdVb8GVY0L_5t84NDkSe4ZcySnvLx3_U2gyLi_IYU4h3WA/viewform" target="_blank" style="color: #1a73e8; text-decoration: underline;">Poster Submission</a></td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
             </div>
         </div>
         

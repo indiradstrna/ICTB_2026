@@ -91,6 +91,7 @@ include 'includes/header.php';
                         <th>No</th>
                         <th>Registration ID</th>
                         <th>Name</th>
+                        <th>Gender</th>
                         <th>Email</th>
                         <th>Organization</th>
                         <th>Country</th>
@@ -114,6 +115,7 @@ include 'includes/header.php';
                                 <td><?php echo $no++; ?></td>
                                 <td><?php echo $reg_id; ?></td>
                                 <td><?php echo $name; ?></td>
+                                <td><?php echo htmlspecialchars($row['gender'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
                                 <td><?php echo htmlspecialchars($row['institution'] ?? ''); ?></td>
                                 <td><?php echo htmlspecialchars($row['country'] ?? ''); ?></td>
@@ -155,7 +157,7 @@ include 'includes/header.php';
                         <?php endwhile; ?>
                     <?php else: ?>
                         <tr>
-                            <td colspan="11" style="text-align: center; padding: 20px;">No authors found.</td>
+                            <td colspan="12" style="text-align: center; padding: 20px;">No authors found.</td>
                         </tr>
                     <?php endif; ?>
                 </tbody>
