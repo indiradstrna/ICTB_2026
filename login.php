@@ -232,7 +232,7 @@ include 'includes/header.php';
                 
                 <div class="login-actions">
                     <button type="submit" class="btn-login">Login</button>
-                    <a href="#" class="forgot-password">Forgot Your Password?</a>
+                    <a href="forgot_password.php" class="forgot-password">Forgot Your Password?</a>
                 </div>
             </form>
         </div>

@@ -27,7 +27,23 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     } else {
         $action = $_POST['action'] ?? 'update';
 
-        if ($action === 'update') {
+        if ($action === 'reset_password') {
+            // Generate a temporary password and update the participant's hash
+            $chars        = 'abcdefghjkmnpqrstuvwxyzABCDEFGHJKMNPQRSTUVWXYZ23456789@#!';
+            $temp_pass    = '';
+            for ($i = 0; $i < 10; $i++) {
+                $temp_pass .= $chars[random_int(0, strlen($chars) - 1)];
+            }
+            $temp_hash = password_hash($temp_pass, PASSWORD_DEFAULT);
+
+            $rp_stmt = $conn->prepare('UPDATE participants SET password_hash = ? WHERE id = ?');
+            $rp_stmt->bind_param('si', $temp_hash, $participant_id);
+            $rp_stmt->execute();
+            $rp_stmt->close();
+
+            $message = 'PASSWORD_RESET::' . $temp_pass;
+
+        } elseif ($action === 'update') {
             $allowed_types = ['author', 'participant'];
             $participant_type = in_array($_POST['participant_type'] ?? '', $allowed_types, true) ? $_POST['participant_type'] : 'participant';
             $first_name = trim($_POST['first_name'] ?? '');
@@ -241,6 +257,67 @@ include 'includes/header.php';
     <div class="container" style="max-width: 1100px;">
         <h2 class="admin-title" style="font-family: 'Oswald', sans-serif; color: #333;">UPDATE PESERTA</h2>
 
+        <?php
+        $reset_plain_pass = '';
+        if ($message && strpos($message, 'PASSWORD_RESET::') === 0) {
+            $reset_plain_pass = substr($message, strlen('PASSWORD_RESET::'));
+            $message = ''; // suppress generic green bar; we show a custom box
+        }
+        ?>
+        <?php if ($reset_plain_pass): ?>
+            <div style="background:#fff3cd;border:1px solid #ffc107;color:#7d5a00;padding:20px;margin:15px 0;border-radius:6px;">
+                <strong>✅ Password berhasil direset!</strong><br>
+                Salin password sementara di bawah ini dan kirimkan ke peserta melalui email:
+                <div style="display:flex;align-items:center;gap:10px;margin-top:12px;">
+                    <input type="text" id="tmp_pass_box" value="<?php echo htmlspecialchars($reset_plain_pass); ?>"
+                        readonly
+                        style="flex:1;padding:10px 14px;font-size:15px;font-family:monospace;border:1px solid #ffc107;border-radius:4px;background:#fffdf0;letter-spacing:1px;">
+                    <button type="button"
+                        onclick="navigator.clipboard.writeText(document.getElementById('tmp_pass_box').value).then(function(){this.textContent='✔ Disalin!';}.bind(this),function(){alert('Salin manual: <?php echo htmlspecialchars($reset_plain_pass); ?>');});"
+                        style="padding:10px 16px;background:#ffc107;color:#000;border:0;border-radius:4px;cursor:pointer;font-weight:600;white-space:nowrap;">
+                        📋 Salin Password
+                    </button>
+                </div>
+                <p style="margin:12px 0 0;font-size:13px;color:#856404;">
+                    📧 <strong>Template email siap pakai:</strong><br>
+<?php
+$_cp_login    = 'https://ictb.biotrop.org/login.php';
+$_cp_chgpwd   = 'https://ictb.biotrop.org/change_password.php';
+$_cp_name     = htmlspecialchars(trim(($participant['first_name'] ?? '') . ' ' . ($participant['last_name'] ?? '')));
+$_cp_tmppass  = htmlspecialchars($reset_plain_pass);
+?>
+                    <textarea rows="22" readonly style="width:100%;box-sizing:border-box;margin-top:6px;padding:10px;font-size:12px;font-family:monospace;border:1px solid #ffc107;border-radius:4px;background:#fffdf0;resize:vertical;">Dear <?php echo $_cp_name; ?>,
+
+We have reset your ICTB 2026 Conference portal password as requested. Please follow the steps below to regain access and set your own password.
+
+Your Temporary Password: <?php echo $_cp_tmppass; ?>
+
+
+STEPS TO SET YOUR NEW PASSWORD:
+
+  1. Open the following link in your browser:
+     <?php echo $_cp_chgpwd; ?>
+
+  2. Fill in the form:
+     - Email Address      : (your registered email)
+     - Current Password   : <?php echo $_cp_tmppass; ?>
+       (this is the temporary password above)
+     - New Password       : (choose a password, min. 8 characters)
+     - Confirm Password   : (repeat your new password)
+
+  3. Click "Save New Password".
+
+  4. Once saved, you can log in normally at:
+     <?php echo $_cp_login; ?>
+
+If you run into any trouble, feel free to reply to this email and we will assist you.
+
+Best regards,
+ICTB 2026 Secretariat
+ictb@biotrop.org</textarea>
+                </p>
+            </div>
+        <?php endif; ?>
         <?php if ($message): ?><div style="background:#d4edda;color:#155724;padding:12px;margin:15px 0;border-radius:4px;"><?php echo htmlspecialchars($message); ?></div><?php endif; ?>
         <?php if ($error): ?><div style="background:#f8d7da;color:#721c24;padding:12px;margin:15px 0;border-radius:4px;"><?php echo htmlspecialchars($error); ?></div><?php endif; ?>
 
@@ -363,6 +440,18 @@ include 'includes/header.php';
                 <button type="submit" style="margin-top:25px;padding:11px 20px;background:#17a2b8;color:#fff;border:0;cursor:pointer;">Simpan perubahan</button>
 
             </form>
+
+            <!-- ===== RESET PASSWORD SECTION ===== -->
+            <div style="margin-top:20px;background:#fff;border:1px solid #e0e0e0;border-radius:6px;padding:20px;">
+                <h3 style="margin:0 0 8px;font-size:15px;color:#495057;">🔐 Reset Password Peserta</h3>
+                <p style="font-size:13px;color:#6c757d;margin:0 0 14px;">Gunakan fitur ini jika peserta lupa password dan tidak bisa reset sendiri. Sistem akan men-generate password sementara yang bisa kamu copy dan kirim manual ke peserta.</p>
+                <form method="post" onsubmit="return confirm('Reset password untuk peserta ini? Password lama tidak dapat dipakai lagi.');">
+                    <input type="hidden" name="csrf_token" value="<?php echo htmlspecialchars($_SESSION['admin_edit_token']); ?>">
+                    <input type="hidden" name="participant_id" value="<?php echo (int) $participant['id']; ?>">
+                    <input type="hidden" name="action" value="reset_password">
+                    <button type="submit" style="padding:10px 20px;background:#dc3545;color:#fff;border:0;border-radius:4px;cursor:pointer;font-weight:600;">🔄 Generate & Reset Password Sementara</button>
+                </form>
+            </div>
         <?php elseif ($participant_id): ?>
             <div style="background:#fff;padding:20px;">Peserta dengan ID tersebut tidak ditemukan.</div>
         <?php endif; ?>
@@ -403,4 +492,4 @@ document.addEventListener('DOMContentLoaded', function() {
         adminUpdateSubthemes(existingSub);
     }
 });
-</script>
+</script>
