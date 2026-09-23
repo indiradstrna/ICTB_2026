@@ -32,6 +32,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             $stmt = $conn->prepare('SELECT id, first_name, email, password_hash FROM participants WHERE id = ? LIMIT 1');
             $stmt->bind_param('i', $_SESSION['participant_id']);
         } else {
+            if ($form_email === '') {
+                $error = 'Please enter your registered email address.';
+                goto render;
+            }
             if (!filter_var($form_email, FILTER_VALIDATE_EMAIL)) {
                 $error = 'Please enter a valid email address.';
                 goto render;

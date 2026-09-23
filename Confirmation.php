@@ -3,6 +3,7 @@ session_start();
 require_once 'includes/db.php';
 
 $upload_success = false;
+$upload_success_msg = "";
 $upload_error_msg = "";
 $upload_dir = __DIR__ . DIRECTORY_SEPARATOR . 'uploads' . DIRECTORY_SEPARATOR;
 
@@ -70,6 +71,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     $user_data['bukti_transfer'] = $target_path;
                 }
                 $upload_success = true;
+                $upload_success_msg = "File bukti pembayaran berhasil diunggah dan disimpan.";
             } else {
                 $upload_error_msg = 'File bukti pembayaran tidak dapat disimpan. Periksa permission folder uploads di hosting.';
             }
@@ -107,6 +109,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     }
                     $upload_success = true;
+                    $upload_success_msg = "File presentasi (PPT/PDF) berhasil diunggah.";
                 } else {
                     $upload_error_msg = 'File PPT tidak dapat disimpan. Periksa permission folder uploads di hosting.';
                 }
@@ -144,6 +147,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                             }
                         }
                         $upload_success = true;
+                        $upload_success_msg = "File Full Paper berhasil diunggah dan disimpan.";
                     } else {
                         $upload_error_msg = 'File Full Paper tidak dapat disimpan. Periksa permission folder uploads di hosting.';
                     }
@@ -181,6 +185,7 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                         }
                     }
                     $upload_success = true;
+                    $upload_success_msg = "File Abstract berhasil diunggah dan disimpan.";
                 } else {
                     $upload_error_msg = 'File abstract tidak dapat disimpan. Periksa permission folder uploads di hosting.';
                 }
@@ -439,8 +444,13 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
             Summary of all the information that you have entered earlier. Please make sure all information shown are correct before clicking on Confirmation Button.
         </div>
         <?php if (!empty($upload_error_msg)): ?>
-            <div style="background: #f8d7da; color: #721c24; padding: 10px; margin-bottom: 20px; border: 1px solid #f5c6cb; border-radius: 4px;">
+            <div style="background: #f8d7da; color: #721c24; padding: 15px; margin-bottom: 20px; border: 1px solid #f5c6cb; border-radius: 4px; font-weight: bold;">
                 <?php echo htmlspecialchars($upload_error_msg); ?>
+            </div>
+        <?php endif; ?>
+        <?php if (!empty($upload_success_msg)): ?>
+            <div style="background: #d4edda; color: #155724; padding: 15px; margin-bottom: 20px; border: 1px solid #c3e6cb; border-radius: 4px; font-weight: bold;">
+                <?php echo htmlspecialchars($upload_success_msg); ?>
             </div>
         <?php endif; ?>
 
