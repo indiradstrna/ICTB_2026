@@ -97,15 +97,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                 if (move_uploaded_file($_FILES['update_ppt']['tmp_name'], $upload_dir . $filename)) {
                     if (isset($_SESSION['participant_id'])) {
                         if (!empty($app_data)) {
-                            $stmt = $conn->prepare("UPDATE applications SET ppt_file = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
-                            if ($stmt) {
-                                $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
-                                if ($stmt->execute()) {
-                                    $app_data['ppt_file'] = $target_path;
-                                } else {
-                                    $upload_error_msg = 'PPT berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
-                                }
-                            }
+                            $stmt = $conn->prepare("UPDATE applications SET ppt_file = ? WHERE participant_id = ?");
+                            $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                            $database_saved = $stmt->execute();
+                        } else {
+                            $stmt = $conn->prepare("INSERT INTO applications (participant_id, ppt_file) VALUES (?, ?)");
+                            $stmt->bind_param("is", $_SESSION['participant_id'], $target_path);
+                            $database_saved = $stmt->execute();
+                        }
+                        if ($database_saved) {
+                            $app_data['ppt_file'] = $target_path;
+                        } else {
+                            $upload_error_msg = 'PPT berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
                         }
                     }
                     $upload_success = true;
@@ -135,15 +138,18 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
                     if (move_uploaded_file($_FILES['update_full_paper']['tmp_name'], $upload_dir . $filename)) {
                         if (isset($_SESSION['participant_id'])) {
                             if (!empty($app_data)) {
-                                $stmt = $conn->prepare("UPDATE applications SET full_paper = ? WHERE participant_id = ? ORDER BY id DESC LIMIT 1");
-                                if ($stmt) {
-                                    $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
-                                    if ($stmt->execute()) {
-                                        $app_data['full_paper'] = $target_path;
-                                    } else {
-                                        $upload_error_msg = 'Full Paper berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
-                                    }
-                                }
+                                $stmt = $conn->prepare("UPDATE applications SET full_paper = ? WHERE participant_id = ?");
+                                $stmt->bind_param("si", $target_path, $_SESSION['participant_id']);
+                                $database_saved = $stmt->execute();
+                            } else {
+                                $stmt = $conn->prepare("INSERT INTO applications (participant_id, full_paper) VALUES (?, ?)");
+                                $stmt->bind_param("is", $_SESSION['participant_id'], $target_path);
+                                $database_saved = $stmt->execute();
+                            }
+                            if ($database_saved) {
+                                $app_data['full_paper'] = $target_path;
+                            } else {
+                                $upload_error_msg = 'Full Paper berhasil diunggah, tetapi database gagal diperbarui: ' . $stmt->error;
                             }
                         }
                         $upload_success = true;
