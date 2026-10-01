@@ -88,9 +88,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!in_array($ext, $allowed)) {
                 die("<script>alert('Error: Hanya file dokumen (PDF, Word, PPT) dan gambar (JPG) yang diperbolehkan!'); history.back();</script>");
             }
-            $max_size = 20 * 1024 * 1024; // 20 MB
+            $max_size = 50 * 1024 * 1024; // 50 MB
             if ($_FILES['update_ppt']['size'] > $max_size) {
-                $upload_error_msg = "Error: Ukuran file PPT/PDF maksimal adalah 20 MB.";
+                $upload_error_msg = "Error: Ukuran file PPT/PDF maksimal adalah 50 MB.";
             } else {
                 $filename = time() . '_ppt_' . basename($_FILES['update_ppt']['name']);
                 $target_path = 'uploads/' . $filename;

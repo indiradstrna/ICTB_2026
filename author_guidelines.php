@@ -134,7 +134,7 @@
                         <ul style="padding-left: 20px; margin-top: 5px; margin-bottom: 5px;">
                             <li><a href="assets/files/template_ppt_ICTB.pptx" target="_blank" style="color: #1a73e8;">Presentation Template</a></li>
                         </ul>
-                        The presentation file can be uploaded through your ICTB 2026 user dashboard: <a href="https://ictb.biotrop.org/" target="_blank" style="color: #1a73e8;">ICTB 2026 Submission Website</a>.
+                        The presentation file (maximum size: 50 MB) can be uploaded through your ICTB 2026 user dashboard: <a href="https://ictb.biotrop.org/" target="_blank" style="color: #1a73e8;">ICTB 2026 Submission Website</a>.
                     </li>
                     
                     <li style="margin-bottom: 15px;">
