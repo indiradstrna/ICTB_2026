@@ -145,7 +145,7 @@
                     
                     <li style="margin-bottom: 15px;">
                         <strong>Poster Presenter</strong><br>
-                        Authors presenting a poster are requested to prepare their poster according to the ICTB 2026 poster template in A1 size (59.4 x 84.1 cm). You may use either of the following templates: <a href="https://canva.link/3gg1c58asqeh463" target="_blank" style="color: #1a73e8;">Canva Poster Template</a> or <a href="assets/files/Template%20Poster%205th%20ICTB.pptx" target="_blank" style="color: #1a73e8;">PowerPoint Poster Template</a>.<br>
+                        Authors presenting a poster are requested to prepare their poster according to the ICTB 2026 poster template in A1 size (59.4 x 84.1 cm). You may use either of the following templates: <a href="https://canva.link/3gg1c58asqeh463" target="_blank" style="color: #1a73e8;">Canva Poster Template</a> or <a href="assets/files/Template_Poster_5th_ICTB.pptx" target="_blank" style="color: #1a73e8;">PowerPoint Poster Template</a>.<br>
                         The submitted poster file will be used by the Committee for printing and display at the conference venue.<br>
                         Please upload the final poster through: <a href="https://docs.google.com/forms/d/e/1FAIpQLScHxdVb8GVY0L_5t84NDkSe4ZcySnvLx3_U2gyLi_IYU4h3WA/viewform" target="_blank" style="color: #1a73e8;">Poster Submission Link</a>.
                     </li>
