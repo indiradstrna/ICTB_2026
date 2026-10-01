@@ -125,8 +125,8 @@
                                 <td>To be determined by the journal</td>
                             </tr>
                             <tr>
-                                <td style="font-weight: 600;">Scopus-indexed proceedings</td>
-                                <td>IDR 3,000,000</td>
+                                <td style="font-weight: 600;">Scopus-indexed proceedings (IOP)</td>
+                                <td><del style="color: #999; font-size: 13px; margin-right: 5px;">IDR 3,000,000</del> IDR 2,500,000 / USD 150</td>
                             </tr>
                             <tr>
                                 <td style="font-weight: 600;">ICTB proceeding book (ISBN)</td>

@@ -258,9 +258,9 @@ if ($is_participant_only) {
     $pub_fee_label = "Not Applicable";
     $publication_type = "None";
 } else {
-    if (strpos($publication_type, 'Scopus-indexed proceedings') !== false && strpos($publication_type, '3,000,000') !== false) {
-        $publication_fee = 3000000;
-        $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');
+    if (strpos($publication_type, 'Scopus-indexed proceedings') !== false) {
+        $publication_fee = 2500000;
+        $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',') . " / USD 150";
     } elseif (strpos($publication_type, 'ICTB proceeding book') !== false || strpos($publication_type, 'Rp. 800.000') !== false) {
         $publication_fee = 800000;
         $pub_fee_label = "IDR " . number_format($publication_fee, 0, ',', ',');

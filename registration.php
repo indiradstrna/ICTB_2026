@@ -138,8 +138,8 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <td>To be determined by the journal</td>
                     </tr>
                     <tr>
-                        <td style="font-weight: 600;">Scopus-indexed proceedings</td>
-                        <td>IDR 3,000,000</td>
+                        <td style="font-weight: 600;">Scopus-indexed proceedings (IOP)</td>
+                        <td><del style="color: #999; font-size: 13px; margin-right: 5px;">IDR 3,000,000</del> IDR 2,500,000 / USD 150</td>
                     </tr>
                     <tr>
                         <td style="font-weight: 600;">ICTB proceeding book (ISBN)</td>
@@ -220,7 +220,10 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                 <?php
                 // Get the predefined type from URL if it exists (e.g. ?type=presenter)
                 $selected_type = isset($_GET['type']) ? $_GET['type'] : 'participant';
+                $registration_open = false; // Registration is closed
                 ?>
+                
+                <?php if ($registration_open): ?>
                 <form action="registration.php#important-info" method="POST" class="conference-form" enctype="multipart/form-data">
                     <h4 style="margin-bottom: 20px; color: var(--primary-color);">Main author or Participant Only</h4>
                     
@@ -272,6 +275,14 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
                         <button type="submit" class="btn" style="background-color: #17a2b8; color: #000; padding: 8px 16px; font-weight: bold; border: 1px solid #117a8b;">Submit</button>
                     </div>
                 </form>
+                <?php else: ?>
+                    <div style="background-color: #fff3cd; color: #856404; padding: 25px; border-radius: 8px; margin-bottom: 20px; text-align: center; border: 1px solid #ffeeba;">
+                        <i class="ph-bold ph-lock-key" style="font-size: 32px; margin-bottom: 15px; display: block; color: #856404;"></i>
+                        <h4 style="margin-bottom: 10px; font-weight: bold; color: #856404; font-family: var(--font-subheading);">Registration is Closed</h4>
+                        <p style="margin-bottom: 0; font-size: 15px;">Online registration for the 5th ICTB 2026 is currently closed.</p>
+                        <p style="margin-top: 10px; font-size: 14px;">For any inquiries, please contact the secretariat at <a href="mailto:ictb@biotrop.org" style="color: #856404; text-decoration: underline; font-weight: bold;">ictb@biotrop.org</a></p>
+                    </div>
+                <?php endif; ?>
             </div>
         </div>
     </div>

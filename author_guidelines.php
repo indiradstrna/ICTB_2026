@@ -139,7 +139,7 @@
                     
                     <li style="margin-bottom: 15px;">
                         <strong>Video Recording File for Online Presenter</strong><br>
-                        Authors who will present online are requested to prepare a recorded presentation video in accordance with the ICTB 2026 multimedia guidelines. Please review the following guideline before preparing your recording: <a href="assets/files/Multimedia%20guidelines.pdf" target="_blank" style="color: #1a73e8;">Multimedia Guidelines</a>.<br>
+                        Authors who will present online are requested to prepare a recorded presentation video in accordance with the ICTB 2026 multimedia guidelines. Please review the following guideline before preparing your recording: <a href="assets/files/Multimedia%20guideline%20ICTB.pdf" target="_blank" style="color: #1a73e8;">Multimedia Guidelines</a>.<br>
                         Please upload your presentation recording through: <a href="https://docs.google.com/forms/d/e/1FAIpQLScHxdVb8GVY0L_5t84NDkSe4ZcySnvLx3_U2gyLi_IYU4h3WA/viewform" target="_blank" style="color: #1a73e8;">Online Presentation Video Submission</a>.
                     </li>
                     
