@@ -93,6 +93,7 @@ include 'includes/header.php';
                         <th>Name</th>
                         <th>Gender</th>
                         <th>Email</th>
+                        <th>Phone</th>
                         <th>Organization</th>
                         <th>Country</th>
                         <th>Student</th>
@@ -117,6 +118,18 @@ include 'includes/header.php';
                                 <td><?php echo $name; ?></td>
                                 <td><?php echo htmlspecialchars($row['gender'] ?? '-'); ?></td>
                                 <td><?php echo htmlspecialchars($row['email']); ?></td>
+                                <td style="white-space: nowrap;">
+                                    <?php 
+                                        $phone_val = trim($row['phone'] ?? '');
+                                        if ($phone_val !== '') {
+                                            $wa_link = preg_replace('/[^0-9]/', '', $phone_val);
+                                            if (strpos($wa_link, '0') === 0) { $wa_link = '62' . substr($wa_link, 1); }
+                                            echo '<a href="https://wa.me/' . $wa_link . '" target="_blank" class="link-action"><i class="ph-bold ph-whatsapp-logo" style="vertical-align: middle;"></i> ' . htmlspecialchars($phone_val) . '</a>';
+                                        } else {
+                                            echo '-';
+                                        }
+                                    ?>
+                                </td>
                                 <td><?php echo htmlspecialchars($row['institution'] ?? ''); ?></td>
                                 <td><?php echo htmlspecialchars($row['country'] ?? ''); ?></td>
                                 <td>
