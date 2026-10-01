@@ -78,7 +78,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'ppt_file' => ['column' => 'ppt_file', 'prefix' => 'ppt'],
             ];
             $allowed_extensions = ['jpg', 'jpeg', 'png', 'pdf', 'doc', 'docx', 'ppt', 'pptx'];
-            $max_file_size = 20 * 1024 * 1024;
+            $max_file_size = 50 * 1024 * 1024;
             $uploaded_files = [];
 
             foreach (array_merge($file_fields, $application_file_fields) as $input_name => $file_config) {
@@ -90,7 +90,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                     break;
                 }
                 if ($_FILES[$input_name]['size'] > $max_file_size) {
-                    $error = 'Ukuran setiap file maksimal 20 MB.';
+                    $error = 'Ukuran setiap file maksimal 50 MB.';
                     break;
                 }
                 $extension = strtolower(pathinfo($_FILES[$input_name]['name'], PATHINFO_EXTENSION));
@@ -429,7 +429,7 @@ ictb@biotrop.org</textarea>
                 </div>
 
                 <h3 style="margin:25px 0 12px;">Upload file</h3>
-                <p style="font-size:13px;color:#666;">Format: JPG, PNG, PDF, Word, atau PowerPoint. Maksimal 20 MB per file.</p>
+                <p style="font-size:13px;color:#666;">Format: JPG, PNG, PDF, Word, atau PowerPoint. Maksimal 50 MB per file.</p>
                 <div style="display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:15px;">
                     <label>Jenis aplikasi<select name="application_type" style="display:block;width:100%;padding:9px;margin-top:7px;border:1px solid #ccc;"><option value="Oral" <?php echo (($application['apptype_id'] ?? 'Oral') === 'Oral') ? 'selected' : ''; ?>>Oral</option><option value="Poster" <?php echo (($application['apptype_id'] ?? '') === 'Poster') ? 'selected' : ''; ?>>Poster</option></select></label>
                     <label>Bukti pembayaran<input type="file" name="payment_receipt" style="display:block;margin-top:7px;"><?php if (!empty($participant['bukti_transfer'])): ?><small>File saat ini: <a href="<?php echo htmlspecialchars($participant['bukti_transfer']); ?>" target="_blank">Lihat</a></small><?php endif; ?></label>

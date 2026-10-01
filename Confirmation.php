@@ -129,9 +129,9 @@ if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             if (!in_array($ext, $allowed)) {
                 $upload_error_msg = 'Format Full Paper tidak diperbolehkan. Gunakan PDF atau Word (.doc, .docx).';
             } else {
-                $max_size = 20 * 1024 * 1024; // 20 MB
+                $max_size = 50 * 1024 * 1024; // 50 MB
                 if ($_FILES['update_full_paper']['size'] > $max_size) {
-                    $upload_error_msg = "Error: Ukuran file Full Paper maksimal adalah 20 MB.";
+                    $upload_error_msg = "Error: Ukuran file Full Paper maksimal adalah 50 MB.";
                 } else {
                     $filename = time() . '_fullpaper_' . bin2hex(random_bytes(4)) . '.' . $ext;
                     $target_path = 'uploads/' . $filename;
@@ -522,7 +522,7 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                 <div style="margin-top: 20px; margin-bottom: 10px; border-top: 1px dashed #ccc; padding-top: 15px;">
                     <strong>Upload / Update Presentation File (PPT/PDF):</strong>
                     <div style="font-size: 11px; color: #d9534f; margin-bottom: 5px;">
-                        <em>Note: Maximum file size allowed is 20 MB.</em>
+                        <em>Note: Maximum file size allowed is 50 MB.</em>
                     </div>
                     
                     <?php if (!empty($app_data['ppt_file'])): ?>
@@ -543,7 +543,7 @@ $total_payment_formatted = "IDR " . number_format($total_payment, 0, ',', ',');
                     <strong>Upload / Update Full Paper (DOC/DOCX/PDF):</strong>
                     <div style="font-size: 13px; color: #31708f; background-color: #d9edf7; border: 1px solid #bce8f1; padding: 12px; border-radius: 4px; margin-top: 10px; margin-bottom: 10px;">
                         <strong><i class="ph-bold ph-info"></i> Full Paper Instructions:</strong><br>
-                        Please follow the standard full paper format. Your paper will undergo a peer-review process for publication. Ensure your file is in DOC, DOCX, or PDF format and does not exceed 20 MB.
+                        Please follow the standard full paper format. Your paper will undergo a peer-review process for publication. Ensure your file is in DOC, DOCX, or PDF format and does not exceed 50 MB.
                         <div style="margin-top: 10px;">
                             <strong>Download Templates & Guidelines:</strong><br>
                             <a href="assets/files/Style-guide-for-conference-organisers-and-authors.pdf" target="_blank" download style="color: #245269; text-decoration: underline; display: inline-block; margin-top: 5px;"><i class="ph-bold ph-file-pdf"></i> Style Guide for Conference Organisers and Authors</a><br>
@@ -655,9 +655,9 @@ function validatePPTUpdate() {
             return false;
         }
         
-        var maxSize = 20 * 1024 * 1024; // 20 MB
+        var maxSize = 50 * 1024 * 1024; // 50 MB
         if (file.size > maxSize) {
-            alert('Ukuran file melebihi batas maksimal yang diizinkan (20 MB).');
+            alert('Ukuran file melebihi batas maksimal yang diizinkan (50 MB).');
             fileInput.value = '';
             return false;
         }
@@ -682,9 +682,9 @@ function validateFullPaperUpdate() {
             return false;
         }
         
-        var maxSize = 20 * 1024 * 1024; // 20 MB
+        var maxSize = 50 * 1024 * 1024; // 50 MB
         if (file.size > maxSize) {
-            alert('Ukuran file melebihi batas maksimal yang diizinkan (20 MB).');
+            alert('Ukuran file melebihi batas maksimal yang diizinkan (50 MB).');
             fileInput.value = '';
             return false;
         }
