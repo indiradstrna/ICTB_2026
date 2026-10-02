@@ -33,6 +33,7 @@
                 <div class="speaker-card reveal-up" style="transition-delay: <?php echo $index * 0.1; ?>s;">
                     <div class="speaker-img-wrapper">
                         <img src="<?php echo $speaker['img']; ?>" alt="<?php echo $speaker['name']; ?>" class="speaker-img">
+                        <div class="speaker-socials"></div>
                     </div>
                     <div class="speaker-info">
                         <h3 class="speaker-name"><?php echo $speaker['name']; ?></h3>
@@ -52,36 +53,28 @@
             </div>
             
             <div class="speakers-grid">
-                <div class="speaker-card reveal-up">
+                <?php
+                $invited_speakers = [
+                    ['name' => 'Prof. Dr. Arif Satria, S.P., M.Si', 'role' => 'Head of the National Research and Innovation Agency', 'org' => 'BRIN', 'img' => 'assets/img/speakers/1.png'],
+                    ['name' => 'H.E. Mr. Mohammad Jumhur Hidayat', 'role' => 'Minister of Environment', 'org' => 'Republic of Indonesia', 'img' => 'assets/img/speakers/2.png'],
+                    ['name' => 'Prof. Dr. Khin Maung Sint', 'role' => 'Governing Board Member', 'org' => 'Myanmar', 'img' => 'assets/img/speakers/3.png'],
+                    ['name' => 'Prof. Tan Aik Ling', 'role' => 'Governing Board Member', 'org' => 'Nanyang Technological University, Singapore', 'img' => 'assets/img/speakers/4.png'],
+                    ['name' => 'Prof. Dr. Nguyen Tat Toan', 'role' => 'Governing Board Member', 'org' => 'Nong Lam University, Vietnam', 'img' => 'assets/img/speakers/5.png']
+                ];
+                
+                foreach($invited_speakers as $index => $speaker): ?>
+                <div class="speaker-card reveal-up" style="transition-delay: <?php echo $index * 0.1; ?>s;">
                     <div class="speaker-img-wrapper">
-                        <img src="https://placehold.co/400x400/0d9488/ffffff?text=To+Be+Announced" alt="Speaker" class="speaker-img">
+                        <img src="<?php echo $speaker['img']; ?>" alt="<?php echo $speaker['name']; ?>" class="speaker-img">
+                        <div class="speaker-socials"></div>
                     </div>
                     <div class="speaker-info">
-                        <h3 class="speaker-name">To Be Announced</h3>
-                        <p class="speaker-role">Invited Speaker</p>
-                        <p class="speaker-org">Various Institutions</p>
+                        <h3 class="speaker-name" style="font-size: 1.1rem; line-height: 1.4;"><?php echo $speaker['name']; ?></h3>
+                        <p class="speaker-role" style="font-size: 0.9rem;"><?php echo $speaker['role']; ?></p>
+                        <p class="speaker-org" style="font-size: 0.85rem; color: #666;"><?php echo $speaker['org']; ?></p>
                     </div>
                 </div>
-                <div class="speaker-card reveal-up" style="transition-delay: 0.1s;">
-                    <div class="speaker-img-wrapper">
-                        <img src="https://placehold.co/400x400/0d9488/ffffff?text=To+Be+Announced" alt="Speaker" class="speaker-img">
-                    </div>
-                    <div class="speaker-info">
-                        <h3 class="speaker-name">To Be Announced</h3>
-                        <p class="speaker-role">Invited Speaker</p>
-                        <p class="speaker-org">Various Institutions</p>
-                    </div>
-                </div>
-                <div class="speaker-card reveal-up" style="transition-delay: 0.2s;">
-                    <div class="speaker-img-wrapper">
-                        <img src="https://placehold.co/400x400/0d9488/ffffff?text=To+Be+Announced" alt="Speaker" class="speaker-img">
-                    </div>
-                    <div class="speaker-info">
-                        <h3 class="speaker-name">To Be Announced</h3>
-                        <p class="speaker-role">Invited Speaker</p>
-                        <p class="speaker-org">Various Institutions</p>
-                    </div>
-                </div>
+                <?php endforeach; ?>
             </div>
         </div>
 
